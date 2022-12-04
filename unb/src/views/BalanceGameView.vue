@@ -1,5 +1,5 @@
 <template>
-  <div class="about">.</div>
+  <div class="balance-game">.</div>
 </template>
 <script>
 export default {
