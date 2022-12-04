@@ -1,11 +1,12 @@
 <template>
   <nav>
     <div class="nav-item-wrap">
+      <!-- 밸런스게임 to 랜덤으로 수정 필요 -->
       <router-link to="/balance-game">밸런스게임</router-link>
-      <router-link to="/about">토론리스트</router-link>
+      <router-link to="/all-list">토론리스트</router-link>
       <router-link to="/"><img src="../assets/로고1.png" class="nav-logo"></router-link>
-      <router-link to="/about">회원가입</router-link>
-      <router-link to="/about">로그인</router-link>
+      <router-link to="/all-list">회원가입</router-link>
+      <router-link to="/all-list">로그인</router-link>
     </div>
   </nav>
 </template>
