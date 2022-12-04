@@ -1,5 +1,5 @@
 <template>
-  <div class="balance-game">
+  <div>
     <h3>{{ article.title }}</h3>
   </div>
 </template>
