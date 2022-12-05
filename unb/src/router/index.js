@@ -23,6 +23,12 @@ const routes = [
     component: () => import(/* webpackChunkName: "all-list" */ '../views/AllListView.vue')
   },
   {
+    path: '/create-game',
+    name: 'create-game',
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "all-list" */ '../views/CreatGameView.vue')
+  },
+  {
     path: '/login',
     name: 'LoginView',
     // route level code-splitting

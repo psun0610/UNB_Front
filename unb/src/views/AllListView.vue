@@ -1,5 +1,6 @@
 <template>
   <div>
+    <TodayKing></TodayKing>
     <div v-for="article in articles" :key="article.id">
       <router-link
       :to="{name: 'balance-game', params: {slug: article.slug}}"
@@ -12,8 +13,11 @@
 </template>
 <script>
 import {csrftoken} from '../csrf/csrf_token'
+import TodayKing from '../components/TodayKing'
 export default {
-  components: {},
+  components: {
+    TodayKing
+  },
   data () {
     return {
       articles: [],
