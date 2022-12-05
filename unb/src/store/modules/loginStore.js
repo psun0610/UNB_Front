@@ -10,7 +10,6 @@ const loginStore = {
       state.userInfo = payload
       state.isLogin = true
       state.isLoginError = false
-      axios.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem('access_token')
     },
     loginError: function (state) {
       state.userInfo = null
@@ -48,14 +47,14 @@ const loginStore = {
       commit('logoutTest')
     },
     getMemberInfo ({ commit }) { // 토큰으로 유저 정보를 받아오는 코드
-      // const token = localStorage.getItem('access_token') // 저장된 access 토큰을 가져옴
-      // // const config = {
-      // //   headers: {
-      // //     Authorization: 'Bearer ' + token
-      // //   }
-      // // }
+      const token = localStorage.getItem('access_token') // 저장된 access 토큰을 가져옴
+      const config = {
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      }
       axios
-        .get('http://localhost:8000/accounts/user/') // 가져온 토큰을 헤더에 Authorization 로 담아서 요청을 보냄
+        .get('http://localhost:8000/accounts/user/', config) // 가져온 토큰을 헤더에 Authorization 로 담아서 요청을 보냄
         .then((response) => {
           console.log('accounts/user에 보냄')
           const userInfo = {
