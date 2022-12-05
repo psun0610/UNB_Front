@@ -1,13 +1,6 @@
 <template>
   <div class="home">
-    <!-- 오늘의 토론왕 -->
-    <div class="today-king my-shadow">
-      <div class="today-king-title">
-        오늘의 토론왕<img src="../assets/crown.png" style="width: 50px;">
-      </div>
-      <div></div>
-    </div>
-
+    <TodayKing></TodayKing>
     <!-- 밸런스 게임 바로가기 -->
     <a href="">
       <div class="balance-wrap my-shadow">
@@ -22,9 +15,9 @@
     <div class="today-dis">
       <div class="today-dis-title">
         <h1 class="kg-font">오늘의 토론</h1>
-        <a href="">
+        <router-link to="/all-list/">
           <p>목록보기</p>
-        </a>
+        </router-link>
       </div>
       <hr style="border: solid 1px #D9D9D9">
 
@@ -74,8 +67,11 @@
   </div>
 </template>
 <script>
+import TodayKing from '../components/TodayKing'
 export default {
-  components: {},
+  components: {
+    TodayKing
+  },
   data () {
     return {
       sampleData: '',

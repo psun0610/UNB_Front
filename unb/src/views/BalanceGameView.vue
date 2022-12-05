@@ -1,10 +1,12 @@
 <template>
   <div>
     <h3>{{ article.title }}</h3>
+    <GameDelete v-if="IsAuthor" :slug="article.slug" />
   </div>
 </template>
 <script>
 import {csrftoken} from '../csrf/csrf_token'
+import GameDelete from '../components/GameDelete'
 export default {
   props: {
     slug: {
@@ -12,10 +14,13 @@ export default {
       required: true,
     }
   },
-  components: {},
+  components: {
+    GameDelete
+  },
   data () {
     return {
-      article: {}
+      article: {},
+      requestUser: null
     }
   },
   setup () {},
@@ -36,10 +41,20 @@ export default {
         this.articles = data
       })
       .catch(error => console.log(error))
+      },
+      getUserRequest() {
+        this.requestUser = localStorage.getItem("username")
+      }
+  },
+  computed: {
+    IsAuthor() {
+      return this.article.author === this.requestUser
     }
   },
+
   created() {
     this.getArticleData()
+    this.getUserRequest()
   }
 }
 </script>

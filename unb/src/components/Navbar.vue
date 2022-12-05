@@ -2,11 +2,16 @@
   <nav>
     <div class="nav-item-wrap">
       <!-- 밸런스게임 to 랜덤으로 수정 필요 -->
-      <router-link to="/balance-game">밸런스게임</router-link>
-      <router-link to="/all-list">토론리스트</router-link>
+      <div class="left-nav">
+        <router-link to="/balance-game">밸런스게임</router-link>
+        <router-link to="/all-list">토론리스트</router-link>
+        <router-link to="/create-game">만들기</router-link>
+      </div>
       <router-link to="/"><img src="../assets/로고1.png" class="nav-logo"></router-link>
-      <router-link to="/all-list">회원가입</router-link>
-      <router-link to="/all-list">로그인</router-link>
+      <div class="right-nav">
+        <router-link to="/all-list">회원가입</router-link>
+        <router-link to="/all-list">로그인</router-link>
+      </div>
     </div>
   </nav>
 </template>
@@ -46,7 +51,7 @@ nav a.router-link-exact-active {
   font-weight: bold;
 }
 .nav-item-wrap {
-  width: 920px;
+  max-width: 920px;
   height: 100%;
   margin: auto;
   display: flex;
@@ -55,5 +60,21 @@ nav a.router-link-exact-active {
 }
 .nav-logo {
   height: 40px;
+}
+.left-nav {
+  display: flex;
+  justify-content: flex-start;
+  width: 400px;
+}
+.left-nav>a {
+  margin: 0 10px;
+}
+.right-nav {
+  display: flex;
+  justify-content: flex-end;
+  width: 400px;
+}
+.right-nav>a {
+  margin: 0 10px;
 }
 </style>
