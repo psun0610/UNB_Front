@@ -6,7 +6,7 @@
 </template>
 <script>
 import {csrftoken} from '../csrf/csrf_token'
-import GameDelete from '../components/GameDelete'
+import GameActions from '../components/GameActions'
 export default {
   props: {
     slug: {
@@ -15,7 +15,7 @@ export default {
     }
   },
   components: {
-    GameDelete
+    GameActions
   },
   data () {
     return {

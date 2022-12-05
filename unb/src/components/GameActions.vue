@@ -1,5 +1,6 @@
 <template>
   <div>
+    <router-link to="{name:'GameEdit', params:{slug:slug}}">수정</router-link>
     <button @click="deleteArticle">삭제</button>
   </div>
 </template>
