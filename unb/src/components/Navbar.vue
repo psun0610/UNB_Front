@@ -9,8 +9,8 @@
       </div>
       <router-link to="/"><img src="../assets/로고1.png" class="nav-logo"></router-link>
       <div class="right-nav">
-        <router-link to="/all-list">회원가입</router-link>
-        <router-link to="/all-list">로그인</router-link>
+        <router-link to="/signup">회원가입</router-link>
+        <router-link to="/login">로그인</router-link>
       </div>
     </div>
   </nav>

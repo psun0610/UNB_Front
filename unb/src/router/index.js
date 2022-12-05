@@ -28,6 +28,30 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "all-list" */ '../views/CreatGameView.vue')
   },
+  {
+    path: '/login',
+    name: 'LoginView',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "Login" */ '../views/LoginView.vue')
+  },
+  {
+    path: '/logincheck',
+    name: 'LoginCheckView',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "LoginCheck" */ '../views/LoginCheckView.vue')
+  },
+  {
+    path: '/signup',
+    name: 'SignupView',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "signup" */ '../views/SignupView.vue')
+  },
 ]
 
 const router = createRouter({
