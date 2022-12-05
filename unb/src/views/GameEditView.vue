@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @submit.prevent="insertArticle">
+    <form @submit.prevent="updateArticle">
       <input
       type="text"
       placeholder="A"
@@ -11,7 +11,7 @@
       placeholder="B"
       v-model="B"
       />
-      <button>제출하기</button>
+      <button>수정하기</button>
     </form>
     <div v-if="error" role="alert">
       <strong>{{ error }}</strong>
@@ -19,8 +19,14 @@
   </div>
 </template>
 <script>
-import {csrftoken} from '../csrf/csrf_token';
+import {csrftoken} from '../csrf/csrf_token'
 export default {
+  props: {
+    slug: {
+      type: String,
+      required: true,
+    }
+  },
   components: {},
   data () {
     return {
@@ -29,17 +35,34 @@ export default {
       error: null,
     }
   },
+  beforeRouteEnter (to, from, next) {
+    if(to.params.slug !== undefined) {
+      fetch(`/api/articles//${to.params.slug}/`, {
+        methods: "GET",
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFTOKEN': csrftoken
+        }
+      })
+      .then(resp => resp.json())
+      .then((data) => {
+        return next(vm=> (vm.A=data.A, vm.B=data.B))
+      })
+    } else {
+      return next()
+    }
+  },
   setup () {},
   created () {},
   mounted () {},
   unmounted () {},
   methods: {
-    insertArticle() {
+    updateArticle() {
       if(!this.A || !this.B) {
         this.error = "선택지를 모두 채워주세요"
       } else {
         fetch(`api/articles/${this.slug}/`, {
-        methods: "POST",
+        methods: "PUT",
         headers: {
           'Content-Type': 'application/json',
           'X-CSRFTOKEN': csrftoken
@@ -48,9 +71,7 @@ export default {
       })
       .then(resp => resp.json())
       .then(() => {
-        this.$router.push({
-          name: 'home'
-        })
+        this.$router.push('/')
       })
       .catch(error => console.log(error))
       }
