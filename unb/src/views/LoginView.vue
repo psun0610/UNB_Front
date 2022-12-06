@@ -13,7 +13,8 @@
       <button @click="loginSubmit()" class="form-btn my-shadow">로그인</button>
       <div>
         <button @click="googlelogin()">구글로그인</button>
-        <a href="https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email&response_type=code&client_id={client_id}&redirect_uri={redirect_uri}">
+        <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=594914704717-2s7b5k1fjai3o89vnc66hc0fiisa15uq.apps.googleusercontent.com&response_type=code&redirect_uri=http://localhost:8000/accounts/google/callback/&scope=https://www.googleapis.com/auth/userinfo.email"
+    >
         구글로그인
         </a>
       </div>
@@ -39,12 +40,7 @@ export default {
       this.$store.dispatch('logintest', saveData)
     },
     googlelogin() {
-      axios.get('http://localhost:8000/accounts/google/login', { headers: {
-        'Access-Control-Allow-Origin': '*',
-        Authorization: null
-        }
-      }
-      )
+      axios.get('http://localhost:8000/accounts/google/login')
       .then((response) => {
         console.log(response.data)
       }
@@ -56,10 +52,12 @@ export default {
     },
     kakaologin() {
       window.location.href = 'http://localhost:8000/accounts/kakao/login'
+
     }
   }
 }
 </script>
+
 <style scoped>
 .login-container {
   width: 550px;

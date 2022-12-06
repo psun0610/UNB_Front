@@ -1,7 +1,22 @@
 <template>
   <div>
-    <div> 유저 이름 {{userdetail.nickname}} </div>
-    <div> 유저가 쓴 글 {{userdetail.article}} </div>
+    <br>
+    <div> 유저 이름 <br><br> {{userdetail.nickname}} </div>
+    <br><br><br>
+    <div> 유저가 쓴 글 </div>
+    <br>
+    <div class="arttable">
+      <div v-for="(article, index) in articlelist.slice().reverse()" :key="index" class="artlist">
+        <p>제목: {{ article.title }}</p>
+      </div>
+    </div>
+    <br><br><br>
+    <div> 유저가 쓴 댓글 </div>
+    <div class="comtable">
+      <div v-for="(com, index) in comlist.slice().reverse()" :key="index" class="comlist">
+        <p>제목: {{ com.content }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -11,7 +26,9 @@ import axios from '../axios'
 export default {
   data(){
     return {
-      userdetail: []
+      userdetail: [],
+      articlelist: [],
+      comlist: []
     }
   },
   mounted() {
@@ -24,7 +41,9 @@ export default {
     })
       .then(response => {
         this.userdetail = response.data
-        console.log(this.userdetail)
+        this.articlelist = response.data.article
+        this.comlist = response.data.comment
+        console.log(response.data.article)
       })
       .catch(response => {
         console.log('에러')
@@ -33,3 +52,10 @@ export default {
   },
 }
 </script>
+<style scoped>
+
+.artlist {
+  border: 1px solid black;
+}
+
+</style>

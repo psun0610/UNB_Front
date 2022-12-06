@@ -1,7 +1,9 @@
 import axios from 'axios'
 import store from '../store'
 
-axios.interceptors.response.use(
+const testaxios  = axios.create()
+
+testaxios.interceptors.response.use(
   function (response) {
     // 200대 response를 받아 응답 데이터를 가공하는 작업
     return response
@@ -31,4 +33,4 @@ axios.interceptors.response.use(
     return Promise.reject(error)
   }
 )
-export default axios
+export default testaxios

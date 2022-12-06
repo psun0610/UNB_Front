@@ -15,7 +15,7 @@
 </template>
 <script>
 
-import axios from '../axios'
+import testaxios from '../axios/index'
 const url = 'http://localhost:8000/articles/'
 
 export default {
@@ -28,7 +28,7 @@ export default {
   setup() {},
   created() {},
   mounted() {
-    axios({
+    testaxios ({
       method: 'GET',
       url: url,
       headers: {

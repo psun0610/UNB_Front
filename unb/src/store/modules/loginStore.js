@@ -65,7 +65,6 @@ const loginStore = {
           console.log('유저 정보 받아옴')
           console.log(userInfo)
           console.log(loginStore.state.isLogin)
-          router.push('logincheck')
         })
         .catch(() => {
           alert('이메일과 비밀번호를 확인하세요.')
