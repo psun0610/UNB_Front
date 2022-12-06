@@ -23,7 +23,7 @@
   </div>
 </template>
 <script>
-import axios from '../axios/index'
+import axios from 'axios'
 
 export default {
   name: 'SignupForm',
