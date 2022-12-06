@@ -1,17 +1,26 @@
 <template>
-  <div>
+  <div class="create-div my-shadow">
     <form @submit.prevent="insertArticle">
-      <input
-      type="text"
-      placeholder="A"
-      v-model="A"
-      />
-      <input
-      type="text"
-      placeholder="B"
-      v-model="B"
-      />
-      <button>제출하기</button>
+      <div class="input-wrap" style="width:700px;">
+        <input
+        type="text"
+        placeholder="A"
+        v-model="A"
+        class="input-text no-kg-font"
+        />
+        <div class="vs kg-font">
+          VS
+        </div>
+        <input
+        type="text"
+        placeholder="B"
+        v-model="B"
+        class="input-text no-kg-font"
+        />
+      </div>
+      <div>
+        <button class="create-btn my-shadow">제출하기</button>
+      </div>
     </form>
     <div v-if="error" role="alert">
       <strong>{{ error }}</strong>
@@ -58,3 +67,48 @@ export default {
   }
 }
 </script>
+<style scoped>
+.create-div {
+  width: 850px;
+  margin: 300px auto;
+  padding: 80px 0px;
+}
+.create-btn {
+  width: 700px;
+  background-color: rgb(111, 214, 255);
+  border: 0;
+  padding: 7px 0;
+  margin-top: 20px;
+  border-radius:  3px;
+  font-family: 'Pretendard-Regular';
+  font-size: 15px;
+  transition: 0.14s all ease-in;
+}
+.create-btn:hover {
+  background-color: #4BBEFF;
+  width: 700px;
+  font-family: 'Pretendard-Regular';
+  color: white;
+  transition: 0.14s all ease-in;
+}
+.input-text {
+  width: 280px;
+  padding: 7px 10px;
+  border: 1px solid rgb(180, 180, 180);
+  border-radius:  3px;
+  font-size: 15px;
+}
+.input-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+form {
+  width: 700px;
+  margin: 0 auto;
+}
+.vs {
+  font-weight: bold;
+  font-size: 20px;
+}
+</style>
