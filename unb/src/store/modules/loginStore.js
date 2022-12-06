@@ -22,7 +22,6 @@ const loginStore = {
       state.isLoginError = false
       localStorage.removeItem('access_token')
       localStorage.removeItem('refresh_token')
-      axios.defaults.headers.common.Authorization = null
     }
   },
   actions: {
@@ -60,7 +59,6 @@ const loginStore = {
           const userInfo = {
             pk: response.data.pk,
             email: response.data.email,
-            nickname: response.data.nickname
           } // 유저 정보를 받아옴
           commit('loginSuccess', userInfo) // mutations 호출
           console.log('유저 정보 받아옴')
