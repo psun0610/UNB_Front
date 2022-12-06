@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     getUser() {
-      fetch('api/user/', {
+      fetch('http://localhost:8000/', {
         methods: "GET",
         headers: {
           'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ export default {
     }
   },
   created() {
-    this.getUser()
+    // this.getUser()
   }
 }
 </script>
