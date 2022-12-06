@@ -1,23 +1,24 @@
 <template>
-  <div class="container">
-    <form @submit.prevent="submitForm">
-      <div>
-        <label for="nickname">아이디(nickname)</label>
-        <input type="text" id="nickname" v-model="nickname" />
+  <div class="signup-container my-shadow">
+    <form @submit.prevent="submitForm" class="myform">
+      <h1 class="form-title">회원가입</h1>
+      <div class="input-wrap">
+        <label for="nickname">닉네임</label>
+        <input type="text" id="nickname" v-model="nickname" class="input-text"/>
       </div>
-      <div>
-        <label for="email">email</label>
-        <input type="text" id="email" v-model="email" />
+      <div class="input-wrap">
+        <label for="email">이메일<span style="color: rgb(255, 69, 37)">*</span></label>
+        <input type="text" id="email" v-model="email" class="input-text"/>
       </div>
-      <div>
-        <label for="password1">비밀번호</label>
-        <input type="password" id="password1" v-model="password1" />
+      <div class="input-wrap">
+        <label for="password1">비밀번호<span style="color: rgb(255, 69, 37)">*</span></label>
+        <input type="password" id="password1" v-model="password1" class="input-text"/>
       </div>
-      <div>
-        <label for="password2">비밀번호 확인</label>
-        <input type="password" id="password2" v-model="password2" />
+      <div class="input-wrap">
+        <label for="password2">비밀번호 확인<span style="color: rgb(255, 69, 37)">*</span></label>
+        <input type="password" id="password2" v-model="password2" class="input-text"/>
       </div>
-      <button type="submit">회원가입</button>
+      <button type="submit" class="form-btn my-shadow">회원가입</button>
     </form>
   </div>
 </template>
@@ -57,3 +58,48 @@ export default {
   }
 }
 </script>
+<style>
+.form-title {
+  text-align: center;
+  margin-bottom: 70px;
+  font-size: 23px;
+  font-weight: 500;
+}
+.signup-container {
+  width: 550px;
+  margin: 200px auto;
+}
+.input-wrap {
+  width: 350px;
+  margin: 20px auto;
+  display: flex;
+  justify-content: space-between;
+}
+.myform {
+  padding: 80px 0;
+}
+.input-text {
+  width: 220px;
+  padding: 7px 10px;
+  border: 1px solid rgb(180, 180, 180);
+  border-radius:  3px;
+  font-size: 15px;
+}
+.form-btn {
+  width: 350px;
+  background-color: pink;
+  border: 0;
+  padding: 7px 0;
+  margin-top: 50px;
+  border-radius:  3px;
+  font-family: 'Pretendard-Regular';
+  font-size: 15px;
+  transition: 0.14s all ease-in;
+}
+.form-btn:hover {
+  background-color: #FF719B;
+  font-family: 'Pretendard-Regular';
+  color: white;
+  transition: 0.14s all ease-in;
+}
+</style>

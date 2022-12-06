@@ -1,22 +1,22 @@
 <template>
-  <div class="app">
-    <div>
-      <label for="nickname">
-        <span>아이디</span>
-        <input type="text" id="nickname" v-model="nickname" />
-      </label>
-      <label for="email">
-        <span>이메일</span>
-        <input type="text" id="email" v-model="email" />
-      </label>
-      <label for="password">
-        <span>패스워드</span>
-        <input type="password" id="password" v-model="password" />
-      </label>
-      <hr />
-      <button @click="loginSubmit()">로그인</button>
-    </div>
-    <button @click="logoutplz()">로그아웃</button>
+  <div class="login-container my-shadow">
+    <form class="myform">
+      <h1 class="form-title">로그인</h1>
+      <div class="input-wrap">
+        <label for="nickname">아이디</label>
+        <input type="text" id="nickname" v-model="nickname" class="input-text"/>
+      </div>
+      <div class="input-wrap">
+        <label for="email">이메일</label>
+        <input type="text" id="email" v-model="email" class="input-text"/>
+      </div>
+      <div class="input-wrap">
+        <label for="password">패스워드</label>
+        <input type="password" id="password" v-model="password" class="input-text"/>
+      </div>
+        <button @click="loginSubmit()" class="form-btn my-shadow">로그인</button>
+        <button @click="logoutplz()" class="form-btn my-shadow">로그아웃</button>
+    </form>
   </div>
 </template>
 
@@ -43,3 +43,9 @@ export default {
   }
 }
 </script>
+<style scoped>
+.login-container {
+  width: 550px;
+  margin: 200px auto;
+}
+</style>
