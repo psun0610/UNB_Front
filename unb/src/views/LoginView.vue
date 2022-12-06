@@ -13,6 +13,7 @@
     <button @click="loginSubmit()" class="form-btn my-shadow">로그인</button>
     <button @click="logoutplz()" class="form-btn my-shadow">로그아웃</button>
     <button @click="googlelogin()">구글로그인</button>
+    <button @click="kakaologin()">카카오</button>
     <a href="https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email&response_type=code&client_id={client_id}&redirect_uri={redirect_uri}">
     구글로그인
     </a>
@@ -56,8 +57,7 @@ export default {
       // window.location.href = 'http://localhost:8000/accounts/google/login'
     },
     kakaologin() {
-      const url = 'http://localhost:8000/accounts/google_front/login/'
-      window.location.href = 'http://localhost:8000/accounts/google/login'
+      window.location.href = 'http://localhost:8000/accounts/kakao/login'
     }
   }
 }

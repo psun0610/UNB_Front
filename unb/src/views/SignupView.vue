@@ -50,6 +50,8 @@ export default {
           const refretoken = response.data.refresh_token
           localStorage.setItem('refresh_token', refretoken) // 토큰을 저장함
           this.$store.dispatch('getMemberInfo') // 유저 정보를 가져오는 actions 호출
+          alert('회원가입 성공')
+          router.push('logincheck')
         })
         .catch(response => {
           console.log('fail', this, response)
