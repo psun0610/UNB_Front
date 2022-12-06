@@ -58,12 +58,13 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
 .form-title {
   text-align: center;
   margin-bottom: 70px;
   font-size: 23px;
   font-weight: 500;
+  margin-top: 0;
 }
 .signup-container {
   width: 550px;

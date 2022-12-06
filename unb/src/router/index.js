@@ -26,7 +26,7 @@ const routes = [
     path: '/create-game',
     name: 'create-game',
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "all-list" */ '../views/CreatGameView.vue')
+    component: () => import(/* webpackChunkName: "create-game" */ '../views/CreatGameView.vue')
   },
   {
     path: '/login',
