@@ -8,7 +8,11 @@
         <router-link to="/create-game">만들기</router-link>
       </div>
       <router-link to="/"><img src="../assets/로고1.png" class="nav-logo"></router-link>
-      <div class="right-nav">
+      <div class="right-nav" v-if="logincheck">
+        <router-link to="/">마이페이지</router-link>
+        <a @click="logoutplz()">로그아웃</a>
+      </div>
+      <div class="right-nav" v-else>
         <router-link to="/signup">회원가입</router-link>
         <router-link to="/login">로그인</router-link>
       </div>
@@ -20,19 +24,21 @@ export default {
   components: {},
   data () {
     return {
-      sampleData: ''
+      logincheck: JSON.parse(sessionStorage.vuex).loginStore.isLogin
     }
   },
   setup () {},
   created () {},
   mounted () {},
   unmounted () {},
-  methods: {}
+  methods: {
+    logoutplz () {
+      this.$store.dispatch('logouttest_act')
+    },
+  }
 }
 </script>
 <style scoped>
-
-
 nav {
   position: fixed;
   top: 0;

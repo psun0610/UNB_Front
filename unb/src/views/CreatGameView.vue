@@ -29,6 +29,7 @@
 </template>
 <script>
 import {csrftoken} from '../csrf/csrf_token';
+import axios from 'axios'
 export default {
   components: {},
   data () {
@@ -42,23 +43,40 @@ export default {
   created () {},
   mounted () {},
   unmounted () {},
+  // methods: {
+  //   insertArticle() {
+  //     if(!this.A || !this.B) {
+  //       this.error = "선택지를 모두 채워주세요"
+  //     } else {
+  //       axios({
+  //       url: 'http://localhost:8000/articles/',
+  //       method: "POST",
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'X-CSRFTOKEN': csrftoken,
+  //       },
+  //       body: JSON.stringify({A: this.A, B: this.B})
+  //     })
+  //     .then(resp => resp.json())
+  //     .then(() => {
+  //       this.$router.push({
+  //         name: 'home'
+  //       })
+  //     })
+  //     .catch(error => console.log(error))
+  //     }
+  //   }
+  // }
   methods: {
     insertArticle() {
       if(!this.A || !this.B) {
         this.error = "선택지를 모두 채워주세요"
       } else {
-        fetch(`api/articles/${this.slug}/`, {
-        methods: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFTOKEN': csrftoken
-        },
-        body: JSON.stringify({A: this.A, B: this.B})
-      })
-      .then(resp => resp.json())
+        axios.post('http://localhost:8000/articles/', {A: this.A, B: this.B})
+      .then(resp => {console.log(resp.data)})
       .then(() => {
         this.$router.push({
-          name: 'home'
+          name: 'all-list'
         })
       })
       .catch(error => console.log(error))
@@ -78,7 +96,7 @@ export default {
   background-color: rgb(111, 214, 255);
   border: 0;
   padding: 7px 0;
-  margin-top: 20px;
+  margin-top: 50px;
   border-radius:  3px;
   font-family: 'Pretendard-Regular';
   font-size: 15px;

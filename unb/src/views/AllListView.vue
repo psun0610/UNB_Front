@@ -14,6 +14,7 @@
 <script>
 import {csrftoken} from '../csrf/csrf_token'
 import TodayKing from '../components/TodayKing'
+import url from '../main'
 export default {
   components: {
     TodayKing
@@ -29,7 +30,7 @@ export default {
   unmounted () {},
   methods: {
     getAllArticles() {
-      fetch('api/articles/', {
+      fetch('http://localhost:8000/articles/', {
         methods: "GET",
         headers: {
           'Content-Type': 'application/json',
