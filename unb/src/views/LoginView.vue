@@ -55,8 +55,7 @@ export default {
       // window.location.href = 'http://localhost:8000/accounts/google/login'
     },
     kakaologin() {
-      const url = 'http://localhost:8000/accounts/google_front/login/'
-      window.location.href = 'http://localhost:8000/accounts/google/login'
+      window.location.href = 'http://localhost:8000/accounts/kakao/login'
     }
   }
 }
