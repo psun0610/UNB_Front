@@ -24,16 +24,21 @@
   </nav>
 </template>
 <script>
+import loginStore from '../store/index'
 export default {
   components: {},
   data () {
     return {
-      // logincheck: JSON.parse(sessionStorage.vuex).loginStore.isLogin
+      logincheck: ''
     }
   },
   setup () {},
   created () {},
-  mounted () {},
+  mounted() {
+    this.logincheck = loginStore.state.loginStore.isLogin
+    console.log('↓↓로그인 여부 ↓↓')
+    console.log(loginStore.state.loginStore.isLogin)
+  },
   unmounted () {},
   methods: {
     logoutplz () {

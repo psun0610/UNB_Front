@@ -23,6 +23,7 @@ const loginStore = {
       state.isLoginError = false
       localStorage.removeItem('access_token')
       localStorage.removeItem('refresh_token')
+      localStorage.removeItem('vuex')
     }
   },
   actions: {
@@ -45,6 +46,7 @@ const loginStore = {
     },
     logouttest_act ({ commit }) { // 로그아웃 actions
       commit('logoutTest')
+      window.location.href="http://localhost:8080/"
     },
     getMemberInfo ({ commit }) { // 토큰으로 유저 정보를 받아오는 코드
       const token = localStorage.getItem('access_token') // 저장된 access 토큰을 가져옴
@@ -65,6 +67,8 @@ const loginStore = {
           console.log('유저 정보 받아옴')
           console.log(userInfo)
           console.log(loginStore.state.isLogin)
+          window.location.href="http://localhost:8080/logincheck/"
+          // router.push('logincheck')
         })
         .catch(() => {
           alert('이메일과 비밀번호를 확인하세요.')
