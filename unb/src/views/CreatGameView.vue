@@ -6,7 +6,7 @@
         type="text"
         placeholder="A"
         v-model="A"
-        class="input-text no-kg-font"
+        class="input-text A no-kg-font"
         />
         <div class="vs kg-font">
           VS
@@ -15,7 +15,7 @@
         type="text"
         placeholder="B"
         v-model="B"
-        class="input-text no-kg-font"
+        class="input-text B no-kg-font"
         />
       </div>
       <div>
@@ -111,10 +111,15 @@ export default {
 }
 .input-text {
   width: 280px;
-  padding: 7px 10px;
-  border: 1px solid rgb(180, 180, 180);
+  padding: 8px 10px;
   border-radius:  3px;
   font-size: 15px;
+}
+.A {
+  border: 3px solid #4BBEFF;
+}
+.B {
+  border: 3px solid #FF719B;
 }
 .input-wrap {
   display: flex;

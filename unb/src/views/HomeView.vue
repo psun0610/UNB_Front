@@ -108,6 +108,7 @@ export default {
 .b-subtitle {
   top: 55%;
   font-weight: 300;
+  font-size: 20px;
 }
 .today-dis {
   margin: 50px 0;
