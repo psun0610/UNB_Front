@@ -3,7 +3,7 @@
     <div class="nav-item-wrap">
       <!-- 밸런스게임 to 랜덤으로 수정 필요 -->
       <div class="left-nav">
-        <router-link to="/balance-game">밸런스게임</router-link>
+        <a :href="randomnum">밸런스게임</a>
         <router-link to="/all-list">토론리스트</router-link>
         <router-link to="/create-game">만들기</router-link>
       </div>
@@ -25,14 +25,15 @@
 </template>
 <script>
 import loginStore from '../store/index'
+import articles_pk_list from '../store/index'
 export default {
   components: {},
   data () {
     return {
       logincheck: '',
       pk: '',
-      // userInfo: JSON.parse(localStorage.getItem("vuex")).loginStore.userInfo,
       userInfo: loginStore.state.loginStore.userInfo,
+      randomnum: ''
     }
   },
   setup () {},
@@ -41,7 +42,9 @@ export default {
     this.logincheck = loginStore.state.loginStore.isLogin
     console.log('↓↓로그인 여부 ↓↓')
     console.log(loginStore.state.loginStore.isLogin)
-    console.log(localStorage.getItem('vuex'))
+    const randomlist = articles_pk_list.state.articles_pk_list.pklist
+    const idx = Math.floor(Math.random() * randomlist.length)+1
+    this.randomnum = 'http://localhost:8080/Detail/'+idx
   },
   unmounted () {},
   methods: {
