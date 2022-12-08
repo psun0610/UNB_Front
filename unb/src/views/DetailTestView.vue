@@ -96,7 +96,8 @@ export default {
         this.show = Array(this.article_comment.length).fill(false)
       })
       .catch(response => {
-        console.log('에러')
+        alert('없는 글입니다.')
+        history.go(-1)
       }),
     axios ({
       method: 'GET',
@@ -146,7 +147,7 @@ export default {
         console.log(res)
       })
       } else {
-        alert('로그인해')
+        alert('로그인 후 가능합니다.')
       }
     },
     recommenttoggle(index) {

@@ -16,6 +16,7 @@
         구글로그인
         </a>
       </div>
+      <img @click="kakaologin()" src='https://developers.kakao.com/tool/resource/static/img/button/login/full/ko/kakao_login_medium_narrow.png'> 
     </div>
   </div>
 </template>
@@ -48,10 +49,11 @@ export default {
       // window.location.href = 'http://localhost:8000/accounts/google/login'
     },
     kakaologin() {
-      window.location.href = 'http://localhost:8000/accounts/kakao/login'
-
-    }
+      const REST_API_KEY ='17927c83c8f77eef6c83ef6dd7ff221c'
+      const REDIRECT_URI = 'http://localhost:8080/login'
+      window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`
   }
+}
 }
 </script>
 
