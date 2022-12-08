@@ -1,7 +1,7 @@
 <template>
   <div class="create-div my-shadow">
     <form @submit.prevent="insertArticle">
-      <input type="text" placeholder="제목을 입력하세요" class="title-input">
+      <input type="text" v-model="title" placeholder="제목을 입력하세요" class="title-input">
       <div class="input-wrap" style="width:700px;">
         <textarea
         placeholder="A"
@@ -22,17 +22,18 @@
       </div>
     </form>
     <div v-if="error" role="alert">
-      <strong>{{ error }}</strong>
+      <p><strong>{{ error }}</strong></p>
     </div>
   </div>
 </template>
 <script>
 import {csrftoken} from '../csrf/csrf_token';
-import testaxios from '../axios/index'
+import axios from '../axios/index'
 export default {
   components: {},
   data () {
     return {
+      title: null,
       A: null,
       B: null,
       error: null,
@@ -44,10 +45,11 @@ export default {
   unmounted () {},
   methods: {
     insertArticle() {
-      if(!this.A || !this.B) {
+      if(!this.title || !this.A || !this.B) {
         this.error = "선택지를 모두 채워주세요"
       } else {
-        axios.post('http://localhost:8000/articles/', {A: this.A, B: this.B})
+        console.log(this.title, this.A, this.B)
+        axios.post('http://localhost:8000/articles/', {title: this.title, A: this.A, B: this.B})
       .then(resp => {console.log(resp.data)})
       .then(() => {
         this.$router.push({
