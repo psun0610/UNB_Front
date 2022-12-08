@@ -31,7 +31,8 @@ export default {
     return {
       logincheck: '',
       pk: '',
-      userInfo: JSON.parse(localStorage.getItem("vuex")).loginStore.userInfo,
+      // userInfo: JSON.parse(localStorage.getItem("vuex")).loginStore.userInfo,
+      userInfo: loginStore.state.loginStore.userInfo,
     }
   },
   setup () {},
