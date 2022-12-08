@@ -37,7 +37,8 @@ export default {
   data () {
     return {
       articles: [],
-      comments:[]
+      comments:[],
+      article_index:[]
     }
   },
   setup () {},
@@ -52,26 +53,12 @@ export default {
     })
       .then(response => {
         this.articles = response.data
-        console.log(response.data)
+        for (const object of this.articles){
+          this.article_index.push(object.pk)
+        }
+        this.$store.dispatch('pk_list', this.article_index)
       })
       .catch(response => {
-        console.log('access토큰 만료')
-        console.log(response.response.data)
-      })
-    testaxios ({
-      method: 'GET',
-      url: url,
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('access_token')
-      }
-    })
-      .then(response => {
-        this.articles = response.data
-        console.log(response.data)
-      })
-      .catch(response => {
-        console.log('access토큰 만료')
-        console.log(response.response.data)
       })
   },
   unmounted() {},
