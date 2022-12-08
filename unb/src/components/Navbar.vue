@@ -42,9 +42,9 @@ export default {
     this.logincheck = loginStore.state.loginStore.isLogin
     console.log('↓↓로그인 여부 ↓↓')
     console.log(loginStore.state.loginStore.isLogin)
-    const randomlist = articles_pk_list.state.articles_pk_list.pklist
-    const idx = Math.floor(Math.random() * randomlist.length)+1
-    this.randomnum = 'http://localhost:8080/Detail/'+idx
+    // const randomlist = articles_pk_list.state.articles_pk_list.pklist
+    // const idx = Math.floor(Math.random() * randomlist.length)+1
+    // this.randomnum = 'http://localhost:8080/Detail/'+idx
   },
   unmounted () {},
   methods: {

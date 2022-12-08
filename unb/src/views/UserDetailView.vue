@@ -2,21 +2,17 @@
   <div class="container2">
     <div class="badge-edit-wrap">
       <!-- 현재 뱃지 -->
-      <img src="../assets/브론즈.png" class="current-badge my-shadow" @click="isFolding()">
+      <img src="" class="current-badge my-shadow" @click="isFolding()">
       <button class="edit-btn no-kg-font my-shadow">프로필 편집</button>
     </div>
     <!-- 뱃지컬렉션 -->
     <div class="badge-collection my-shadow" v-if="isOpen">
-      <img src="../assets/브론즈.png" class="my-shadow">
-      <img src="../assets/브론즈.png" class="my-shadow">
-      <img src="../assets/브론즈.png" class="my-shadow">
-      <img src="../assets/브론즈.png" class="my-shadow">
     </div>
     <!-- 이름과 활동지수 -->
     <div class="profile-container">
       <div class="name-exp-wrap">
-        <h2>{{ userdetail.nickname }}</h2>
-        <p>총 활동지수 100</p>
+        <h2>{{ userinfo.nickname }}</h2>
+        <p>총 활동지수 {{ user.all_score }}</p>
       </div>
       <div class="exp-bar">
         <div class="current-exp"></div>
@@ -24,25 +20,40 @@
     </div>
 
     <div class="article-comment-container">
-      <input type="radio" name="artcom" id="article" v-model="picked" value=0 style="display: none" checked>
-      <label class="profile-radio" for="article">{{ userdetail.nickname }}님이 작성한 글</label>
+      <input type="radio" name="artcom" id="article" v-model="picked" value="article" style="display: none" checked>
+      <label class="profile-radio" for="article">{{ userinfo.nickname }}님이 작성한 글</label>
 
-      <input type="radio" name="artcom" id="comment" v-model="picked" value=1 style="display: none">
-      <label class="profile-radio" for="comment">{{ userdetail.nickname }}님이 작성한 댓글</label>
+      <input type="radio" name="artcom" id="comment" v-model="picked" value="comment" style="display: none">
+      <label class="profile-radio" for="comment">{{ userinfo.nickname }}님이 작성한 댓글</label>
     </div>
     <div class="arttable">
-
-      <div v-for="(article, index) in articlelist.slice().reverse()" :key="index" class="artlist my-shadow">
-        <div class="article">
-          <p>제목: {{ article.title }}</p>
-          <p>{{ article.A }}</p>
-          <p>{{ article.B }}</p>
+      <div v-if="(picked=='article')">
+        <h4 v-if="articlelist.length==0" style="margin-top: 40px;">작성한 글이 없어요</h4>
+        <div v-else v-for="(article, index) in articlelist.slice().reverse()" :key="index" class="artlist my-shadow">
+          <router-link :to="'/Detail/' + article.pk" class="article-router">
+            <div class="article">
+              <h2 class="kg-font" style="margin: 0; font-size: 22px;">{{ article.title }}</h2>
+              <div style="display: flex; justify-content:center; align-items: center;">
+                <div>{{ article.A }}</div>
+                <h3 class="kg-font" style="font-size: 20px; margin: 0 10px;">VS</h3>
+                <div>{{ article.B }}</div>
+              </div>
+            </div>
+          </router-link>
         </div>
       </div>
     </div>
     <div class="comtable">
-      <div v-for="(com, index) in comlist.slice().reverse()" :key="index" class="comlist">
-        <p>제목: {{ com.content }}</p>
+      <div v-if="(picked=='comment')">
+        <h4 v-if="comlist.length==0" style="margin-top: 40px;">작성한 댓글이 없어요</h4>
+        <div v-else v-for="(com, index) in comlist.slice().reverse()" :key="index" class="comlist">
+          <router-link :to="'/Detail/' + com.article.pk" class="article-router">
+            <div class="article">
+              <h2 style="margin: 0; font-size: 22px;">{{ com.content }}</h2>
+              <h3 class="kg-font" style="font-size: 20px; margin: 0 10px;">{{ article.article.title }}</h3>
+            </div>
+          </router-link>
+        </div>
       </div>
     </div>
     
@@ -54,12 +65,12 @@ const url = 'http://localhost:8000/accounts/'
 export default {
   data(){
     return {
-      userdetail: [],
+      user: '',
+      userinfo: '',
       articlelist: [],
       comlist: [],
-      height: 0,
       isOpen: false,
-      radioValues: '',
+      picked: 'article',
     }
   },
   mounted() {
@@ -71,8 +82,9 @@ export default {
       }
     })
     .then(response => {
-      console.log(response.data.userinfo)
-      this.userdetail = response.data.userinfo
+      console.log(response.data.userinfo.profiles.badge.image)
+      this.user = response.data
+      this.userinfo = response.data.userinfo
       this.articlelist = response.data.userinfo.article
       this.comlist = response.data.comment
       console.log(11)
@@ -93,11 +105,20 @@ export default {
 }
 </script>
 <style scoped>
+#article+label:hover, #comment+label:hover {
+  background-color:#c4c4c4;
+  scale: 1.05;
+  transition: all .05s ease-in;
+}
 #article:checked+label {
   background-color: #4BBEFF;
+  scale: 1.05;
+  transition: all .15s ease;
 }
 #comment:checked+label {
   background-color: #FF719B;
+  scale: 1.05;
+  transition: all .15s ease;
 }
 .container2 {
   margin: 100px auto;
@@ -187,6 +208,10 @@ export default {
 }
 .article {
   padding: 15px;
+  transition: all .1s ease-in;
 }
-
+.article:hover {
+  transform: scale(1.07);
+  transition: all .1s ease-in;
+}
 </style>
