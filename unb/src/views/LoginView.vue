@@ -12,7 +12,7 @@
       </div>
       <button @click="loginSubmit()" class="form-btn my-shadow">로그인</button>
       <div>
-        <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=594914704717-2s7b5k1fjai3o89vnc66hc0fiisa15uq.apps.googleusercontent.com&response_type=code&redirect_uri=http://localhost:8080/login&scope=https://www.googleapis.com/auth/userinfo.email">
+        <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id={clinet_id}}&response_type=code&redirect_uri=http://localhost:8080/login&scope=https://www.googleapis.com/auth/userinfo.email">
         구글로그인
         </a>
       </div>
@@ -49,7 +49,7 @@ export default {
       // window.location.href = 'http://localhost:8000/accounts/google/login'
     },
     kakaologin() {
-      const REST_API_KEY ='17927c83c8f77eef6c83ef6dd7ff221c'
+      const REST_API_KEY =''
       const REDIRECT_URI = 'http://localhost:8080/login'
       window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`
   }
