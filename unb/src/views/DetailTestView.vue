@@ -1,15 +1,16 @@
 <template>
-  <div>
+  <div class="detail-container">
     <div class="balance-wrap my-shadow">
-      <div class="balance-back" style="background-color: #FF719B;"></div>
-      <div class="balance-back" style="background-color: #4BBEFF"></div>
-      <div class="AandB">
-        <div class="ABbox">{{article_A}}</div>
-        <h1 class="balance-title b-title kg-font">VS</h1>
-        <div class="ABbox">{{article_B}}</div>
+      <div class="balance-back" style="background-color: #FF719B;">
+        <div class="AB">{{article_A}}</div>
       </div>
+      <div class="balance-back" style="background-color: #4BBEFF">
+        <div class="AB">{{article_B}}</div>
+      </div>
+      <h2 class="balance-title kg-font">{{ article_title }}</h2>
+      <h1 class="vs kg-font">VS</h1>
     </div>
-    <br><br><br>
+
     <div>
       <button @click="previousbutton()">이전 질문</button>
       <button @click="nextbutton()">다음 질문</button>
@@ -53,7 +54,6 @@
               <div>작성자: {{ soncomment.user }} </div>
               <div>내용:  {{ soncomment.content }} </div>
             </div>
-             
           </div>
         </div>
       </div>
@@ -73,6 +73,7 @@ export default {
       article: null,
       article_A: null,
       article_B: null,
+      article_title: null,
       article_comment: [],
       show:[],
       content: null,
@@ -90,6 +91,7 @@ export default {
     })
       .then(response => {
         this.article = response.data
+        this.article_title = response.data.title
         this.article_A = response.data.A
         this.article_B = response.data.B
         this.article_comment = response.data.comments
@@ -191,6 +193,9 @@ export default {
 }
 </script>
 <style scoped>
+.detail-container {
+  margin-top: 100px;
+}
 .balance-wrap {
   display: flex;
   position: relative;
@@ -198,136 +203,39 @@ export default {
 .balance-back {
   width: 50%;
   height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 60px;
+  box-sizing: border-box;
+}
+.vs {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  font-size: 60px;
 }
 .balance-title {
   position: absolute;
   color: white;
+  top: 20%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
-.b-title {
-  top: 39%;
-  font-weight: 700;
-  font-size: 50px;
-}
-.b-subtitle {
-  top: 55%;
-  font-weight: 300;
-}
-.today-dis {
-  margin: 50px 0;
-}
-.today-dis-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-.today-dis-title>h1 {
-  font-size: 28px;
   margin: 0;
+  font-size: 30px;
 }
-.today-dis-title>a {
-  text-decoration: none;
-  color: gray;
-}
-.today-dis-title p {
-  margin: 0;
-}
-.today-dis-article-wrap {
-  display: flex;
-  position: relative;
-}
-.vs {
-  position: absolute;
-  top: 65%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 60px;
-}
-.article-title {
-  /* width: 90%;
-  margin: 0 auto; */
+.AB {
   font-size: 20px;
 }
-.today-dis-comment-wrap{
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  height: 400px;
-}
-.today-dis-comment-wrap img {
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, 0);
-  height: 400px;
-  width: 80%;
-}
-.today-dis-comment-wrap>div>p {
-  margin: 10px 0;
-  text-align: start;
-  width: 250px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3; /* 라인수 */
-  -webkit-box-orient: vertical;
-  word-wrap:break-word;
-  line-height: 1.2em;
-}
-.best-p {
-  margin: 10px 0;
-  text-align: start;
-  width: calc(250px - 50px);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3; /* 라인수 */
-  -webkit-box-orient: vertical;
-  word-wrap:break-word;
-  line-height: 1.2em;
-}
-.best-comment {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
-}
-.best-comment div {
-  color: white;
-  border-radius: 5px;
-  padding: 4px 8px;
-  margin-right: 8px;
-  font-family: 'Pretendard-Regular';
-  font-size: 14px;
-}
+
 article {
   width: 50%;
-}
-.comments {
-  position: absolute;
-  z-index: 1;
-  top: 55%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.AandB {
-  display: grid;
-  grid-template-columns: 4fr 1fr 4fr;
-  position: absolute;
 }
 .comment-div {
   height: 130px;
   box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
-  display: flex;
-}
-.recomment-div {
-  width: 90%;
-  height : 130px;
-  border-left: 1px solid black;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
   display: flex;
 }
 </style>

@@ -33,9 +33,9 @@
           <router-link :to="'/Detail/' + article.pk" class="article-router">
             <div class="article">
               <h2 class="kg-font" style="margin: 0; font-size: 22px;">{{ article.title }}</h2>
-              <div style="display: flex; justify-content:center; align-items: center;">
+              <div class="article-wrap">
                 <div>{{ article.A }}</div>
-                <h3 class="kg-font" style="font-size: 20px; margin: 0 10px;">VS</h3>
+                <h3 class="kg-font" style="font-size: 20px; margin: 0 10px;"><span style="color: var(--mypink)">V</span><span style="color: var(--myblue)">S</span></h3>
                 <div>{{ article.B }}</div>
               </div>
             </div>
@@ -47,10 +47,11 @@
       <div v-if="(picked=='comment')">
         <h4 v-if="comlist.length==0" style="margin-top: 40px;">작성한 댓글이 없어요</h4>
         <div v-else v-for="(com, index) in comlist.slice().reverse()" :key="index" class="comlist">
-          <router-link :to="'/Detail/' + com.article.pk" class="article-router">
-            <div class="article">
-              <h2 style="margin: 0; font-size: 22px;">{{ com.content }}</h2>
-              <h3 class="kg-font" style="font-size: 20px; margin: 0 10px;">{{ article.article.title }}</h3>
+          <router-link :to="'/Detail/' + com.article_pk" class="article-router">
+            <div class="article artlist my-shadow">
+              <h3 class="kg-font" style="font-size: 22px; margin: 0 10px;">둘 중 더 킹받는 것은?</h3>
+              <!-- <h3 class="kg-font" style="font-size: 20px; margin: 0 10px;">{{ article.article.title }}</h3> -->
+              <p style="margin: 0; font-size: 16px;">> {{ com.content }}</p>
             </div>
           </router-link>
         </div>
@@ -82,7 +83,7 @@ export default {
       }
     })
     .then(response => {
-      console.log(response.data.userinfo.profiles.badge.image)
+      console.log(response.data.comment)
       this.user = response.data
       this.userinfo = response.data.userinfo
       this.articlelist = response.data.userinfo.article
@@ -206,8 +207,12 @@ export default {
 .artlist {
   margin-top: 30px;
 }
+.article-wrap {
+  display: grid;
+  grid-template-columns: 4fr 1fr 4fr;
+}
 .article {
-  padding: 15px;
+  padding: 20px;
   transition: all .1s ease-in;
 }
 .article:hover {
