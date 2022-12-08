@@ -8,15 +8,15 @@
         <router-link to="/create-game">만들기</router-link>
       </div>
       <router-link to="/"><img src="../assets/로고1.png" class="nav-logo"></router-link>
-      <!-- <div class="right-nav" v-if="logincheck">
-        <router-link to="/">마이페이지</router-link>
+      <div class="right-nav" v-if="logincheck">
+        <router-link
+          :to="{ name: 'UserDetailView', params: { pk: this.userInfo.pk } }"
+        >
+          마이페이지
+        </router-link>
         <a @click="logoutplz()">로그아웃</a>
       </div>
       <div class="right-nav" v-else>
-        <router-link to="/signup">회원가입</router-link>
-        <router-link to="/login">로그인</router-link>
-      </div> -->
-      <div class="right-nav">
         <router-link to="/signup">회원가입</router-link>
         <router-link to="/login">로그인</router-link>
       </div>
@@ -29,7 +29,9 @@ export default {
   components: {},
   data () {
     return {
-      logincheck: ''
+      logincheck: '',
+      pk: '',
+      userInfo: JSON.parse(localStorage.getItem("vuex")).loginStore.userInfo,
     }
   },
   setup () {},
@@ -38,6 +40,7 @@ export default {
     this.logincheck = loginStore.state.loginStore.isLogin
     console.log('↓↓로그인 여부 ↓↓')
     console.log(loginStore.state.loginStore.isLogin)
+    console.log(localStorage.getItem('vuex'))
   },
   unmounted () {},
   methods: {
