@@ -67,6 +67,10 @@ export default {
 .no-kg-font {
   font-family: 'Pretendard-Regular';
 }
+:root {
+  --mypink: #FF719B;
+  --myblue: #4BBEFF;
+}
 #app {
   /* font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
