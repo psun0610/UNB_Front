@@ -36,7 +36,6 @@ export default {
       const saveData = {}
       saveData.email = this.email
       saveData.password = this.password
-      console.log(1111111)
       this.$store.dispatch('logintest', saveData)
     },
     googlelogin() {

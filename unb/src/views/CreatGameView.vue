@@ -1,21 +1,20 @@
 <template>
   <div class="create-div my-shadow">
     <form @submit.prevent="insertArticle">
+      <input type="text" placeholder="제목을 입력하세요" class="title-input">
       <div class="input-wrap" style="width:700px;">
-        <input
-        type="text"
+        <textarea
         placeholder="A"
         v-model="A"
-        class="input-text A no-kg-font"
+        class="A no-kg-font"
         />
         <div class="vs kg-font">
           VS
         </div>
-        <input
-        type="text"
+        <textarea
         placeholder="B"
         v-model="B"
-        class="input-text B no-kg-font"
+        class="B no-kg-font"
         />
       </div>
       <div>
@@ -43,30 +42,6 @@ export default {
   created () {},
   mounted () {},
   unmounted () {},
-  // methods: {
-  //   insertArticle() {
-  //     if(!this.A || !this.B) {
-  //       this.error = "선택지를 모두 채워주세요"
-  //     } else {
-  //       axios({
-  //       url: 'http://localhost:8000/articles/',
-  //       method: "POST",
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'X-CSRFTOKEN': csrftoken,
-  //       },
-  //       body: JSON.stringify({A: this.A, B: this.B})
-  //     })
-  //     .then(resp => resp.json())
-  //     .then(() => {
-  //       this.$router.push({
-  //         name: 'home'
-  //       })
-  //     })
-  //     .catch(error => console.log(error))
-  //     }
-  //   }
-  // }
   methods: {
     insertArticle() {
       if(!this.A || !this.B) {
@@ -109,17 +84,32 @@ export default {
   color: white;
   transition: 0.14s all ease-in;
 }
-.input-text {
+form {
+  display: flex;
+  flex-direction: column;
+}
+.title-input {
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 30px;
+  border: 3px solid rgb(192, 192, 192);
+  border-radius: 3px;
+}
+textarea {
   width: 280px;
-  padding: 8px 10px;
-  border-radius:  3px;
-  font-size: 15px;
+  height: 60px;
+  padding: 10px;
+  border-radius: 3px;
+  text-align: center;
 }
 .A {
   border: 3px solid #4BBEFF;
 }
 .B {
   border: 3px solid #FF719B;
+}
+textarea:focus, .title-input:focus {
+  outline: none;
 }
 .input-wrap {
   display: flex;
