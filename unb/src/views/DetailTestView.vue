@@ -11,8 +11,8 @@
     </div>
     <br><br><br>
     <div>
-      <button @click="">이전 질문</button>
-      <button @click="">다음 질문</button>
+      <button @click="previousbutton()">이전 질문</button>
+      <button @click="nextbutton()">다음 질문</button>
     </div>
     <!-- 댓글 입력 -->
     <form action="" method="post"></form>
@@ -57,6 +57,8 @@
 <script>
 const url = 'http://localhost:8000/articles/'
 import axios from '../axios'
+import articles_pk_list from '../store/index'
+import loginStore from '../store/index'
 export default {
   data(){
     return {
@@ -66,6 +68,7 @@ export default {
       article_comment: [],
       show:[],
       content: null,
+      randomlist:''
     }
   },
   mounted() {
@@ -82,13 +85,11 @@ export default {
         this.article_B = response.data.B
         this.article_comment = response.data.comments
         this.show = Array(this.article_comment.length).fill(false)
-        console.log(this.show)
-        console.log(response.data)
       })
       .catch(response => {
         console.log('에러')
-        console.log(response.response.data)
       })
+
   },
   methods: {
     submitForm() {
@@ -110,11 +111,9 @@ export default {
             this.content = null
           })
           .catch(response => {
-            console.log('에러')
           })
       })
       .catch((err) => {
-        console.log('댓글 작성 실패')
       })
       },
     recombutton(index){
@@ -148,7 +147,15 @@ export default {
       .catch((err) => {
         console.log('댓글 작성 실패')
       })
-      },
+    },
+    previousbutton() {
+      history.go(-1)
+    },
+    nextbutton() {
+      const randomlist = articles_pk_list.state.articles_pk_list.pklist
+      const idx = Math.floor(Math.random() * randomlist.length)
+      window.location.href = 'http://localhost:8080/Detail/'+idx
+    }
   }
 }
 </script>
