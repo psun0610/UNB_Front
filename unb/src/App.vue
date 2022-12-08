@@ -87,7 +87,7 @@ a {
   font-family: 'UhBeeHYUNJUNG';
 }
 .container {
-  width: 920px;
+  max-width: 920px;
   margin: 0 auto;
   margin-top: 50px;
 }
