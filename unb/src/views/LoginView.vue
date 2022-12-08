@@ -12,9 +12,7 @@
       </div>
       <button @click="loginSubmit()" class="form-btn my-shadow">로그인</button>
       <div>
-        <button @click="googlelogin()">구글로그인</button>
-        <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=594914704717-2s7b5k1fjai3o89vnc66hc0fiisa15uq.apps.googleusercontent.com&response_type=code&redirect_uri=http://localhost:8000/accounts/google/callback/&scope=https://www.googleapis.com/auth/userinfo.email"
-    >
+        <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id=594914704717-2s7b5k1fjai3o89vnc66hc0fiisa15uq.apps.googleusercontent.com&response_type=code&redirect_uri=http://localhost:8080/login&scope=https://www.googleapis.com/auth/userinfo.email">
         구글로그인
         </a>
       </div>

@@ -6,7 +6,7 @@
     <div> 유저가 쓴 글 </div>
     <br>
     <div class="arttable">
-      <div v-for="(article, index) in articlelist.slice().reverse()" :key="index" class="artlist">
+      <div v-for="(article, index) in articlelist" :key="index" class="artlist">
         <p>제목: {{ article.title }}</p>
       </div>
     </div>
