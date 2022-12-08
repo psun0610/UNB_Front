@@ -35,7 +35,6 @@
             </div>
             <div>내용:  {{ comment.content }} </div>
           </div>
-
         </div>
     <!-- 대댓글 작성폼 -->
         <div v-show="show[index]">
@@ -78,7 +77,9 @@ export default {
       show:[],
       content: null,
       randomlist:'',
-      logincheck:''
+      logincheck:'',
+      articles:[], // 랜덤을 위한 아티클 목록
+      article_index:[] // 아티클 인덱스
       }
   },
   mounted() {
@@ -96,8 +97,21 @@ export default {
       })
       .catch(response => {
         console.log('에러')
+      }),
+    axios ({
+      method: 'GET',
+      url: 'http://localhost:8000/articles/'
+    })
+      .then(response => {
+        this.articles = response.data
+        for (const object of this.articles){
+          this.article_index.push(object.pk)
+        }
+        console.log(this.article_index)
+        this.$store.commit('pk_list_mut', this.article_index)
       })
-
+      .catch(response => {
+      })
   },
   methods: {
     submitForm() {
@@ -169,7 +183,7 @@ export default {
     },
     nextbutton() {
       const randomlist = articles_pk_list.state.articles_pk_list.pklist
-      const idx = Math.floor(Math.random() * randomlist.length)
+      const idx = Math.floor(Math.random() * randomlist.length)+1
       window.location.href = 'http://localhost:8080/Detail/'+idx
     }
   }

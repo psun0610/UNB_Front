@@ -28,7 +28,7 @@
 </template>
 <script>
 import {csrftoken} from '../csrf/csrf_token';
-import axios from 'axios'
+import testaxios from '../axios/index'
 export default {
   components: {},
   data () {

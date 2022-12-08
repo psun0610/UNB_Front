@@ -28,8 +28,7 @@
 <script>
 import {csrftoken} from '../csrf/csrf_token'
 import TodayKing from '../components/TodayKing'
-import testaxios from '../axios/index'
-const url = 'http://localhost:8000/articles/'
+import axios from 'axios'
 export default {
   components: {
     TodayKing
@@ -44,19 +43,17 @@ export default {
   setup () {},
   created () {},
   mounted() {
-    testaxios ({
+    axios ({
       method: 'GET',
-      url: url,
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('access_token')
-      }
+      url: 'http://localhost:8000/articles/'
     })
       .then(response => {
         this.articles = response.data
         for (const object of this.articles){
           this.article_index.push(object.pk)
         }
-        this.$store.dispatch('pk_list', this.article_index)
+        console.log(this.article_index)
+        this.$store.commit('pk_list_mut', this.article_index)
       })
       .catch(response => {
       })
