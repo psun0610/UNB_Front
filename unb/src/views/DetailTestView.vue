@@ -19,22 +19,30 @@
     <form @submit.prevent="submitForm" class="myform">
       <div class="input-wrap">
         <input type="text" id="comment" v-model="content" class="input-text"/>
-        <label for="comment">&nbsp<button type="submit" style="background-color:black; color:white;">작성</button></label>
+        <label for="comment">&nbsp;<button type="submit" style="background-color:black; color:white;">작성</button></label>
       </div>
     </form>
     <!-- 댓글 출력 -->
     <div class="commentlist">
       <div v-for="(comment, index) in article_comment" :key="index" class="list">
-        <div class="comment-div"> {{ comment.pk }} 작성자: {{ comment.user }} 내용:  {{ comment.content }}
-          <button type="button" :class="`${comment.pk}`" @click="toggle(index)"> 답글달기 
-          </button> 
+        <div class="comment-div"> 
+          <div style="width:20%;"><img src="https://m.smartcara.com/web/product/option_button/202105/79aa353bc0b08653dd24427feb73c60b.png" style="width:70%;"></div>
+          <div style="width:80%;">
+            <div style="display:flex;">
+              <p>작성자:{{comment.pk}} {{ comment.user }}</p>
+              <div><i class="fa-regular fa-heart" @click="like(comment.pk)"></i></div>
+              <div> <button type="button" :class="`${comment.pk}`" @click="recommenttoggle(index)"> 답글 </button> </div>
+            </div>
+            <div>내용:  {{ comment.content }} </div>
+          </div>
+
         </div>
     <!-- 대댓글 작성폼 -->
         <div v-show="show[index]">
           <form @submit.prevent="submitreForm(comment.pk)" class="myreform">
             <div class="input-wrap">
               <input type="text" id="recomment" v-model="content" class="input-text"/>
-              <label for="recomment">&nbsp<button type="submit" style="background-color:black; color:white;">작성</button></label>
+              <label for="recomment">&nbsp;<button type="submit" style="background-color:black; color:white;">작성</button></label>
             </div>
           </form>
         </div>
@@ -59,6 +67,7 @@ const url = 'http://localhost:8000/articles/'
 import axios from '../axios'
 import articles_pk_list from '../store/index'
 import loginStore from '../store/index'
+import testaxios from '../axios/index'
 export default {
   data(){
     return {
@@ -68,16 +77,15 @@ export default {
       article_comment: [],
       show:[],
       content: null,
-      randomlist:''
-    }
+      randomlist:'',
+      logincheck:''
+      }
   },
   mounted() {
+    this.logincheck = loginStore.state.loginStore.isLogin // 로그인 체크
     axios({
       method: 'GET',
-      url: url + this.$route.params.pk + '/',
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('access_token')
-      }
+      url: url + this.$route.params.pk + '/'
     })
       .then(response => {
         this.article = response.data
@@ -116,10 +124,18 @@ export default {
       .catch((err) => {
       })
       },
-    recombutton(index){
-      console.log(index)
+    like(e){ // 좋아요
+      if (this.logincheck){
+      const comment_like_url = `http://localhost:8000/articles/${this.$route.params.pk}/comment/${e}/like/`
+      testaxios.post(comment_like_url)
+      .then((res) => {
+        console.log(res)
+      })
+      } else {
+        alert('로그인해')
+      }
     },
-    toggle(index) {
+    recommenttoggle(index) {
       this.show.splice(index,1,!this.show[index])
     },
     submitreForm(pk) {
@@ -289,9 +305,10 @@ article {
 .comment-div {
   height: 130px;
   box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+  display: flex;
 }
 .recomment-div {
-  width: 80%;
+  width: 90%;
   height : 130px;
   border-left: 1px solid black;
   margin-top: 2rem;

@@ -31,6 +31,7 @@
       <label class="profile-radio" for="comment">{{ userdetail.nickname }}님이 작성한 댓글</label>
     </div>
     <div class="arttable">
+
       <div v-for="(article, index) in articlelist.slice().reverse()" :key="index" class="artlist my-shadow">
         <div class="article">
           <p>제목: {{ article.title }}</p>
