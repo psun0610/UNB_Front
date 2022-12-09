@@ -2,20 +2,48 @@
   <div class="container2">
     <div class="badge-edit-wrap">
       <!-- 현재 뱃지 -->
-      <img src="" class="current-badge my-shadow" @click="isFolding()">
+      <img :src="current_badge" class="current-badge my-shadow" @click="isFolding()">
       <button class="edit-btn no-kg-font my-shadow">프로필 편집</button>
     </div>
     <!-- 뱃지컬렉션 -->
-    <div class="badge-collection my-shadow" v-if="isOpen">
-    </div>
+      <div class="badge-collection my-shadow" v-if="isOpen">
+        <img :src="badge" v-for="(badge, index) in user_badges" :key="index" class="my-shadow">
+      </div>
     <!-- 이름과 활동지수 -->
     <div class="profile-container">
       <div class="name-exp-wrap">
         <h2>{{ userinfo.nickname }}</h2>
-        <p>총 활동지수 {{ user.all_score }}</p>
+        <div style="display: flex;">
+          <p>총 활동지수 <b>{{ user.all_score }}</b></p>
+          <p>오늘의 활동지수 <b>{{ user.today_score }}</b></p>
+        </div>
       </div>
-      <div class="exp-bar">
-        <div class="current-exp"></div>
+      <div class="exp-bar my-shadow">
+        <div class="current-exp"
+          :style="`background-color:${current_color}; width: ${userinfo.grade_percent}%;`">
+        </div>
+      </div>
+      <div class="level">
+        <p style="font-size: 15px; font-weight: bold;" :style="`color:${current_color}`">
+        {{ current_level }}</p>
+        <p>{{ next_level }}까지 <b>{{ next_exp }}</b></p>
+      </div>
+    </div>
+
+    <!-- 잔디 심기 -->
+    <div class="grass-div my-shadow">
+      <div class="grass-title kg-font">
+        <h3>{{ user.year }}</h3>
+        <h1>{{ user.month }}</h1>
+        <p class="no-kg-font">현재 연속 <b>{{ user.consecutive }}</b>일</p>
+      </div>
+      <div class="grass-wrap">
+        <div v-for="index in user.monthrange"  style="display: flex">
+          <div v-if="index==6 || index==16 || index==26" class="blank"></div>
+          <!-- 리스트 포함 여부 확인 -->
+          <div v-if="index in user.daylist" class="grass" style="background-color: #2DD92A"></div>
+          <div v-else class="grass"></div>
+        </div>
       </div>
     </div>
 
@@ -49,7 +77,7 @@
         <div v-else v-for="(com, index) in comlist.slice().reverse()" :key="index" class="comlist">
           <router-link :to="'/Detail/' + com.article_pk" class="article-router">
             <div class="article artlist my-shadow">
-              <h3 class="kg-font" style="font-size: 22px; margin: 0 10px;">둘 중 더 킹받는 것은?</h3>
+              <h3 class="kg-font" style="font-size: 22px; margin: 0 10px;">{{ com.article }}</h3>
               <!-- <h3 class="kg-font" style="font-size: 20px; margin: 0 10px;">{{ article.article.title }}</h3> -->
               <p style="margin: 0; font-size: 16px;">> {{ com.content }}</p>
             </div>
@@ -68,10 +96,17 @@ export default {
     return {
       user: '',
       userinfo: '',
+      current_badge: '',
+      user_badges: [],
       articlelist: [],
       comlist: [],
       isOpen: false,
       picked: 'article',
+      current_level: '',
+      current_color: '',
+      next_level: '',
+      next_exp: '',
+      exp_percent: '',
     }
   },
   mounted() {
@@ -83,15 +118,37 @@ export default {
       }
     })
     .then(response => {
-      console.log(response.data.comment)
       this.user = response.data
       this.userinfo = response.data.userinfo
+      this.current_badge = require(`../assets${response.data.userinfo.profiles.badge.image}`)
+      response.data.userinfo.user_badges.forEach((current, index, array) => {
+        this.user_badges.push(require(`../assets${current.badge.image}`))
+      })
       this.articlelist = response.data.userinfo.article
       this.comlist = response.data.comment
-      console.log(11)
+      // 레벨 분기
+      const grade = response.data.userinfo.profiles.grade
+      const level = [
+        ['Unranked', '#3eb489'],
+        ['Bronze', 'rgb(123 93 77)'],
+        ['Silver', 'rgb(176 176 176)'],
+        ['Gold', '#ffd700'],
+        ['Platinum', '#deefed'],
+        ['Diamond', '#a0b2c6'],
+        ['Master', '#8b00ff']
+      ]
+      this.current_level = level[grade-1][0]
+      this.current_color = level[grade-1][1]
+      if (grade === 7) {
+        this.next_level = '준비중'
+      } else {
+        this.next_level = level[grade][0]
+      }
+      const exp = [0, 30, 300, 600, 1000, 1600, 2500]
+      this.next_exp = exp[grade] - response.data.all_score
     })
-    .catch(response => {
-      console.log('에러')
+    .catch(error => {
+      console.log(error)
     })
   },
   methods: {
@@ -172,7 +229,7 @@ export default {
 
 /* 이름과 활동지수 */
 .profile-container {
-  margin-top: 30px;
+  margin: 30px 0;
 }
 .name-exp-wrap {
   display: flex;
@@ -182,26 +239,47 @@ export default {
 .name-exp-wrap>h2 {
   margin: 0;
 }
-.name-exp-wrap>p {
-  margin: 0 8px;
+.name-exp-wrap>div {
+  margin-left: 8px;
+}
+.name-exp-wrap p {
+  margin: 0 6px;
   color: gray;
   font-size: 15px;
 }
 .exp-bar {
-  height: 23px;
-  background-color: rgb(57, 57, 57);
+  position: relative;
+  height: 20px;
+  background-color: rgb(224, 224, 224);
   border-radius: 20px;
+}
+.current-exp {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 20px;
+  border-radius: 20px;
+}
+.level {
+  display: flex;
+  justify-content: space-between;
+  margin: 6px 15px;
+}
+.level>p {
+  margin: 0;
+  font-size: 14px;
+  color: gray;
 }
 .article-comment-container {
   display: flex;
   justify-content: center;
-  margin-top: 30px;
+  margin-top: 60px;
 }
 .profile-radio {
   margin: 0 10px;
   padding: 10px 18px;
   background-color:#D9D9D9;
-  font-size: 15px;
+  font-size: 14px;
   border-radius: 3px;
 }
 .artlist {
@@ -218,5 +296,46 @@ export default {
 .article:hover {
   transform: scale(1.07);
   transition: all .1s ease-in;
+}
+
+/* 잔디심기 */
+.grass-div {
+  padding: 20px 40px;
+}
+.grass-title {
+  display: flex;
+  align-items: flex-end;
+  width: calc((17px + 6px * 2)*11);
+  margin: 0 auto;
+}
+.grass-title>h1 {
+  margin: 0 5px;
+  font-size: 23px;
+}
+.grass-title>h3 {
+  margin: 0 0 5px 0;
+  font-size: 15px;
+}
+.grass-title>p {
+  margin: 0 0 5px 8px;
+  font-size: 15px;
+}
+.grass-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 15px auto 0;
+  width: calc((17px + 6px * 2)*11);
+}
+.grass {
+  width: 17px;
+  height: 17px;
+  background-color: #D9D9D9;
+  border-radius: 50%;
+  margin: 10px 6px;
+}
+.blank {
+  width: 10px;
+  height: 17px;
+  margin: 4px;
 }
 </style>
