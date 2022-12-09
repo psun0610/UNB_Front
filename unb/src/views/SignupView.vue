@@ -3,7 +3,7 @@
     <form @submit.prevent="submitForm" class="myform">
       <h1 class="form-title">회원가입</h1>
       <div class="input-wrap">
-        <label for="nickname">닉네임</label>
+        <label for="nickname">닉네임<span style="color: rgb(255, 69, 37)">*</span></label>
         <input type="text" id="nickname" v-model="nickname" class="input-text"/>
       </div>
       <div class="input-wrap">

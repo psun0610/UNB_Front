@@ -1,13 +1,14 @@
 <template>
   <div class="detail-container">
-    <div class="balance-wrap my-shadow">
-      <div class="balance-back" style="background-color: #FF719B;">
+    <h1 class="kg-font title">{{ article_title }}</h1>
+    <div class="balance-wrap">
+      <div class="balance-back my-shadow" style="background-color: #FF719B;">
         <div class="AB">{{article_A}}</div>
       </div>
-      <div class="balance-back" style="background-color: #4BBEFF">
+      <div class="balance-back my-shadow" style="background-color: #4BBEFF; align-self: flex-end;">
         <div class="AB">{{article_B}}</div>
       </div>
-      <h2 class="balance-title kg-font">{{ article_title }}</h2>
+      <!-- <h2 class="balance-title kg-font">{{ article_title }}</h2> -->
       <h1 class="vs kg-font">VS</h1>
     </div>
 
@@ -193,16 +194,25 @@ export default {
 }
 </script>
 <style scoped>
+.title {
+  height: 23px;
+  display: inline-block;
+  padding: 0px 30px;
+  border-bottom: 25px solid rgb(224, 224, 224);
+  margin-bottom: 50px;
+}
 .detail-container {
-  margin-top: 100px;
+  margin-top: 90px;
 }
 .balance-wrap {
   display: flex;
   position: relative;
+  height: 410px;
+  margin-bottom: 50px;
 }
 .balance-back {
   width: 50%;
-  height: 500px;
+  height: 400px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -216,6 +226,7 @@ export default {
   transform: translate(-50%, -50%);
   margin: 0;
   font-size: 60px;
+  color: white;
 }
 .balance-title {
   position: absolute;
@@ -228,6 +239,7 @@ export default {
 }
 .AB {
   font-size: 20px;
+  font-weight: bold;
 }
 
 article {
