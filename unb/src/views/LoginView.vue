@@ -11,11 +11,8 @@
         <input type="password" id="password" v-model="password" class="input-text"/>
       </div>
       <button @click="loginSubmit()" class="form-btn my-shadow">로그인</button>
-      <div>
-        <a href="https://accounts.google.com/o/oauth2/v2/auth?client_id={clinet_id}}&response_type=code&redirect_uri=http://localhost:8080/login&scope=https://www.googleapis.com/auth/userinfo.email">
-        구글로그인
-        </a>
-      </div>
+      <img @click="googlelogin()" src='https://developers.kakao.com/tool/resource/static/img/button/login/full/ko/kakao_login_medium_narrow.png'> 
+      <div> ↑↑↑↑↑얘는 구글임↑↑↑ </div>
       <img @click="kakaologin()" src='https://developers.kakao.com/tool/resource/static/img/button/login/full/ko/kakao_login_medium_narrow.png'> 
     </div>
   </div>
@@ -33,9 +30,14 @@ export default {
   mounted() {
     const urlSearch = new URLSearchParams(location.search);
     const code = urlSearch.get('code')
+    const scope_test = urlSearch.get('scope')
     console.log(code)
-    if (code != null) {
+    console.log(scope_test)
+    if (code != null && scope_test == null) {
       this.$store.dispatch('kakaologin', code)
+    } else if (code != null && scope_test) {
+      this.$store.dispatch('googlelogin', code)
+    } else {
     }
   },
   methods: {
@@ -46,21 +48,15 @@ export default {
       this.$store.dispatch('login', saveData)
     },
     googlelogin() {
-      axios.get('http://localhost:8000/accounts/google/login')
-      .then((response) => {
-        console.log(response.data)
-      }
-      )
-      .catch((err) => {
-        console.log(err)
-      })
-      // window.location.href = 'http://localhost:8000/accounts/google/login'
+      const SOCIAL_AUTH_GOOGLE_CLIENT_ID= "594914704717-2s7b5k1fjai3o89vnc66hc0fiisa15uq.apps.googleusercontent.com"
+      const GOOGLE_CALLBACK_URI= 'http://localhost:8080/login'
+      const scope = "https://www.googleapis.com/auth/userinfo.email"
+      window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${SOCIAL_AUTH_GOOGLE_CLIENT_ID}&response_type=code&redirect_uri=${GOOGLE_CALLBACK_URI}&scope=${scope}`
     },
     kakaologin() {
-      const REST_API_KEY ='17927c83c8f77eef6c83ef6dd7ff221c'
-      const REDIRECT_URI = 'http://localhost:8080/login'
-      window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=account_email`
-
+      const KAKAO_REST_API_KEY ='17927c83c8f77eef6c83ef6dd7ff221c'
+      const KAKAO_REDIRECT_URI = 'http://localhost:8080/login'
+      window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code&scope=account_email`
   }
 }
 }
