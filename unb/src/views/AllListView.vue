@@ -65,30 +65,47 @@ export default {
     return {
       articles: [],
       comments:[],
-      article_index:[]
+      article_index:[],
+      page:1,
+      hasNext: true
     }
   },
   setup () {},
   created () {},
   mounted() {
-    axios ({
-      method: 'GET',
-      url: 'http://localhost:8000/articles/'
-    })
-      .then(response => {
-        this.articles = response.data
-        for (const object of this.articles){
-          this.article_index.push(object.pk)
+    this.getPosts()
+    window.onscroll = () => {
+        if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+          if (this.hasNext) {
+            this.page += 1
+            this.getPosts()
+          }
         }
-        console.log(this.article_index)
-        this.$store.commit('pk_list_mut', this.article_index)
-      })
-      .catch(response => {
-      })
+    }
   },
   unmounted() {},
-  methods: {}
+  methods: {
+    getPosts() {
+      console.log('Get Posts')
+      axios.get('http://localhost:8000/articles/?page=' + this.page)
+        .then(response => {
+            console.log(response.data)
+            this.hasNext = false
+            if (response.data.next) {
+                this.hasNext = true
+            }
+            for (let i = 0; i < response.data.results.length; i++) {
+                this.articles.push(response.data.results[i])
+            }
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
 }
+}
+
+
 
 </script>
 <style scoped>
