@@ -63,10 +63,8 @@
 
 <script>
 const url = 'http://localhost:8000/articles/'
-import axios from '../axios'
-import articles_pk_list from '../store/index'
 import loginStore from '../store/index'
-import testaxios from '../axios/index'
+import axios from '../axios/index'
 export default {
   data(){
     return {
@@ -77,10 +75,8 @@ export default {
       article_comment: [],
       show:[],
       content: null,
-      randomlist:'',
       logincheck:'',
-      articles:[], // 랜덤을 위한 아티클 목록
-      article_index:[] // 아티클 인덱스
+      random_index:'' // 아티클 인덱스
       }
   },
   mounted() {
@@ -100,21 +96,11 @@ export default {
       .catch(response => {
         alert('없는 글입니다.')
         history.go(-1)
-      }),
-    axios ({
-      method: 'GET',
-      url: 'http://localhost:8000/articles/'
+      })
+    axios.get('http://localhost:8000/articles/random/article/')
+    .then((response) =>{
+      this.random_index = response.data.article_pk
     })
-      .then(response => {
-        this.articles = response.data
-        for (const object of this.articles){
-          this.article_index.push(object.pk)
-        }
-        console.log(this.article_index)
-        this.$store.commit('pk_list_mut', this.article_index)
-      })
-      .catch(response => {
-      })
   },
   methods: {
     submitForm() {
@@ -185,9 +171,8 @@ export default {
       history.go(-1)
     },
     nextbutton() {
-      const randomlist = articles_pk_list.state.articles_pk_list.pklist
-      const idx = Math.floor(Math.random() * randomlist.length)+1
-      window.location.href = 'http://localhost:8080/Detail/'+idx
+      const idx = this.random_index
+      window.location.href = 'http://localhost:8080/Detail/'+ idx
     }
   }
 }
