@@ -27,7 +27,7 @@ const loginStore = {
     }
   },
   actions: {
-    logintest (dispatch, loginObj) {
+    login (dispatch, loginObj) {
       axios
         .post('http://localhost:8000/accounts/login/', loginObj) // 로그인 URL로 ID, PW를 보냄
         .then((res) => {
@@ -43,6 +43,21 @@ const loginStore = {
         .catch(() => {
           alert('이메일과 비밀번호를 확인하세요.')
         })
+    },
+    kakaologin(dispatch, code){
+      axios.get(`http://localhost:8000/accounts/kakao/callback/?code=${code}`)
+      .then((response) => {
+        console.log(response)
+        const token = response.data.access_token
+        localStorage.setItem('access_token', token) // 토큰을 저장함
+        const refretoken = response.data.refresh_token
+        localStorage.setItem('refresh_token', refretoken) // 토큰을 저장함
+        axios.defaults.headers.common.Authorization = `Bearer ${token}`
+        this.dispatch('getMemberInfo') // 유저 정보를 가져오는 actions 호출
+      })
+      .catch((err)=>{
+        alert('이메일과 비밀번호를 확인하세요.')
+      })
     },
     logouttest_act ({ commit }) { // 로그아웃 actions
       commit('logoutTest')

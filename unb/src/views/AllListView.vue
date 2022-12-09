@@ -50,6 +50,7 @@
         </div>
       </router-link>
     </div>
+    <a href="#" class="top-btn" v-show="(scroll_height>800)"> <p style="font-size:100px">top</p> </a>
     <!-- <router-view :el="el"></router-view> -->
   </div>
 </template>
@@ -65,9 +66,9 @@ export default {
     return {
       articles: [],
       comments:[],
-      article_index:[],
       page:1,
-      hasNext: true
+      hasNext: true,
+      scroll_height: ''
     }
   },
   setup () {},
@@ -75,6 +76,8 @@ export default {
   mounted() {
     this.getPosts()
     window.onscroll = () => {
+        this.scroll_height = window.scrollY || document.documentElement.scrollTop;
+        console.log(this.scroll_height)
         if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
           if (this.hasNext) {
             this.page += 1
@@ -82,6 +85,7 @@ export default {
           }
         }
     }
+
   },
   unmounted() {},
   methods: {
@@ -168,5 +172,10 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   margin: 0;
+}
+.top-btn {
+  position: fixed;
+  bottom: 5px;
+  right: 5px;
 }
 </style>

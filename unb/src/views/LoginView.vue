@@ -30,12 +30,20 @@ export default {
       password: null
       }
   },
+  mounted() {
+    const urlSearch = new URLSearchParams(location.search);
+    const code = urlSearch.get('code')
+    console.log(code)
+    if (code != null) {
+      this.$store.dispatch('kakaologin', code)
+    }
+  },
   methods: {
     loginSubmit () {
       const saveData = {}
       saveData.email = this.email
       saveData.password = this.password
-      this.$store.dispatch('logintest', saveData)
+      this.$store.dispatch('login', saveData)
     },
     googlelogin() {
       axios.get('http://localhost:8000/accounts/google/login')
@@ -49,9 +57,10 @@ export default {
       // window.location.href = 'http://localhost:8000/accounts/google/login'
     },
     kakaologin() {
-      const REST_API_KEY =''
+      const REST_API_KEY ='17927c83c8f77eef6c83ef6dd7ff221c'
       const REDIRECT_URI = 'http://localhost:8080/login'
-      window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`
+      window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=account_email`
+
   }
 }
 }

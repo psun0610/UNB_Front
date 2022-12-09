@@ -3,7 +3,7 @@
     <div class="nav-item-wrap">
       <!-- 밸런스게임 to 랜덤으로 수정 필요 -->
       <div class="left-nav">
-        <a :href="randomnum">밸런스게임</a>
+        <a :href="'/Detail/'+random_index">밸런스게임</a>
         <router-link to="/all-list">토론리스트</router-link>
         <router-link to="/create-game">만들기</router-link>
       </div>
@@ -25,7 +25,7 @@
 </template>
 <script>
 import loginStore from '../store/index'
-import articles_pk_list from '../store/index'
+import axios from '../axios/index'
 export default {
   components: {},
   data () {
@@ -33,7 +33,7 @@ export default {
       logincheck: '',
       pk: '',
       userInfo: loginStore.state.loginStore.userInfo,
-      randomnum: ''
+      random_index: ''
     }
   },
   setup () {},
@@ -42,14 +42,10 @@ export default {
     this.logincheck = loginStore.state.loginStore.isLogin
     console.log('↓↓로그인 여부 ↓↓')
     console.log(loginStore.state.loginStore.isLogin)
-    const randomlist = articles_pk_list.state.articles_pk_list.pklist
-    if (randomlist != null) {
-      const idx = Math.floor(Math.random() * randomlist.length)+1
-      this.randomnum = 'http://localhost:8080/Detail/'+idx
-    } else {
-      const idx = '1' // today article 넣어주기
-      this.randomnum = 'http://localhost:8080/Detail/'+idx
-    }
+    axios.get('http://localhost:8000/articles/random/article/')
+    .then((response) =>{
+      this.random_index = response.data.article_pk
+    })
   },
   unmounted () {},
   methods: {
