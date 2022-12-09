@@ -41,7 +41,7 @@ const loginStore = {
           this.dispatch('getMemberInfo') // 유저 정보를 가져오는 actions 호출
         })
         .catch(() => {
-          alert('이메일과 비밀번호를 확인하세요.')
+          alert('소셜 로그인 오류. 관리자에게 문의하세요.')
         })
     },
     kakaologin(dispatch, code){
@@ -56,7 +56,22 @@ const loginStore = {
         this.dispatch('getMemberInfo') // 유저 정보를 가져오는 actions 호출
       })
       .catch((err)=>{
-        alert('이메일과 비밀번호를 확인하세요.')
+        alert('소셜 로그인 오류. 관리자에게 문의하세요.')
+      })
+    },
+    googlelogin(dispatch, code){
+      axios.get(`http://localhost:8000/accounts/google/callback/?code=${code}`)
+      .then((response) => {
+        console.log(response)
+        const token = response.data.access_token
+        localStorage.setItem('access_token', token) // 토큰을 저장함
+        const refretoken = response.data.refresh_token
+        localStorage.setItem('refresh_token', refretoken) // 토큰을 저장함
+        axios.defaults.headers.common.Authorization = `Bearer ${token}`
+        this.dispatch('getMemberInfo') // 유저 정보를 가져오는 actions 호출
+      })
+      .catch((err)=>{
+
       })
     },
     logouttest_act ({ commit }) { // 로그아웃 actions
