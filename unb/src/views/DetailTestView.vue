@@ -1,10 +1,10 @@
 <template>
   <div class="detail-container">
     <div class="balance-wrap my-shadow">
-      <div class="balance-back" style="background-color: #FF719B;">
+      <div class="balance-back" style="background-color: #FF719B;" @click="choice_A()">
         <div class="AB">{{article_A}}</div>
       </div>
-      <div class="balance-back" style="background-color: #4BBEFF">
+      <div class="balance-back" style="background-color: #4BBEFF" @click="choice_B()">
         <div class="AB">{{article_B}}</div>
       </div>
       <h2 class="balance-title kg-font">{{ article_title }}</h2>
@@ -20,7 +20,7 @@
     <form @submit.prevent="submitForm" class="myform">
       <div class="input-wrap">
         <input type="text" id="comment" v-model="content" class="input-text"/>
-        <label for="comment">&nbsp;<button type="submit" style="background-color:black; color:white;">작성</button></label>
+        <label for="comment">&nbsp;<button type="submit" style="background-color:black; color:white;" v-bind:disabled="(Choice_AB == '')">작성</button></label>
       </div>
     </form>
     <!-- 댓글 출력 -->
@@ -76,7 +76,8 @@ export default {
       show:[],
       content: null,
       logincheck:'',
-      random_index:'' // 아티클 인덱스
+      random_index:'', // 아티클 인덱스
+      Choice_AB: '',
       }
   },
   mounted() {
@@ -173,6 +174,14 @@ export default {
     nextbutton() {
       const idx = this.random_index
       window.location.href = 'http://localhost:8080/Detail/'+ idx
+    },
+    choice_A() {
+      this.Choice_AB = 'A'
+      console.log('A')
+    },
+    choice_B() {
+      this.Choice_AB = 'B'
+      console.log('B')
     }
   }
 }
