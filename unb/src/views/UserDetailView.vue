@@ -7,7 +7,9 @@
     </div>
     <!-- 뱃지컬렉션 -->
       <div class="badge-collection my-shadow" v-if="isOpen">
-        <img :src="badge" v-for="(badge, index) in user_badges" :key="index" class="my-shadow">
+        <div v-for="(badge, index) in user_badges" :key="index"><!-- @click="badgeChange"-->
+            <img :src="badge[0]" class="my-shadow" @click="badgeChange(badge)" style="cursor:pointer;"/> 
+        </div>
       </div>
     <!-- 이름과 활동지수 -->
     <div class="profile-container">
@@ -41,7 +43,7 @@
         <div v-for="index in user.monthrange"  style="display: flex">
           <div v-if="index==6 || index==16 || index==26" class="blank"></div>
           <!-- 리스트 포함 여부 확인 -->
-          <div v-if="index in user.daylist" class="grass" style="background-color: #2DD92A"></div>
+          <div v-if="user.daylist.includes(index)" class="grass" style="background-color: #2DD92A"></div>
           <div v-else class="grass"></div>
         </div>
       </div>
@@ -89,7 +91,7 @@
   </div>
 </template>
 <script>
-import axios from '../axios'
+import axios from '../axios/index'
 const url = 'http://localhost:8000/accounts/'
 export default {
   data(){
@@ -107,6 +109,7 @@ export default {
       next_level: '',
       next_exp: '',
       exp_percent: '',
+      badge_pick: '',
     }
   },
   mounted() {
@@ -118,11 +121,12 @@ export default {
       }
     })
     .then(response => {
+      this.user_pk = response.data.user_pk
       this.user = response.data
       this.userinfo = response.data.userinfo
       this.current_badge = require(`../assets${response.data.userinfo.profiles.badge.image}`)
       response.data.userinfo.user_badges.forEach((current, index, array) => {
-        this.user_badges.push(require(`../assets${current.badge.image}`))
+        this.user_badges.push([require(`../assets${current.badge.image}`), current.badge.pk])
       })
       this.articlelist = response.data.userinfo.article
       this.comlist = response.data.comment
@@ -158,6 +162,24 @@ export default {
       } else {
         this.isOpen = true
       }
+    },
+    badgeChange(badge) {
+      const badge_pk = badge[1]
+      axios({
+        url : 'http://localhost:8000/accounts/'+this.$route.params.pk+'/my_page/',
+        method : 'PUT',
+        data : {
+          test:'test',
+          user_pk: this.user_pk,
+          badge_pk: badge_pk,
+        }
+      })
+      .then(response => {
+        const badge_image  = response.data.image
+        this.current_badge = require(`../assets${badge_image}`)
+      }).catch(err => {
+        console.error(err)
+      }) 
     }
   }
 }
@@ -218,7 +240,7 @@ export default {
   grid-template-columns: repeat(auto-fill, minmax(90px, 90px));
   margin: 30px 0 0 0;
 }
-.badge-collection>img {
+.badge-collection img {
   display: inline-block;
   width: 70px;
   height: 70px;
