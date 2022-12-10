@@ -2,7 +2,7 @@
   <div class="detail-container">
     <h1 class="kg-font title">{{ article_title }}</h1>
     <div class="balance-wrap">
-      <div class="balance-back my-shadow" style="background-color: #FF719B;">
+      <div class="balance-back my-shadow" style="background-color: #FF719B;" @click="">
         <div class="AB">{{article_A}}</div>
       </div>
       <div class="balance-back my-shadow" style="background-color: #4BBEFF; align-self: flex-end;">
@@ -104,6 +104,24 @@ export default {
     })
   },
   methods: {
+    Pick(badge) {
+      const badge_pk = badge[1]
+      axios({
+        url : 'http://localhost:8000/accounts/'+this.$route.params.pk+'/my_page/',
+        method : 'PUT',
+        data : {
+          test:'test',
+          user_pk: this.user_pk,
+          badge_pk: badge_pk,
+        }
+      })
+      .then(response => {
+        const badge_image  = response.data.image
+        this.current_badge = require(`../assets${badge_image}`)
+      }).catch(err => {
+        console.error(err)
+      })
+    },
     submitForm() {
       axios.post(`http://localhost:8000/articles/${this.$route.params.pk}/comment/`, this.$data)
       .then((response) => {
