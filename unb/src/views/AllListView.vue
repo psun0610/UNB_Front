@@ -50,7 +50,9 @@
         </div>
       </router-link>
     </div>
-    <a href="#" class="top-btn" v-show="(scroll_height>800)"> <p style="font-size:100px">top</p> </a>
+    <a href="#" class="top-btn" v-show="(scroll_height>800)">
+      <div class="my-shadow">top▲</div>
+    </a>
     <!-- <router-view :el="el"></router-view> -->
   </div>
 </template>
@@ -175,7 +177,18 @@ export default {
 }
 .top-btn {
   position: fixed;
-  bottom: 5px;
-  right: 5px;
+  bottom: 100px;
+  right: 10vw;
+}
+.top-btn>div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: rgb(163, 163, 163);
+  color: white;
+  font-weight: bold;
 }
 </style>

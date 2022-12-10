@@ -3,9 +3,9 @@
     <TodayKing></TodayKing>
     <!-- 밸런스 게임 바로가기 -->
     <a href="">
-      <div class="balance-wrap my-shadow">
-        <div class="balance-back" style="background-color: #FF719B;"></div>
-        <div class="balance-back" style="background-color: #4BBEFF"></div>
+      <div class="balance-wrap">
+        <div class="balance-back my-shadow" style="background-color: #FF719B;"></div>
+        <div class="balance-back my-shadow" style="background-color: #4BBEFF; align-self: flex-end;"></div>
         <h1 class="balance-title b-title kg-font">밸런스 게임</h1>
         <h2 class="balance-title b-subtitle">시작하기 ></h2>
       </div>
@@ -89,10 +89,12 @@ export default {
 .balance-wrap {
   display: flex;
   position: relative;
+  height: 460px;
+  margin-bottom: 50px;
 }
 .balance-back {
   width: 50%;
-  height: 500px;
+  height: 450px;
 }
 .balance-title {
   position: absolute;

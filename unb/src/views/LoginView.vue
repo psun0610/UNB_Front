@@ -11,9 +11,11 @@
         <input type="password" id="password" v-model="password" class="input-text"/>
       </div>
       <button @click="loginSubmit()" class="form-btn my-shadow">로그인</button>
-      <img @click="googlelogin()" src='https://developers.kakao.com/tool/resource/static/img/button/login/full/ko/kakao_login_medium_narrow.png'> 
-      <div> ↑↑↑↑↑얘는 구글임↑↑↑ </div>
-      <img @click="kakaologin()" src='https://developers.kakao.com/tool/resource/static/img/button/login/full/ko/kakao_login_medium_narrow.png'> 
+      <div>
+        <img @click="googlelogin()" src='https://developers.kakao.com/tool/resource/static/img/button/login/full/ko/kakao_login_medium_narrow.png'> 
+        <div> ↑↑↑↑↑얘는 구글임↑↑↑ </div>
+        <img @click="kakaologin()" src='https://developers.kakao.com/tool/resource/static/img/button/login/full/ko/kakao_login_medium_narrow.png'> 
+      </div>
     </div>
   </div>
 </template>
