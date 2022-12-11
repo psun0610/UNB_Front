@@ -3,7 +3,7 @@
     <h2 class="kg-font" style="margin:0 0 30px 0;">토론 주제를 직접 만들어보세요</h2>
     <form @submit.prevent="insertArticle">
       <input type="text" v-model="title" placeholder="제목을 입력하세요" class="title-input my-shadow">
-      <div class="input-wrap" style="width:700px;">
+      <div class="input-wrap" style="max-width:700px;">
         <textarea
         placeholder="A"
         v-model="A"
@@ -28,6 +28,7 @@
   </div>
 </template>
 <script>
+const url = 'http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/articles/'
 import {csrftoken} from '../csrf/csrf_token';
 import axios from '../axios/index'
 export default {
@@ -50,7 +51,7 @@ export default {
         this.error = "선택지를 모두 채워주세요"
       } else {
         console.log(this.title, this.A, this.B)
-        axios.post('http://localhost:8000/articles/', {title: this.title, A: this.A, B: this.B})
+        axios.post(url, {title: this.title, A: this.A, B: this.B})
       .then(resp => {console.log(resp.data)})
       .then(() => {
         this.$router.push({
@@ -65,12 +66,12 @@ export default {
 </script>
 <style scoped>
 .create-div {
-  width: 850px;
-  margin: 200px auto;
+  max-width: 850px;
+  margin: 25vmin auto;
   padding: 80px 0px;
 }
 .create-btn {
-  width: 700px;
+  width: 100%;
   background-color: rgb(111, 214, 255);
   border: 0;
   padding: 7px 0;
@@ -82,7 +83,6 @@ export default {
 }
 .create-btn:hover {
   background-color: #4BBEFF;
-  width: 700px;
   font-family: 'Pretendard-Regular';
   color: white;
   transition: 0.14s all ease-in;
@@ -90,6 +90,8 @@ export default {
 form {
   display: flex;
   flex-direction: column;
+  max-width: 700px;
+  margin: 0 auto;
 }
 .title-input {
   text-align: center;
@@ -121,10 +123,6 @@ textarea:focus, .title-input:focus {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-form {
-  width: 700px;
-  margin: 0 auto;
 }
 .vs {
   font-weight: bold;
