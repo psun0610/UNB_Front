@@ -1,11 +1,12 @@
 <template>
   <div class="detail-container">
+
     <h1 class="kg-font title">{{ article_title }}</h1>
     <div class="balance-wrap">
-      <div class="balance-back my-shadow" style="background-color: #FF719B;" @click="">
+      <div class="balance-back my-shadow" style="background-color: #FF719B;" @click="choice_A()>
         <div class="AB">{{article_A}}</div>
       </div>
-      <div class="balance-back my-shadow" style="background-color: #4BBEFF; align-self: flex-end;">
+      <div class="balance-back my-shadow" style="background-color: #4BBEFF; align-self: flex-end;" @click="choice_B()">
         <div class="AB">{{article_B}}</div>
       </div>
       <!-- <h2 class="balance-title kg-font">{{ article_title }}</h2> -->
@@ -21,7 +22,7 @@
     <form @submit.prevent="submitForm" class="myform">
       <div class="input-wrap">
         <input type="text" id="comment" v-model="content" class="my-shadow" autocomplete="off"/>
-        <button type="submit" class="my-shadow no-kg-font">작성</button>
+        <button type="submit" class="my-shadow no-kg-font" v-bind:disabled="(Choice_AB == '')">작성</button>
       </div>
     </form>
     <!-- 댓글 출력 -->
@@ -82,6 +83,7 @@ export default {
       logincheck:'',
       random_index:'', // 아티클 인덱스
       comments: '',
+      Choice_AB: '',
       }
   },
   mounted() {
@@ -195,6 +197,14 @@ export default {
     nextbutton() {
       const idx = this.random_index
       window.location.href = 'http://localhost:8080/Detail/'+ idx
+    },
+    choice_A() {
+      this.Choice_AB = 'A'
+      console.log('A')
+    },
+    choice_B() {
+      this.Choice_AB = 'B'
+      console.log('B')
     }
   }
 }
