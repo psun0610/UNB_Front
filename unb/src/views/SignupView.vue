@@ -32,7 +32,7 @@ export default {
       email: '',
       password1: '',
       password2: '',
-      nickname: ''
+      nickname: '',
     }
   },
   setup () {},
@@ -41,6 +41,9 @@ export default {
   unmounted () {},
   methods: {
     submitForm () {
+      if (this.password1 != this.password2) {
+        alert('비밀번호가 일치하지 않습니다.')
+      }
       axios.post('http://localhost:8000/accounts/registration', this.$data)
         .then(response => {
           console.log('회원가입 성공')

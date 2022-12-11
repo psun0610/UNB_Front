@@ -79,7 +79,6 @@ export default {
     this.getPosts()
     window.onscroll = () => {
         this.scroll_height = window.scrollY || document.documentElement.scrollTop;
-        console.log(this.scroll_height)
         if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
           if (this.hasNext) {
             this.page += 1
@@ -95,7 +94,6 @@ export default {
       console.log('Get Posts')
       axios.get('http://localhost:8000/articles/?page=' + this.page)
         .then(response => {
-            console.log(response.data)
             this.hasNext = false
             if (response.data.next) {
                 this.hasNext = true
