@@ -3,7 +3,7 @@
 
     <h1 class="kg-font title">{{ article_title }}</h1>
     <div class="balance-wrap">
-      <div class="balance-back my-shadow" style="background-color: #FF719B;" @click="choice_A()>
+      <div class="balance-back my-shadow" style="background-color: #FF719B;" @click="choice_A()">
         <div class="AB">{{article_A}}</div>
       </div>
       <div class="balance-back my-shadow" style="background-color: #4BBEFF; align-self: flex-end;" @click="choice_B()">
@@ -18,8 +18,7 @@
       <button @click="nextbutton()" class="prev-next-btn next-btn my-shadow no-kg-font">다음 질문</button>
     </div>
     <!-- 댓글 입력 -->
-    <form action="" method="post"></form>
-    <form @submit.prevent="submitForm" class="myform">
+    <form v-show="Choice_AB" @submit.prevent="submitForm" class="myform">
       <div class="input-wrap">
         <input type="text" id="comment" v-model="content" class="my-shadow" autocomplete="off"/>
         <button type="submit" class="my-shadow no-kg-font" v-bind:disabled="(Choice_AB == '')">작성</button>
@@ -33,7 +32,11 @@
           <div style="width:80%;">
             <div style="display:flex;">
               <p>작성자:{{comment.pk}} {{ comment.user }}</p>
-              <div><i class="fa-regular fa-heart" @click="like(comment.pk)"></i></div>
+              <!-- 아이콘 -->
+              <div>
+                <i class="fa-regular fa-heart" v-show="!comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
+                <i class="fa-solid fa-heart" v-show="comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
+              </div> 
               <div> <button type="button" :class="`${comment.pk}`" @click="recommenttoggle(index)"> 답글 </button> </div>
             </div>
             <div>내용:  {{ comment.content }} </div>
@@ -84,10 +87,15 @@ export default {
       random_index:'', // 아티클 인덱스
       comments: '',
       Choice_AB: '',
+      user_pk : '',
       }
   },
   mounted() {
     this.logincheck = loginStore.state.loginStore.isLogin // 로그인 체크
+
+    if (this.logincheck) {
+      this.user_pk = loginStore.state.loginStore.userInfo.pk // 로그인 체크
+    }
     axios({
       method: 'GET',
       url: url + this.$route.params.pk + '/'
@@ -102,13 +110,15 @@ export default {
         this.comments = response.data.comments
       })
       .catch(response => {
-        alert('없는 글입니다.')
-        history.go(-1)
+          alert('없는 글입니다.')
+          history.go(-1)
       })
+
     axios.get('http://localhost:8000/articles/random/article/')
     .then((response) =>{
       this.random_index = response.data.article_pk
     })
+
   },
   methods: {
     pick() {
@@ -153,11 +163,27 @@ export default {
       },
     like(e){ // 좋아요
       if (this.logincheck){
-      const comment_like_url = `http://localhost:8000/articles/${this.$route.params.pk}/comment/${e}/like/`
-      testaxios.post(comment_like_url)
-      .then((res) => {
-        console.log(res)
-      })
+        const comment_like_url = `http://localhost:8000/articles/${this.$route.params.pk}/comment/${e}/like/`
+        axios.post(comment_like_url)
+        .then((res) => {
+          console.log(res)
+          axios({
+            method: 'GET',
+            url: url + this.$route.params.pk + '/'
+            })
+              .then(response => {
+                this.article = response.data
+                this.article_title = response.data.title
+                this.article_A = response.data.A
+                this.article_B = response.data.B
+                this.article_comment = response.data.comments
+                this.show = Array(this.article_comment.length).fill(false)
+              })
+              .catch(response => {
+                  alert('없는 글입니다.')
+                  history.go(-1)
+              })
+          })
       } else {
         alert('로그인 후 가능합니다.')
       }
