@@ -3,10 +3,10 @@
 
     <h1 class="kg-font title">{{ article_title }}</h1>
     <div class="balance-wrap">
-      <div class="balance-back my-shadow" style="background-color: #FF719B;" @click="choice_A()">
+      <div class="balance-back my-shadow" style="background-color: var(--mypink); cursor:pointer" @click="choice_A()">
         <div class="AB">{{article_A}}</div>
       </div>
-      <div class="balance-back my-shadow" style="background-color: #4BBEFF; align-self: flex-end;" @click="choice_B()">
+      <div class="balance-back my-shadow" style="background-color: var(--myblue); align-self: flex-end; cursor:pointer" @click="choice_B()">
         <div class="AB">{{article_B}}</div>
       </div>
       <!-- <h2 class="balance-title kg-font">{{ article_title }}</h2> -->
@@ -85,7 +85,7 @@ export default {
       content: null,
       logincheck:'',
       random_index:'', // 아티클 인덱스
-      comments: '',
+      comments: [],
       Choice_AB: '',
       user_pk : '',
       }
@@ -226,6 +226,7 @@ export default {
     },
     choice_A() {
       this.Choice_AB = 'A'
+      console.log(JSON.parse(localStorage.getItem("vuex")).loginStore.userInfo.pk)
       console.log('A')
     },
     choice_B() {
