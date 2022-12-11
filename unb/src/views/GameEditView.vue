@@ -19,12 +19,12 @@
   </div>
 </template>
 <script>
-import {csrftoken} from '../csrf/csrf_token'
+import { csrftoken } from '../csrf/csrf_token'
 export default {
   props: {
     slug: {
       type: String,
-      required: true,
+      required: true
     }
   },
   components: {},
@@ -32,22 +32,22 @@ export default {
     return {
       A: null,
       B: null,
-      error: null,
+      error: null
     }
   },
   beforeRouteEnter (to, from, next) {
-    if(to.params.slug !== undefined) {
+    if (to.params.slug !== undefined) {
       fetch(`/api/articles//${to.params.slug}/`, {
-        methods: "GET",
+        methods: 'GET',
         headers: {
           'Content-Type': 'application/json',
           'X-CSRFTOKEN': csrftoken
         }
       })
-      .then(resp => resp.json())
-      .then((data) => {
-        return next(vm=> (vm.A=data.A, vm.B=data.B))
-      })
+        .then(resp => resp.json())
+        .then((data) => {
+          return next(vm => (vm.A = data.A, vm.B = data.B))
+        })
     } else {
       return next()
     }
@@ -58,22 +58,22 @@ export default {
   unmounted () {},
   methods: {
     updateArticle() {
-      if(!this.A || !this.B) {
-        this.error = "선택지를 모두 채워주세요"
+      if (!this.A || !this.B) {
+        this.error = '선택지를 모두 채워주세요'
       } else {
         fetch(`api/articles/${this.slug}/`, {
-        methods: "PUT",
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRFTOKEN': csrftoken
-        },
-        body: JSON.stringify({A: this.A, B: this.B})
-      })
-      .then(resp => resp.json())
-      .then(() => {
-        this.$router.push('/')
-      })
-      .catch(error => console.log(error))
+          methods: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFTOKEN': csrftoken
+          },
+          body: JSON.stringify({ A: this.A, B: this.B })
+        })
+          .then(resp => resp.json())
+          .then(() => {
+            this.$router.push('/')
+          })
+          .catch(error => console.log(error))
       }
     }
   }

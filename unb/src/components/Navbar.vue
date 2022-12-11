@@ -43,15 +43,15 @@ export default {
     console.log('↓↓로그인 여부 ↓↓')
     console.log(loginStore.state.loginStore.isLogin)
     axios.get('http://localhost:8000/articles/random/article/')
-    .then((response) =>{
-      this.random_index = response.data.article_pk
-    })
+      .then((response) => {
+        this.random_index = response.data.article_pk
+      })
   },
   unmounted () {},
   methods: {
     logoutplz () {
       this.$store.dispatch('logouttest_act')
-    },
+    }
   }
 }
 </script>

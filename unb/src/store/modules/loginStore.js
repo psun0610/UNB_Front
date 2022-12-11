@@ -44,39 +44,39 @@ const loginStore = {
           alert('소셜 로그인 오류. 관리자에게 문의하세요.')
         })
     },
-    kakaologin(dispatch, code){
+    kakaologin(dispatch, code) {
       axios.get(`http://localhost:8000/accounts/kakao/callback/?code=${code}`)
-      .then((response) => {
-        console.log(response)
-        const token = response.data.access_token
-        localStorage.setItem('access_token', token) // 토큰을 저장함
-        const refretoken = response.data.refresh_token
-        localStorage.setItem('refresh_token', refretoken) // 토큰을 저장함
-        axios.defaults.headers.common.Authorization = `Bearer ${token}`
-        this.dispatch('getMemberInfo') // 유저 정보를 가져오는 actions 호출
-      })
-      .catch((err)=>{
-        alert('소셜 로그인 오류. 관리자에게 문의하세요.')
-      })
+        .then((response) => {
+          console.log(response)
+          const token = response.data.access_token
+          localStorage.setItem('access_token', token) // 토큰을 저장함
+          const refretoken = response.data.refresh_token
+          localStorage.setItem('refresh_token', refretoken) // 토큰을 저장함
+          axios.defaults.headers.common.Authorization = `Bearer ${token}`
+          this.dispatch('getMemberInfo') // 유저 정보를 가져오는 actions 호출
+        })
+        .catch((err) => {
+          alert('소셜 로그인 오류. 관리자에게 문의하세요.')
+        })
     },
-    googlelogin(dispatch, code){
+    googlelogin(dispatch, code) {
       axios.get(`http://localhost:8000/accounts/google/callback/?code=${code}`)
-      .then((response) => {
-        console.log(response)
-        const token = response.data.access_token
-        localStorage.setItem('access_token', token) // 토큰을 저장함
-        const refretoken = response.data.refresh_token
-        localStorage.setItem('refresh_token', refretoken) // 토큰을 저장함
-        axios.defaults.headers.common.Authorization = `Bearer ${token}`
-        this.dispatch('getMemberInfo') // 유저 정보를 가져오는 actions 호출
-      })
-      .catch((err)=>{
+        .then((response) => {
+          console.log(response)
+          const token = response.data.access_token
+          localStorage.setItem('access_token', token) // 토큰을 저장함
+          const refretoken = response.data.refresh_token
+          localStorage.setItem('refresh_token', refretoken) // 토큰을 저장함
+          axios.defaults.headers.common.Authorization = `Bearer ${token}`
+          this.dispatch('getMemberInfo') // 유저 정보를 가져오는 actions 호출
+        })
+        .catch((err) => {
 
-      })
+        })
     },
     logouttest_act ({ commit }) { // 로그아웃 actions
       commit('logoutTest')
-      window.location.href="http://localhost:8080/"
+      window.location.href = 'http://localhost:8080/'
     },
     getMemberInfo ({ commit }) { // 토큰으로 유저 정보를 받아오는 코드
       const token = localStorage.getItem('access_token') // 저장된 access 토큰을 가져옴
@@ -91,13 +91,13 @@ const loginStore = {
           console.log('accounts/user에 보냄')
           const userInfo = {
             pk: response.data.pk,
-            email: response.data.email,
+            email: response.data.email
           } // 유저 정보를 받아옴
           commit('loginSuccess', userInfo) // mutations 호출
           console.log('유저 정보 받아옴')
           console.log(userInfo)
           console.log(loginStore.state.isLogin)
-          window.location.href="http://localhost:8080/logincheck/"
+          window.location.href = 'http://localhost:8080/logincheck/'
           // router.push('logincheck')
         })
         .catch(() => {

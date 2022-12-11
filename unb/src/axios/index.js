@@ -1,7 +1,7 @@
 import axios from 'axios'
 import store from '../store'
 
-const testaxios  = axios.create()
+const testaxios = axios.create()
 
 testaxios.interceptors.response.use(
   function (response) {

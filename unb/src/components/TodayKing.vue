@@ -14,14 +14,14 @@ export default {
   components: {},
   data () {
     return {
-      sampleData:''
+      sampleData: ''
     }
   },
   setup () {},
   created () {},
   mounted () {},
   unmounted () {},
-  methods:{}
+  methods: {}
 }
 </script>
 <style scoped>

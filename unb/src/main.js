@@ -10,6 +10,6 @@ import axios from '../src/axios'
 
 createApp(App).use(store).use(router).mount('#app')
 
-if (localStorage.getItem('access_token')){
+if (localStorage.getItem('access_token')) {
   axios.defaults.headers.common.Authorization = 'Bearer ' + localStorage.getItem('access_token')
 }

@@ -5,37 +5,37 @@
   </div>
 </template>
 <script>
-import {csrftoken} from '../csrf/csrf_token'
+import { csrftoken } from '../csrf/csrf_token'
 export default {
   props: {
     slug: {
       type: String,
-      required: true,
+      required: true
     }
   },
   components: {},
   data () {
     return {
-      sampleData:''
+      sampleData: ''
     }
   },
   setup () {},
   created () {},
   mounted () {},
   unmounted () {},
-  methods:{
+  methods: {
     deleteArticle() {
       fetch(`api/articles/${this.slug}/`, {
-        methods: "DELETE",
+        methods: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
           'X-CSRFTOKEN': csrftoken
         }
       })
-      .then(() => {
-        this.$router.push("/")
-      })
-      .catch(error => console.log(error))
+        .then(() => {
+          this.$router.push('/')
+        })
+        .catch(error => console.log(error))
     },
 
     create() {

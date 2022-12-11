@@ -8,7 +8,7 @@
 </template>
 <script>
 import Navbar from './components/Navbar.vue'
-import {csrftoken} from './csrf/csrf_token'
+import { csrftoken } from './csrf/csrf_token'
 export default {
   name: 'App',
   components: {
@@ -17,18 +17,18 @@ export default {
   methods: {
     getUser() {
       fetch('http://localhost:8000/', {
-        methods: "GET",
+        methods: 'GET',
         headers: {
           'Content-Type': 'application/json',
           'X-CSRFTOKEN': csrftoken
         }
       })
-      .then(resp => resp.json())
-      .then((data) => {
-        const username = data["username"]
-        localStorage.setItem("username", username)
-      })
-      .catch(error => console.log(error))
+        .then(resp => resp.json())
+        .then((data) => {
+          const username = data.username
+          localStorage.setItem('username', username)
+        })
+        .catch(error => console.log(error))
     },
     create() {
       this.getAllArticles()

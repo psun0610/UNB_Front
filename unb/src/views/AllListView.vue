@@ -57,7 +57,7 @@
   </div>
 </template>
 <script>
-import {csrftoken} from '../csrf/csrf_token'
+import { csrftoken } from '../csrf/csrf_token'
 import TodayKing from '../components/TodayKing'
 import axios from 'axios'
 export default {
@@ -67,8 +67,8 @@ export default {
   data () {
     return {
       articles: [],
-      comments:[],
-      page:1,
+      comments: [],
+      page: 1,
       hasNext: true,
       scroll_height: ''
     }
@@ -78,16 +78,15 @@ export default {
   mounted() {
     this.getPosts()
     window.onscroll = () => {
-        this.scroll_height = window.scrollY || document.documentElement.scrollTop;
-        console.log(this.scroll_height)
-        if((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-          if (this.hasNext) {
-            this.page += 1
-            this.getPosts()
-          }
+      this.scroll_height = window.scrollY || document.documentElement.scrollTop
+      console.log(this.scroll_height)
+      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+        if (this.hasNext) {
+          this.page += 1
+          this.getPosts()
         }
+      }
     }
-
   },
   unmounted() {},
   methods: {
@@ -95,23 +94,21 @@ export default {
       console.log('Get Posts')
       axios.get('http://localhost:8000/articles/?page=' + this.page)
         .then(response => {
-            console.log(response.data)
-            this.hasNext = false
-            if (response.data.next) {
-                this.hasNext = true
-            }
-            for (let i = 0; i < response.data.results.length; i++) {
-                this.articles.push(response.data.results[i])
-            }
+          console.log(response.data)
+          this.hasNext = false
+          if (response.data.next) {
+            this.hasNext = true
+          }
+          for (let i = 0; i < response.data.results.length; i++) {
+            this.articles.push(response.data.results[i])
+          }
         })
         .catch(error => {
-            console.log(error)
+          console.log(error)
         })
     }
+  }
 }
-}
-
-
 
 </script>
 <style scoped>

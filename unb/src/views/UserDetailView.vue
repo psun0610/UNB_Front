@@ -8,7 +8,7 @@
     <!-- 뱃지컬렉션 -->
       <div class="badge-collection my-shadow" v-if="isOpen">
         <div v-for="(badge, index) in user_badges" :key="index"><!-- @click="badgeChange"-->
-            <img :src="badge[0]" class="my-shadow" @click="badgeChange(badge)" style="cursor:pointer;"/> 
+            <img :src="badge[0]" class="my-shadow" @click="badgeChange(badge)" style="cursor:pointer;"/>
         </div>
       </div>
     <!-- 이름과 활동지수 -->
@@ -87,14 +87,14 @@
         </div>
       </div>
     </div>
-    
+
   </div>
 </template>
 <script>
 import axios from '../axios/index'
 const url = 'http://localhost:8000/accounts/'
 export default {
-  data(){
+  data() {
     return {
       user: '',
       userinfo: '',
@@ -109,7 +109,7 @@ export default {
       next_level: '',
       next_exp: '',
       exp_percent: '',
-      badge_pick: '',
+      badge_pick: ''
     }
   },
   mounted() {
@@ -120,40 +120,40 @@ export default {
         Authorization: 'Bearer ' + localStorage.getItem('access_token')
       }
     })
-    .then(response => {
-      this.user_pk = response.data.user_pk
-      this.user = response.data
-      this.userinfo = response.data.userinfo
-      this.current_badge = require(`../assets${response.data.userinfo.profiles.badge.image}`)
-      response.data.userinfo.user_badges.forEach((current, index, array) => {
-        this.user_badges.push([require(`../assets${current.badge.image}`), current.badge.pk])
+      .then(response => {
+        this.user_pk = response.data.user_pk
+        this.user = response.data
+        this.userinfo = response.data.userinfo
+        this.current_badge = require(`../assets${response.data.userinfo.profiles.badge.image}`)
+        response.data.userinfo.user_badges.forEach((current, index, array) => {
+          this.user_badges.push([require(`../assets${current.badge.image}`), current.badge.pk])
+        })
+        this.articlelist = response.data.userinfo.article
+        this.comlist = response.data.comment
+        // 레벨 분기
+        const grade = response.data.userinfo.profiles.grade
+        const level = [
+          ['Unranked', '#3eb489'],
+          ['Bronze', 'rgb(123 93 77)'],
+          ['Silver', 'rgb(176 176 176)'],
+          ['Gold', '#ffd700'],
+          ['Platinum', '#deefed'],
+          ['Diamond', '#a0b2c6'],
+          ['Master', '#8b00ff']
+        ]
+        this.current_level = level[grade - 1][0]
+        this.current_color = level[grade - 1][1]
+        if (grade === 7) {
+          this.next_level = '준비중'
+        } else {
+          this.next_level = level[grade][0]
+        }
+        const exp = [0, 30, 300, 600, 1000, 1600, 2500]
+        this.next_exp = exp[grade] - response.data.all_score
       })
-      this.articlelist = response.data.userinfo.article
-      this.comlist = response.data.comment
-      // 레벨 분기
-      const grade = response.data.userinfo.profiles.grade
-      const level = [
-        ['Unranked', '#3eb489'],
-        ['Bronze', 'rgb(123 93 77)'],
-        ['Silver', 'rgb(176 176 176)'],
-        ['Gold', '#ffd700'],
-        ['Platinum', '#deefed'],
-        ['Diamond', '#a0b2c6'],
-        ['Master', '#8b00ff']
-      ]
-      this.current_level = level[grade-1][0]
-      this.current_color = level[grade-1][1]
-      if (grade === 7) {
-        this.next_level = '준비중'
-      } else {
-        this.next_level = level[grade][0]
-      }
-      const exp = [0, 30, 300, 600, 1000, 1600, 2500]
-      this.next_exp = exp[grade] - response.data.all_score
-    })
-    .catch(error => {
-      console.log(error)
-    })
+      .catch(error => {
+        console.log(error)
+      })
   },
   methods: {
     isFolding() {
@@ -166,20 +166,20 @@ export default {
     badgeChange(badge) {
       const badge_pk = badge[1]
       axios({
-        url : 'http://localhost:8000/accounts/'+this.$route.params.pk+'/my_page/',
-        method : 'PUT',
-        data : {
-          test:'test',
+        url: 'http://localhost:8000/accounts/' + this.$route.params.pk + '/my_page/',
+        method: 'PUT',
+        data: {
+          test: 'test',
           user_pk: this.user_pk,
-          badge_pk: badge_pk,
+          badge_pk: badge_pk
         }
       })
-      .then(response => {
-        const badge_image  = response.data.image
-        this.current_badge = require(`../assets${badge_image}`)
-      }).catch(err => {
-        console.error(err)
-      }) 
+        .then(response => {
+          const badge_image = response.data.image
+          this.current_badge = require(`../assets${badge_image}`)
+        }).catch(err => {
+          console.error(err)
+        })
     }
   }
 }

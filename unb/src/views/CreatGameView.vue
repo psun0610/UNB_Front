@@ -28,7 +28,7 @@
   </div>
 </template>
 <script>
-import {csrftoken} from '../csrf/csrf_token';
+import { csrftoken } from '../csrf/csrf_token'
 import axios from '../axios/index'
 export default {
   components: {},
@@ -37,7 +37,7 @@ export default {
       title: null,
       A: null,
       B: null,
-      error: null,
+      error: null
     }
   },
   setup () {},
@@ -46,18 +46,18 @@ export default {
   unmounted () {},
   methods: {
     insertArticle() {
-      if(!this.title || !this.A || !this.B) {
-        this.error = "선택지를 모두 채워주세요"
+      if (!this.title || !this.A || !this.B) {
+        this.error = '선택지를 모두 채워주세요'
       } else {
         console.log(this.title, this.A, this.B)
-        axios.post('http://localhost:8000/articles/', {title: this.title, A: this.A, B: this.B})
-      .then(resp => {console.log(resp.data)})
-      .then(() => {
-        this.$router.push({
-          name: 'all-list'
-        })
-      })
-      .catch(error => console.log(error))
+        axios.post('http://localhost:8000/articles/', { title: this.title, A: this.A, B: this.B })
+          .then(resp => { console.log(resp.data) })
+          .then(() => {
+            this.$router.push({
+              name: 'all-list'
+            })
+          })
+          .catch(error => console.log(error))
       }
     }
   }

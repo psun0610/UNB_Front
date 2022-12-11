@@ -5,13 +5,13 @@
   </div>
 </template>
 <script>
-import {csrftoken} from '../csrf/csrf_token'
+import { csrftoken } from '../csrf/csrf_token'
 import GameActions from '../components/GameActions'
 export default {
   props: {
     slug: {
       type: String,
-      required: true,
+      required: true
     }
   },
   components: {
@@ -30,21 +30,21 @@ export default {
   methods: {
     getArticleData() {
       fetch(`api/articles/${this.slug}/`, {
-        methods: "GET",
+        methods: 'GET',
         headers: {
           'Content-Type': 'application/json',
           'X-CSRFTOKEN': csrftoken
         }
       })
-      .then(resp => resp.json())
-      .then((data) => {
-        this.articles = data
-      })
-      .catch(error => console.log(error))
-      },
-      getUserRequest() {
-        this.requestUser = localStorage.getItem("username")
-      }
+        .then(resp => resp.json())
+        .then((data) => {
+          this.articles = data
+        })
+        .catch(error => console.log(error))
+    },
+    getUserRequest() {
+      this.requestUser = localStorage.getItem('username')
+    }
   },
   computed: {
     IsAuthor() {
