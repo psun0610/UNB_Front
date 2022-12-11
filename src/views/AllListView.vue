@@ -9,22 +9,12 @@
           <div class="table-row">
             <div class="article-choice">
               <h3>{{ article.A }}</h3>
-              <div class="comments" v-if="comments.length">
-                <div class="best-badge" style="background-color: var(--mypink);">BEST</div>
-                {{ comments }}
-              </div>
-              <div class="no-comments" v-else>아직 댓글이 없어요 작성해주세요!</div>
             </div>
 
             <div class="vs kg-font"><span style="color: var(--mypink)">V</span><span style="color: var(--myblue)">S</span></div>
 
             <div class="article-choice">
               <h3>{{ article.B }}</h3>
-              <div class="comments" v-if="comments.length">
-                <div class="best-badge" style="background-color: var(--myblue);">BEST</div>
-                {{ comments }}
-              </div>
-              <div class="no-comments" v-else>아직 댓글이 없어요 작성해주세요!</div>
             </div>
           </div>
 
@@ -57,6 +47,7 @@
   </div>
 </template>
 <script>
+const url = 'http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/articles/'
 import {csrftoken} from '../csrf/csrf_token'
 import TodayKing from '../components/TodayKing'
 import axios from 'axios'
@@ -92,7 +83,7 @@ export default {
   methods: {
     getPosts() {
       console.log('Get Posts')
-      axios.get('http://localhost:8000/articles/?page=' + this.page)
+      axios.get(url + '?page=' + this.page)
         .then(response => {
             this.hasNext = false
             if (response.data.next) {
@@ -114,7 +105,7 @@ export default {
 </script>
 <style scoped>
 .table-row {
-  width: 800px;
+  max-width: 800px;
   margin: 10px auto 20px;
   display: grid;
   grid-template-columns: 4fr 1fr 4fr;
@@ -141,7 +132,7 @@ export default {
   margin: 0;
   font-size: 20px;
   margin-bottom: 10px;
-  width: 90%;
+  width: 100%;
 }
 .vs {
   font-size: 30px;

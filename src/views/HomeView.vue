@@ -67,6 +67,7 @@
   </div>
 </template>
 <script>
+const url = 'http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/articles/'
 import TodayKing from '../components/TodayKing'
 import axios from '../axios/index'
 export default {
@@ -82,7 +83,7 @@ export default {
   setup () {},
   created () {},
   mounted () {
-    axios.get('http://localhost:8000/articles/random/article/')
+    axios.get(url + 'random/article/')
     .then((response) =>{
       this.random_index = response.data.article_pk
     })

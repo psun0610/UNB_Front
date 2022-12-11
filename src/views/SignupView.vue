@@ -24,6 +24,7 @@
 </template>
 <script>
 import axios from 'axios'
+const url = 'http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/accounts/';
 
 export default {
   name: 'SignupForm',
@@ -44,7 +45,7 @@ export default {
       if (this.password1 != this.password2) {
         alert('비밀번호가 일치하지 않습니다.')
       }
-      axios.post('http://localhost:8000/accounts/registration', this.$data)
+      axios.post(url + 'registration', this.$data)
         .then(response => {
           console.log('회원가입 성공')
           console.log(response)
