@@ -2,7 +2,7 @@
   <div class="home">
     <TodayKing></TodayKing>
     <!-- 밸런스 게임 바로가기 -->
-    <a href="">
+    <a :href="'/Detail/'+random_index">
       <div class="balance-wrap">
         <div class="balance-back my-shadow" style="background-color: #FF719B;"></div>
         <div class="balance-back my-shadow" style="background-color: #4BBEFF; align-self: flex-end;"></div>
@@ -68,6 +68,7 @@
 </template>
 <script>
 import TodayKing from '../components/TodayKing'
+import axios from '../axios/index'
 export default {
   components: {
     TodayKing
@@ -75,11 +76,17 @@ export default {
   data () {
     return {
       sampleData: '',
+      random_index: ''
     }
   },
   setup () {},
   created () {},
-  mounted () {},
+  mounted () {
+    axios.get('http://localhost:8000/articles/random/article/')
+    .then((response) =>{
+      this.random_index = response.data.article_pk
+    })
+  },
   unmounted () {},
   methods: {
   }

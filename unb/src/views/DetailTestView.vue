@@ -12,16 +12,16 @@
       <h1 class="vs kg-font">VS</h1>
     </div>
 
-    <div>
-      <button @click="previousbutton()">이전 질문</button>
-      <button @click="nextbutton()">다음 질문</button>
+    <div style="margin-bottom: 70px;">
+      <button @click="previousbutton()" class="prev-next-btn prev-btn my-shadow no-kg-font">이전 질문</button>
+      <button @click="nextbutton()" class="prev-next-btn next-btn my-shadow no-kg-font">다음 질문</button>
     </div>
     <!-- 댓글 입력 -->
     <form action="" method="post"></form>
     <form @submit.prevent="submitForm" class="myform">
       <div class="input-wrap">
-        <input type="text" id="comment" v-model="content" class="input-text"/>
-        <label for="comment">&nbsp;<button type="submit" style="background-color:black; color:white;">작성</button></label>
+        <input type="text" id="comment" v-model="content" class="my-shadow" autocomplete="off"/>
+        <button type="submit" class="my-shadow no-kg-font">작성</button>
       </div>
     </form>
     <!-- 댓글 출력 -->
@@ -42,7 +42,9 @@
         <div v-show="show[index]">
           <form @submit.prevent="submitreForm(comment.pk)" class="myreform">
             <div class="input-wrap">
-              <input type="text" id="recomment" v-model="content" class="input-text"/>
+              <div>
+                <input type="text" id="recomment" v-model="content" class="input-text"/>
+                </div>
               <label for="recomment">&nbsp;<button type="submit" style="background-color:black; color:white;">작성</button></label>
             </div>
           </form>
@@ -66,6 +68,7 @@
 const url = 'http://localhost:8000/articles/'
 import loginStore from '../store/index'
 import axios from '../axios/index'
+import axios2 from 'axios'
 export default {
   data(){
     return {
@@ -77,7 +80,8 @@ export default {
       show:[],
       content: null,
       logincheck:'',
-      random_index:'' // 아티클 인덱스
+      random_index:'', // 아티클 인덱스
+      comments: '',
       }
   },
   mounted() {
@@ -93,6 +97,7 @@ export default {
         this.article_B = response.data.B
         this.article_comment = response.data.comments
         this.show = Array(this.article_comment.length).fill(false)
+        this.comments = response.data.comments
       })
       .catch(response => {
         alert('없는 글입니다.')
@@ -104,20 +109,17 @@ export default {
     })
   },
   methods: {
-    Pick(badge) {
-      const badge_pk = badge[1]
-      axios({
-        url : 'http://localhost:8000/accounts/'+this.$route.params.pk+'/my_page/',
-        method : 'PUT',
+    pick() {
+      axios2({
+        url : `http://localhost:8000/articles/${this.$route.params.pk}/`,
+        method : 'POST',
         data : {
-          test:'test',
           user_pk: this.user_pk,
           badge_pk: badge_pk,
         }
       })
       .then(response => {
-        const badge_image  = response.data.image
-        this.current_badge = require(`../assets${badge_image}`)
+        
       }).catch(err => {
         console.error(err)
       })
@@ -144,6 +146,7 @@ export default {
           })
       })
       .catch((err) => {
+        console.error(err)
       })
       },
     like(e){ // 좋아요
@@ -244,7 +247,57 @@ export default {
   font-size: 20px;
   font-weight: bold;
 }
+.prev-next-btn {
+  margin: 0 10px;
+  width: 100px;
+  height: 30px;
+  border: 0;
+  border-radius: 3px;
+  background-color:  #d9d9d9;
+  transition: all .1s ease;
+}
+.prev-next-btn:hover {
+  scale: 1.05;
+  transition: all .1s ease;
+}
+.prev-btn:hover{
+  background-color: var(--mypink);
+}
+.next-btn:hover {
+  background-color: var(--myblue);
+}
 
+/* 댓글 */
+.input-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.input-wrap>input {
+  width: 90%;
+  height: 33px;
+  border-radius: 3px;
+  border: 0;
+  padding: 0 20px;
+  font-size: 16px;
+  text-align: center;
+}
+.input-wrap>button {
+  width: 90px;
+  height: 33px;
+  margin-left: 15px;
+  background-color:rgb(73, 73, 73);
+  color:white;
+  font-size: 16px;
+  border: 0;
+  border-radius: 3px;
+}
+.commentlist {
+  margin: 30px 0;
+}
+.list {
+  margin: 20px 0;
+}
 article {
   width: 50%;
 }
