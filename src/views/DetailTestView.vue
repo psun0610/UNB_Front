@@ -25,42 +25,41 @@
       </div>
     </form>
     <!-- 댓글 출력 -->
-    <div class="commentlist">
-      <div v-for="(comment, index) in article_comment" :key="index" class="list">
-        <div class="comment-div"> 
-          <div style="width:20%;"><img src="https://m.smartcara.com/web/product/option_button/202105/79aa353bc0b08653dd24427feb73c60b.png" style="width:70%;"></div>
-          <div style="width:80%;">
-            <div style="display:flex;">
-              <p>작성자:{{comment.pk}} {{ comment.user }}</p>
-              <!-- 아이콘 -->
-              <div>
-                <i class="fa-regular fa-heart" v-show="!comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
-                <i class="fa-solid fa-heart" v-show="comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
-              </div> 
-              <div> <button type="button" :class="`${comment.pk}`" @click="recommenttoggle(index)"> 답글 </button> </div>
+    <div>
+      <div v-for="(comment, index) in article_comment" :key="index" style="margin:2rem 0">
+        <!-- A B 픽마다 색깔 바꾸기 -->
+        <div class="comment-div" :class="{'a_shadow': comment.pick == 1, 'b_shadow': comment.pick == 2}">
+          <!-- 댓글 작성자 프로필 -->
+          <a :href="purl + `${comment.userpk}` + '/'">
+            <img :src="`${comment.userbadge.image}`" class="my-shadow comment-profile-img">
+          </a>
+          <!-- 댓글 -->
+          <div class="comment">
+            <div class="comment-profile">
+              <p class="comment-name">{{ comment.user }}</p>
+              <i class="fa-regular fa-heart heart" @click="like(comment.pk)"></i>
+              <button type="button" class="my-shadow no-kg-font" :class="`${comment.pk}`" @click="recommenttoggle(index)">답글</button>
             </div>
-            <div>내용:  {{ comment.content }} </div>
+            <div class="comment-content">{{ comment.content }} </div>
           </div>
         </div>
-    <!-- 대댓글 작성폼 -->
+        <!-- 대댓글 작성폼 -->
         <div v-show="show[index]">
-          <form @submit.prevent="submitreForm(comment.pk)" class="myreform">
+          <form @submit.prevent="submitreForm(comment.pk)" class="myform">
             <div class="input-wrap">
-              <div>
-                <input type="text" id="recomment" v-model="content" class="input-text"/>
-                </div>
-              <label for="recomment">&nbsp;<button type="submit" style="background-color:black; color:white;">작성</button></label>
+              <input type="text" id="recomment" style="margin-left:50px;" v-model="content" class="my-shadow" autocomplete="off"/>
+              <button type="submit" class="my-shadow no-kg-font">작성</button>
             </div>
           </form>
         </div>
-      <!-- 대댓글 내용 -->
-        <div v-for="(soncomment, index) in comment.soncomments" :key="index" class="list" style="display:flex; justify-content: flex-end;">
-          <div class="recomment-div">
-            <div style="width:20%;"><img src="https://m.smartcara.com/web/product/option_button/202105/79aa353bc0b08653dd24427feb73c60b.png" style="width:80%;"></div>
-            <div>
-              <div>작성자: {{ soncomment.user }} </div>
-              <div>내용:  {{ soncomment.content }} </div>
-            </div>
+        <!-- 대댓글 내용 -->
+        <div v-for="(soncomment, index) in comment.soncomments" :key="index" class="recomment">
+          <a :href="purl + `${soncomment.userpk}` + '/'">
+            <img :src="`${soncomment.userbadge.image}`" class="my-shadow comment-profile-img">
+          </a>
+          <div class="comment">
+            <p class="comment-name" style="margin-bottom: 8px;">{{ soncomment.user }}</p>
+            <div class="comment-content">{{ soncomment.content }}</div>
           </div>
         </div>
       </div>
@@ -88,6 +87,7 @@ export default {
       comments: [],
       Choice_AB: '',
       user_pk : '',
+      purl: 'http://localhost:8080/userprofile/'
       }
   },
   mounted() {
@@ -114,7 +114,7 @@ export default {
           history.go(-1)
       })
 
-    axios.get('http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/articles/random/article/')
+    axios.get(url + 'random/article/')
     .then((response) =>{
       this.random_index = response.data.article_pk
     })
@@ -123,7 +123,7 @@ export default {
   methods: {
     pick() {
       axios2({
-        url : `http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/articles/${this.$route.params.pk}/`,
+        url : url + `${this.$route.params.pk}/`,
         method : 'POST',
         data : {
           user_pk: this.user_pk,
@@ -137,7 +137,7 @@ export default {
       })
     },
     submitForm() {
-      axios.post(`http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/articles/${this.$route.params.pk}/comment/`, this.$data)
+      axios.post(url + `${this.$route.params.pk}/comment/`, this.$data)
       .then((response) => {
         axios({ // 댓글 작성해서 리스트를 다시 불러옴
           method: 'GET',
@@ -163,7 +163,7 @@ export default {
       },
     like(e){ // 좋아요
       if (this.logincheck){
-        const comment_like_url = `http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/articles/${this.$route.params.pk}/comment/${e}/like/`
+        const comment_like_url = url + `${this.$route.params.pk}/comment/${e}/like/`
         axios.post(comment_like_url)
         .then((res) => {
           console.log(res)
@@ -192,7 +192,7 @@ export default {
       this.show.splice(index,1,!this.show[index])
     },
     submitreForm(pk) {
-      axios.post(`http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/articles/${this.$route.params.pk}/comment/${pk}/recomment/`, this.$data)
+      axios.post(url + `${this.$route.params.pk}/comment/${pk}/recomment/`, this.$data)
       .then((response) => {
         axios({ // 댓글 작성해서 리스트를 다시 불러옴
           method: 'GET',
@@ -226,8 +226,8 @@ export default {
     },
     choice_A() {
       this.Choice_AB = 'A'
-      console.log(JSON.parse(localStorage.getItem("vuex")).loginStore.userInfo.pk)
       console.log('A')
+      // axios.post
     },
     choice_B() {
       this.Choice_AB = 'B'
@@ -303,12 +303,16 @@ export default {
 .next-btn:hover {
   background-color: var(--myblue);
 }
+article {
+  width: 50%;
+}
 
-/* 댓글 */
+/* 댓글 작성 */
 .input-wrap {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 30px;
 }
 .input-wrap>input {
   width: 90%;
@@ -329,18 +333,58 @@ export default {
   border: 0;
   border-radius: 3px;
 }
-.commentlist {
-  margin: 30px 0;
+.a_shadow {
+  box-shadow: rgba(255, 113, 155, 0.5) 4px 2px 16px 0px;
 }
-.list {
-  margin: 20px 0;
-}
-article {
-  width: 50%;
+.b_shadow {
+  box-shadow: rgba(75, 172, 242, 0.5) 4px 2px 16px 0px;
 }
 .comment-div {
-  height: 130px;
-  box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
   display: flex;
+  align-items: center;
+  padding: 10px 30px;
+  margin: 30px 0;
+}
+.comment-profile-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.comment {
+  width: 100%;
+  margin-left: 20px;
+}
+.comment-profile {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.comment-name {
+  margin: 0;
+  font-size: 17px;
+  font-weight: bold;
+  text-align: start;
+}
+.comment-content {
+  width: 100%;
+  text-align: start;
+}
+.comment button {
+  background-color: rgb(107, 107, 107);
+  border: 0;
+  border-radius: 3px;
+  color: white;
+  font-size: 15px;
+}
+.heart {
+  margin: 0 8px;
+}
+.recomment {
+  display: flex;
+  align-items: center;
+  padding: 7px 30px 7px 40px;
+  border-left: 2px solid rgb(185, 185, 185);
+  margin: 0 0 0 70px;
 }
 </style>

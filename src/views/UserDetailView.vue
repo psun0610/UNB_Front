@@ -92,7 +92,7 @@
 </template>
 <script>
 import axios from '../axios/index'
-const url = 'http://localhost:8000/accounts/'
+const url = 'http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/accounts/'
 export default {
   data(){
     return {
@@ -166,7 +166,7 @@ export default {
     badgeChange(badge) {
       const badge_pk = badge[1]
       axios({
-        url : 'http://localhost:8000/accounts/'+this.$route.params.pk+'/my_page/',
+        url : url + this.$route.params.pk + '/my_page/',
         method : 'PUT',
         data : {
           test:'test',

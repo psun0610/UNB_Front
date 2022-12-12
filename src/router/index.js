@@ -8,15 +8,6 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/balance-game/:slug',
-    name: 'balance-game',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "balance-game" */ '../views/BalanceGameView.vue'),
-    props: true,
-  },
-  {
     path: '/all-list',
     name: 'all-list',
     // which is lazy-loaded when the route is visited.
