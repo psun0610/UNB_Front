@@ -20,7 +20,7 @@
           </div>
 
           <!-- exp 바 -->
-          <div class="exp-wrap" v-if="(article.ABcount.A_percent & article.ABcount.B_percent)">
+          <div class="exp-wrap" v-if="(article.ABcount.A_percent || article.ABcount.B_percent)">
             <div class="exp" :style="`width:${article.ABcount.A_percent}%`" style="background-color: var(--mypink);">
               <p> {{ article.ABcount.A_pick }} ({{ article.ABcount.A_percent }}%)</p>
             </div>
