@@ -61,7 +61,7 @@ export default {
       window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${SOCIAL_AUTH_GOOGLE_CLIENT_ID}&response_type=code&redirect_uri=${GOOGLE_CALLBACK_URI}&scope=${scope}`
     },
     kakaologin() {
-      const KAKAO_REST_API_KEY =process.env.KAKAO_REST_API_KEY
+      const KAKAO_REST_API_KEY =process.env.VUE_APP_KAKAO_REST_API_KEY
       const KAKAO_REDIRECT_URI = 'https://www.unbalace.cf/login'
       window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code&scope=account_email`
   }

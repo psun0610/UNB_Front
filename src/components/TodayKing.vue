@@ -5,7 +5,7 @@
       <div class="today-king-title">
         오늘의 토론왕<img src="../assets/crown.png" style="width: 50px;">
       </div>
-      <div class="rollingbanner ">
+      <div class="rollingbanner">
           <div class="wrap">
               <ul>
                 <li class="current"><a href="#">1. {{today_1st}}</a></li>
