@@ -274,6 +274,7 @@ export default {
   height: 20px;
   background-color: rgb(224, 224, 224);
   border-radius: 20px;
+  overflow: hidden;
 }
 .current-exp {
   position: absolute;

@@ -273,11 +273,10 @@ export default {
     },
     nextbutton() {
       const idx = this.random_index
-      window.location.href = 'http://localhost:8080/Detail/'+ idx
+      window.location.href = 'https://www.unbalace.cf/Detail/'+ idx
     },
     choice_A() {
       this.Choice_AB = 'A'
-      console.log('A')
       axios.post(url + `${this.$route.params.pk}/game_pick/`, {pick: 1})
       .then(response => {
         this.pick_result = response.data
@@ -286,7 +285,6 @@ export default {
       },
     choice_B() {
       this.Choice_AB = 'B'
-      console.log('B')
       axios.post(url + `${this.$route.params.pk}/game_pick/`, {pick: 2})
       .then(response => {
         this.pick_result = response.data
