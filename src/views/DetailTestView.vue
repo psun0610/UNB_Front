@@ -3,21 +3,48 @@
 
     <h1 class="kg-font title">{{ article_title }}</h1>
     <div class="balance-wrap">
-      <div class="balance-back my-shadow" style="background-color: var(--mypink); cursor:pointer" @click="choice_A()">
+      <div :class="{'after-pick-wrap': pick_result}" style="z-index: 100;"></div>
+      <div class="after-pick-next-wrap" v-if="pick_result!=null">
+        <img src="../assets/arrow.png" class="kg-font next-button" style="width: 150px;">
+        <div>다음 질문</div>
+      </div>
+      <div
+        class="balance-back my-shadow a"
+        style="background-color: var(--mypink); cursor: pointer"
+        @click="choice_A()"
+      >
+        <div
+          v-if="pick_result!=null"
+          class="after-pick"
+          :style="`height:${pick_result.A_percent}%`"
+        >
+          <h1 v-if="pick_result!=null" class="kg-font result_percent">{{pick_result.A_percent}}%</h1>
+        </div>
         <div class="AB">{{article_A}}</div>
       </div>
-      <div class="balance-back my-shadow" style="background-color: var(--myblue); align-self: flex-end; cursor:pointer" @click="choice_B()">
+      <div
+        class="balance-back my-shadow b"
+        style="background-color: var(--myblue); align-self: flex-end; cursor:pointer;"
+        @click="choice_B()"
+      >
+        <div
+          v-if="pick_result!=null"
+          class="after-pick"
+          :style="`height:${pick_result.B_percent}%`"
+        >
+          <h1 v-if="pick_result!=null" class="kg-font result_percent">{{pick_result.B_percent}}%</h1>
+        </div>
         <div class="AB">{{article_B}}</div>
       </div>
       <!-- <h2 class="balance-title kg-font">{{ article_title }}</h2> -->
-      <h1 class="vs kg-font">VS</h1>
+      <h1 class="vs kg-font" :class="{'none': pick_result}">VS</h1>
     </div>
 
     <div style="margin-bottom: 70px;">
       <button @click="previousbutton()" class="prev-next-btn prev-btn my-shadow no-kg-font">이전 질문</button>
       <button @click="nextbutton()" class="prev-next-btn next-btn my-shadow no-kg-font">다음 질문</button>
     </div>
-    <!-- 댓글 입력 -->
+    <!-- 댓글 작성 -->
     <form v-show="Choice_AB" @submit.prevent="submitForm" class="myform">
       <div class="input-wrap">
         <input type="text" id="comment" v-model="content" class="my-shadow" autocomplete="off"/>
@@ -45,9 +72,9 @@
         </div>
         <!-- 대댓글 작성폼 -->
         <div v-show="show[index]">
-          <form @submit.prevent="submitreForm(comment.pk)" class="myform">
+          <form @submit.prevent="submitreForm(comment.pk)" class="myreform">
             <div class="input-wrap">
-              <input type="text" id="recomment" style="margin-left:50px;" v-model="content" class="my-shadow" autocomplete="off"/>
+              <input type="text" id="recomment" style="margin-left:50px;" v-model="recontent" class="my-shadow" autocomplete="off"/>
               <button type="submit" class="my-shadow no-kg-font">작성</button>
             </div>
           </form>
@@ -82,16 +109,19 @@ export default {
       article_comment: [],
       show:[],
       content: null,
+      recontent: null,
       logincheck:'',
       random_index:'', // 아티클 인덱스
       comments: [],
       Choice_AB: '',
       user_pk : '',
-      purl: 'http://localhost:8080/userprofile/'
+      purl: 'https://www.unbalace.cf/userprofile/',
+      pick_result: null,
       }
   },
   mounted() {
     this.logincheck = loginStore.state.loginStore.isLogin // 로그인 체크
+    console.log(this.logincheck)
 
     if (this.logincheck) {
       this.user_pk = loginStore.state.loginStore.userInfo.pk // 로그인 체크
@@ -137,30 +167,34 @@ export default {
       })
     },
     submitForm() {
-      axios.post(url + `${this.$route.params.pk}/comment/`, this.$data)
-      .then((response) => {
-        axios({ // 댓글 작성해서 리스트를 다시 불러옴
-          method: 'GET',
-          url: url + this.$route.params.pk + '/',
-          headers: {
-            Authorization: 'Bearer ' + localStorage.getItem('access_token')
-          }
+      if(this.logincheck) {
+        axios.post(url + `${this.$route.params.pk}/comment/`, this.$data)
+        .then((response) => {
+          axios({ // 댓글 작성해서 리스트를 다시 불러옴
+            method: 'GET',
+            url: url + this.$route.params.pk + '/',
+            headers: {
+              Authorization: 'Bearer ' + localStorage.getItem('access_token')
+            }
+          })
+            .then(response => {
+              this.article = response.data
+              this.article_A = response.data.A
+              this.article_B = response.data.B
+              this.article_comment = response.data.comments
+              this.show = Array(this.article_comment.length).fill(false)
+              this.content = null
+            })
+            .catch(response => {
+            })
         })
-          .then(response => {
-            this.article = response.data
-            this.article_A = response.data.A
-            this.article_B = response.data.B
-            this.article_comment = response.data.comments
-            this.show = Array(this.article_comment.length).fill(false)
-            this.content = null
-          })
-          .catch(response => {
-          })
-      })
-      .catch((err) => {
-        console.error(err)
-      })
-      },
+        .catch((err) => {
+          console.error(err)
+        })
+      } else {
+        alert('로그인 후 가능합니다.')
+      }
+    },
     like(e){ // 좋아요
       if (this.logincheck){
         const comment_like_url = url + `${this.$route.params.pk}/comment/${e}/like/`
@@ -192,30 +226,34 @@ export default {
       this.show.splice(index,1,!this.show[index])
     },
     submitreForm(pk) {
-      axios.post(url + `${this.$route.params.pk}/comment/${pk}/recomment/`, this.$data)
-      .then((response) => {
-        axios({ // 댓글 작성해서 리스트를 다시 불러옴
-          method: 'GET',
-          url: url + this.$route.params.pk + '/',
-          headers: {
-            Authorization: 'Bearer ' + localStorage.getItem('access_token')
-          }
+      if(this.logincheck) {
+        axios.post(url + `${this.$route.params.pk}/comment/${pk}/recomment/`, this.$data)
+        .then((response) => {
+          axios({ // 댓글 작성해서 리스트를 다시 불러옴
+            method: 'GET',
+            url: url + this.$route.params.pk + '/',
+            headers: {
+              Authorization: 'Bearer ' + localStorage.getItem('access_token')
+            }
+          })
+            .then(response => {
+              this.article = response.data
+              this.article_A = response.data.A
+              this.article_B = response.data.B
+              this.article_comment = response.data.comments
+              this.show = Array(this.article_comment.length).fill(false)
+              this.recontent = null
+            })
+            .catch(response => {
+              console.log('에러')
+            })
         })
-          .then(response => {
-            this.article = response.data
-            this.article_A = response.data.A
-            this.article_B = response.data.B
-            this.article_comment = response.data.comments
-            this.show = Array(this.article_comment.length).fill(false)
-            this.content = null
-          })
-          .catch(response => {
-            console.log('에러')
-          })
-      })
-      .catch((err) => {
-        console.log('댓글 작성 실패')
-      })
+        .catch((err) => {
+          console.log('댓글 작성 실패')
+        })
+      } else {
+        alert('로그인 후 가능합니다.')
+      }
     },
     previousbutton() {
       history.go(-1)
@@ -227,11 +265,20 @@ export default {
     choice_A() {
       this.Choice_AB = 'A'
       console.log('A')
-      // axios.post(url + `${this.$route.params.pk}/`)
-    },
+      axios.post(url + `${this.$route.params.pk}/game_pick/`, {pick: 1})
+      .then(response => {
+        this.pick_result = response.data
+      })
+      .catch(error => console.log(error))
+      },
     choice_B() {
       this.Choice_AB = 'B'
       console.log('B')
+      axios.post(url + `${this.$route.params.pk}/game_pick/`, {pick: 2})
+      .then(response => {
+        this.pick_result = response.data
+      })
+      .catch(error => console.log(error))
     }
   }
 }
@@ -254,6 +301,7 @@ export default {
   margin-bottom: 50px;
 }
 .balance-back {
+  position: relative;
   width: 50%;
   height: 400px;
   display: flex;
@@ -261,6 +309,49 @@ export default {
   align-items: center;
   padding: 40px 60px;
   box-sizing: border-box;
+  transition: all .5s ease;
+  overflow: hidden;
+}
+.a:hover {
+  z-index: 1;
+  scale: 1.02;
+  transition: all .5s ease;
+}
+.b:hover {
+  z-index: 1;
+  scale: 1.02;
+  transition: all .5s ease;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: .5;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+.after-pick {
+  animation: fade-up 1s ease-out;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.63);
+}
+.result_percent {
+  margin: 0;
+  color: white;
+  font-weight: bold;
+  font-size: 50px;
+}
+.after-pick-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 .vs {
   position: absolute;
@@ -268,17 +359,37 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   margin: 0;
-  font-size: 60px;
+  font-size: 40px;
   color: white;
+  z-index: 2;
 }
-.balance-title {
+.none {
+  opacity: 0;
+  transition: all .5s ease;
+}
+@keyframes button-appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.after-pick-next-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   position: absolute;
-  color: white;
-  top: 20%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  margin: 0;
-  font-size: 30px;
+  z-index: 101;
+  opacity: 0;
+  animation: button-appear .5s ease-in-out forwards;
+  animation-delay: 1.5s;
+  font-size: 18px;
+  font-weight: bold;
 }
 .AB {
   font-size: 20px;
@@ -387,4 +498,5 @@ article {
   border-left: 2px solid rgb(185, 185, 185);
   margin: 0 0 0 70px;
 }
+
 </style>
