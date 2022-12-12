@@ -4,10 +4,11 @@
     <h1 class="kg-font title">{{ article_title }}</h1>
     <div class="balance-wrap">
       <div :class="{'after-pick-wrap': pick_result}" style="z-index: 100;"></div>
-      <div class="after-pick-next-wrap" v-if="pick_result!=null">
+      <div class="after-pick-next-wrap" v-if="pick_result!=null" @click="nextbutton()">
         <img src="../assets/arrow.png" class="kg-font next-button" style="width: 150px;">
         <div>다음 질문</div>
       </div>
+      <!-- A 선택지 -->
       <div
         class="balance-back my-shadow a"
         style="background-color: var(--mypink); cursor: pointer"
@@ -15,13 +16,19 @@
       >
         <div
           v-if="pick_result!=null"
+          class="black-back"
+        ></div>
+        <div
+          v-if="pick_result!=null"
           class="after-pick"
-          :style="`height:${pick_result.A_percent}%`"
+          :style="`height:${pick_result.A_percent}%; background-color:var(--mypink)`"
         >
           <h1 v-if="pick_result!=null" class="kg-font result_percent">{{pick_result.A_percent}}%</h1>
         </div>
         <div class="AB">{{article_A}}</div>
       </div>
+
+      <!-- B 선택지 -->
       <div
         class="balance-back my-shadow b"
         style="background-color: var(--myblue); align-self: flex-end; cursor:pointer;"
@@ -29,8 +36,13 @@
       >
         <div
           v-if="pick_result!=null"
+          class="black-back"
+        ></div>
+        <div
+          v-if="pick_result!=null"
           class="after-pick"
-          :style="`height:${pick_result.B_percent}%`"
+          :style="`height:${pick_result.B_percent}%;`"
+          style="background-color:var(--myblue)"
         >
           <h1 v-if="pick_result!=null" class="kg-font result_percent">{{pick_result.B_percent}}%</h1>
         </div>
@@ -315,12 +327,12 @@ export default {
 .a:hover {
   z-index: 1;
   scale: 1.02;
-  transition: all .5s ease;
+  transition: all .2s ease;
 }
 .b:hover {
   z-index: 1;
   scale: 1.02;
-  transition: all .5s ease;
+  transition: all .2s ease;
 }
 
 @keyframes fade-up {
@@ -333,18 +345,25 @@ export default {
     transform: translate(0);
   }
 }
+.black-back {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.63);
+}
 .after-pick {
   animation: fade-up 1s ease-out;
   position: absolute;
   bottom: 0;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.63);
 }
 .result_percent {
   margin: 0;
   color: white;
   font-weight: bold;
-  font-size: 50px;
+  font-size: 38px;
 }
 .after-pick-wrap {
   position: absolute;
@@ -390,6 +409,13 @@ export default {
   animation-delay: 1.5s;
   font-size: 18px;
   font-weight: bold;
+  color: white;
+  transition: all .1s ease-in-out;
+}
+.after-pick-next-wrap:hover {
+  left: 51%;
+  scale: 1.05;
+  transition: all .1s ease-in-out;
 }
 .AB {
   font-size: 20px;
