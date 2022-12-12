@@ -8,9 +8,9 @@
       <div class="rollingbanner ">
           <div class="wrap">
               <ul>
-                <li class="current"><a href="#">1.&nbsp;&nbsp; {{today_1st}}</a></li>
-                <li class="next"><a href="#">2.&nbsp;&nbsp; {{today_2nd}}</a></li>
-                <li class="prev"><a href="#">3.&nbsp;&nbsp; {{today_3rd}}</a></li>
+                <li class="current"><a href="#">1. {{today_1st}}</a></li>
+                <li class="next"><a href="#">2. {{today_2nd}}</a></li>
+                <li class="prev"><a href="#">3. {{today_3rd}}</a></li>
               </ul>
           </div>
       </div>
@@ -92,7 +92,7 @@ export default {
   border-left: 5px solid #4BBEFF;
   border-bottom: 5px solid #FF719B;
   border-right: 5px solid #FF719B;
-  padding: 0 70px;
+  padding: 0 7vmin;
   font-weight: bold;
 }
 .today-king-title {
@@ -103,7 +103,7 @@ export default {
 }
 .rollingbanner{
     position: relative;
-    width: 60%;
+    width: 150px;
     height: 32px;
     font-size: 1rem;
     letter-spacing: -1px;
