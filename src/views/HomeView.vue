@@ -35,9 +35,7 @@
                   <div style="background-color:#FF719B;">BEST</div>
                   <p class="best-p">{{this.best_A}}</p>
                 </div>
-                <p>테스트 댓글 테스트 댓글 테스트 댓글 테스트 댓글 테스트 댓글 테스트 댓글 테스트 댓글 테스트 댓글 테스트 댓글 테스트 댓글 테스트 댓글 테스트 댓글 테스트 댓글 테스트 댓글 </p>
-                <p>테스트 댓글</p>
-                <p>테스트 댓글</p>
+                <p v-for="(item,index) in comments_A.slice(0,3)" :key="index">{{item}}</p>
               </div>
             </div>
           </a>
@@ -55,9 +53,7 @@
                   <div style="background-color:#4BBEFF;">BEST</div>
                   <p class="best-p">{{this.best_A}}</p>
                 </div>
-                <p>테스트 댓글</p>
-                <p>테스트 댓글</p>
-                <p>테스트 댓글</p>
+                <p v-for="(item,index) in comments_B.slice(0,3)" :key="index">{{item}}</p>
               </div>
             </div>
           </a>
@@ -81,7 +77,9 @@ export default {
       today_pk:'',
       article_A:'',
       article_B:'',
-      comments:'',
+      comment:'',
+      comments_A:[],
+      comments_B:[],
       best_A:'',
       best_B:''
     }
@@ -104,8 +102,17 @@ export default {
       .then(response => {
         this.article_A = response.data.A
         this.article_B = response.data.B
-        this.comments = response.data.comments
-        console.log(this.comments)
+        this.comment = response.data.comments
+        for (const obj of this.comment){
+          if (obj.pick == 1) {
+            this.comments_A.push(obj.content)
+            console.log('A추가')
+          } else if ( obj.pick == 0) {
+            this.comments_B.push(obj.content)
+            console.log('B추가')
+          }
+        }
+        console.log(this.comments_B)
         this.best_A = response.data.best_A
         this.best_B = response.data.best_B
       })
