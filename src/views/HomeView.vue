@@ -24,10 +24,10 @@
       <div class="today-dis-article-wrap">
         <img src="../assets/vs.png" class="vs">
         <article>
-          <a href="">
+          <a :href="'/Detail/'+today_pk">
             <h1 class="article-title">{{article_A}}</h1>
           </a>
-          <a href="">
+          <a :href="'/Detail/'+today_pk">
             <div class="today-dis-comment-wrap">
               <img src="../assets/말풍선1.png">
               <div class="comments">
@@ -42,16 +42,16 @@
         </article>
 
         <article>
-          <a href="">
+          <a :href="'/Detail/'+today_pk">
             <h1 class="article-title">{{article_B}}</h1>
           </a>
-          <a href="">
+          <a :href="'/Detail/'+today_pk">
             <div class="today-dis-comment-wrap">
               <img src="../assets/말풍선2.png">
               <div class="comments">
                 <div class="best-comment">
                   <div style="background-color:#4BBEFF;">BEST</div>
-                  <p class="best-p">{{this.best_A}}</p>
+                  <p class="best-p">{{this.best_B}}</p>
                 </div>
                 <p v-for="(item,index) in comments_B.slice(0,3)" :key="index">{{item}}</p>
               </div>
@@ -106,15 +106,12 @@ export default {
         for (const obj of this.comment){
           if (obj.pick == 1) {
             this.comments_A.push(obj.content)
-            console.log('A추가')
-          } else if ( obj.pick == 0) {
+          } else if ( obj.pick == 2) {
             this.comments_B.push(obj.content)
-            console.log('B추가')
           }
         }
-        console.log(this.comments_B)
-        this.best_A = response.data.best_A
-        this.best_B = response.data.best_B
+        this.best_A = response.data.best_A.content
+        this.best_B = response.data.best_B.content
       })
     })
   },

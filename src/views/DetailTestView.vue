@@ -64,7 +64,8 @@
           <div class="comment">
             <div class="comment-profile">
               <p class="comment-name">{{ comment.user }}</p>
-              <i class="fa-regular fa-heart heart" @click="like(comment.pk)"></i>
+              <i class="fa-regular fa-heart heart" v-show="!comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
+              <i class="fa-solid fa-heart heart" v-show="comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
               <button type="button" class="my-shadow no-kg-font" :class="`${comment.pk}`" @click="recommenttoggle(index)">답글</button>
             </div>
             <div class="comment-content">{{ comment.content }} </div>
