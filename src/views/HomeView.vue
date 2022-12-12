@@ -67,7 +67,7 @@
   </div>
 </template>
 <script>
-const url = 'http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/articles/'
+const url = 'https://www.unbback.cf/articles/'
 import TodayKing from '../components/TodayKing'
 import axios from '../axios/index'
 export default {
@@ -94,13 +94,13 @@ export default {
       this.random_index = response.data.article_pk
     })
 
-    axios.get('http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/articles/random/article/') // 오늘의 토론 URL 넣을 자리
+    axios.get('https://www.unbback.cf/articles/random/article/') // 오늘의 토론 URL 넣을 자리
     .then((response) =>{
       this.today_pk = response.data.article_pk
       console.log(this.today_pk)
       axios({ // 글 목록 axios
       method: 'GET',
-      url: `http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/articles/${this.today_pk}/`
+      url: `https://www.unbback.cf/articles/${this.today_pk}/`
       })
       .then(response => {
         this.article_A = response.data.A

@@ -28,7 +28,7 @@
   </div>
 </template>
 <script>
-const url = 'http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/articles/'
+const url = 'https://www.unbback.cf/articles/'
 import {csrftoken} from '../csrf/csrf_token';
 import axios from '../axios/index'
 export default {

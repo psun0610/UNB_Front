@@ -8,7 +8,7 @@ const refreshtoken = {
   actions: {
     async refreshtt (dispatch, ReToken) {
       await axiosRefresh
-        .post('http://localhost:8000/accounts/token/refresh/', ReToken) // 로그인 URL로 ID, PW를 보냄
+        .post('https://www.unbback.cf/accounts/token/refresh/', ReToken) // 로그인 URL로 ID, PW를 보냄
         .then((response) => {
           const newToken = response.data.access
           localStorage.setItem('access_token', newToken)

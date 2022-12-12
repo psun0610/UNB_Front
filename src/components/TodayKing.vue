@@ -18,8 +18,8 @@
   </div>
 </template>
 <script>
-import axios from '../axios/index'
-const url = 'http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/'
+import axios from 'axios'
+const url = 'https://www.unbback.cf/'
 export default {
   components: {},
   data () {
