@@ -11,11 +11,9 @@
         <input type="password" id="password" v-model="password" class="input-text"/>
       </div>
       <button @click="loginSubmit()" class="form-btn my-shadow">로그인</button>
-      <div>
-        <img @click="googlelogin()" src='https://developers.kakao.com/tool/resource/static/img/button/login/full/ko/kakao_login_medium_narrow.png'> 
-        <div> ↑↑↑↑↑얘는 구글임↑↑↑ </div>
-        <div>테스트입니다</div>
-        <img @click="kakaologin()" src='https://developers.kakao.com/tool/resource/static/img/button/login/full/ko/kakao_login_medium_narrow.png'> 
+      <div class="sc-login-div">
+        <img @click="googlelogin()" src='../assets/구글로그인.png' class="google_btn"> 
+        <img @click="kakaologin()" src='../assets/카카오로그인.png' class="kakao_btn">
       </div>
     </div>
   </div>
@@ -109,5 +107,23 @@ export default {
   font-family: 'Pretendard-Regular';
   color: white;
   transition: 0.14s all ease-in;
+}
+.google_btn {
+  width: 350px;
+  border: 0;
+  padding: 7px 0;
+  border-radius:  3px;
+  transition: 0.14s all ease-in;
+}
+.kakao_btn {
+  width: 350px;
+  border: 0;
+  padding: 7px 0;
+  border-radius:  3px;
+  transition: 0.14s all ease-in;
+}
+.sc-login-div{
+  width : 350px;
+  margin:auto;
 }
 </style>
