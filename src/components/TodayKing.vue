@@ -28,6 +28,7 @@ export default {
       today_1st:'',
       today_2nd:'',
       today_3rd:'',
+      interval:''
     }
   },
   setup () {},
@@ -51,7 +52,7 @@ export default {
       })
 
     })
-    var interval = window.setInterval(rollingCallback, 3000);
+    this.interval = window.setInterval(rollingCallback, 3000);
 
     function rollingCallback(){
       //.prev 클래스 삭제
@@ -75,8 +76,10 @@ export default {
       next.classList.add('current');
     } 
   },
-  unmounted () {},
-  methods:{}
+  unmounted () {
+    clearInterval(this.interval)
+  },
+  methods:{},
 }
 </script>
 <style scoped>
