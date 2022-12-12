@@ -92,7 +92,7 @@ export default {
   methods: {
     getPosts() {
       console.log('Get Posts')
-      axios.get('http://localhost:8000/articles/?page=' + this.page)
+      axios.get('http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/articles/?page=' + this.page)
         .then(response => {
             this.hasNext = false
             if (response.data.next) {

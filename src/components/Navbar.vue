@@ -42,7 +42,7 @@ export default {
     this.logincheck = loginStore.state.loginStore.isLogin
     console.log('↓↓로그인 여부 ↓↓')
     console.log(loginStore.state.loginStore.isLogin)
-    axios.get('http://localhost:8000/articles/random/article/')
+    axios.get('http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/articles/random/article/')
     .then((response) =>{
       this.random_index = response.data.article_pk
     })

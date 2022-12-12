@@ -25,7 +25,7 @@
         <img src="../assets/vs.png" class="vs">
         <article>
           <a href="">
-            <h1 class="article-title">술 먹고 다음날 일어났더니 전 애인한테 부재중 발신 21건</h1>
+            <h1 class="article-title">{{article_A}}</h1>
           </a>
           <a href="">
             <div class="today-dis-comment-wrap">
@@ -45,7 +45,7 @@
 
         <article>
           <a href="">
-            <h1 class="article-title">술 먹고 다음날 일어났더니 전공교수님과 통화 내역 1건</h1>
+            <h1 class="article-title">{{article_B}}</h1>
           </a>
           <a href="">
             <div class="today-dis-comment-wrap">
@@ -76,15 +76,39 @@ export default {
   data () {
     return {
       sampleData: '',
-      random_index: ''
+      random_index: '',
+      today_pk:'',
+      article_A:'',
+      article_B:'',
+      comments:'',
+      best_A:'',
+      best_B:''
     }
   },
   setup () {},
   created () {},
   mounted () {
-    axios.get('http://localhost:8000/articles/random/article/')
+    axios.get('http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/articles/random/article/') // 랜덤 숫자 axios
     .then((response) =>{
       this.random_index = response.data.article_pk
+    })
+
+    axios.get('http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/articles/random/article/') // 오늘의 토론 URL 넣을 자리
+    .then((response) =>{
+      this.today_pk = response.data.article_pk
+      console.log(this.today_pk)
+      axios({ // 글 목록 axios
+      method: 'GET',
+      url: `http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/articles/${this.today_pk}/`
+      })
+      .then(response => {
+        this.article_A = response.data.A
+        this.article_B = response.data.B
+        this.comments = response.data.comments
+        console.log(this.comments)
+        this.best_A = response.data.best_A
+        this.best_B = response.data.best_B
+      })
     })
   },
   unmounted () {},

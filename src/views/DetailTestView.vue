@@ -69,7 +69,7 @@
 </template>
 
 <script>
-const url = 'http://localhost:8000/articles/'
+const url = 'http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/articles/'
 import loginStore from '../store/index'
 import axios from '../axios/index'
 import axios2 from 'axios'
@@ -114,7 +114,7 @@ export default {
           history.go(-1)
       })
 
-    axios.get('http://localhost:8000/articles/random/article/')
+    axios.get('http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/articles/random/article/')
     .then((response) =>{
       this.random_index = response.data.article_pk
     })
@@ -123,7 +123,7 @@ export default {
   methods: {
     pick() {
       axios2({
-        url : `http://localhost:8000/articles/${this.$route.params.pk}/`,
+        url : `http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/articles/${this.$route.params.pk}/`,
         method : 'POST',
         data : {
           user_pk: this.user_pk,
@@ -137,7 +137,7 @@ export default {
       })
     },
     submitForm() {
-      axios.post(`http://localhost:8000/articles/${this.$route.params.pk}/comment/`, this.$data)
+      axios.post(`http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/articles/${this.$route.params.pk}/comment/`, this.$data)
       .then((response) => {
         axios({ // 댓글 작성해서 리스트를 다시 불러옴
           method: 'GET',
@@ -163,7 +163,7 @@ export default {
       },
     like(e){ // 좋아요
       if (this.logincheck){
-        const comment_like_url = `http://localhost:8000/articles/${this.$route.params.pk}/comment/${e}/like/`
+        const comment_like_url = `http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/articles/${this.$route.params.pk}/comment/${e}/like/`
         axios.post(comment_like_url)
         .then((res) => {
           console.log(res)
@@ -192,7 +192,7 @@ export default {
       this.show.splice(index,1,!this.show[index])
     },
     submitreForm(pk) {
-      axios.post(`http://localhost:8000/articles/${this.$route.params.pk}/comment/${pk}/recomment/`, this.$data)
+      axios.post(`http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/articles/${this.$route.params.pk}/comment/${pk}/recomment/`, this.$data)
       .then((response) => {
         axios({ // 댓글 작성해서 리스트를 다시 불러옴
           method: 'GET',
