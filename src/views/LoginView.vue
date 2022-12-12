@@ -11,9 +11,15 @@
         <input type="password" id="password" v-model="password" class="input-text"/>
       </div>
       <button @click="loginSubmit()" class="form-btn my-shadow">로그인</button>
-      <div class="sc-login-div">
-        <img @click="googlelogin()" src='../assets/구글로그인.png' class="google_btn"> 
-        <img @click="kakaologin()" src='../assets/카카오로그인.png' class="kakao_btn">
+      <a href="/signup" class="alert-text signup-text">회원이 아니신가요?</a>
+      <div class="social-text">
+        <hr>
+        <div class="alert-text" style="margin: 10px;">소셜로 로그인하기</div>
+        <hr>
+      </div>
+      <div class="social-container">
+        <img @click="googlelogin()" src='../assets/구글로그인2.png' class="google_btn my-shadow"> 
+        <img @click="kakaologin()" src='../assets/카카오로그인2.png' class="kakao_btn my-shadow">
       </div>
     </div>
   </div>
@@ -96,7 +102,7 @@ export default {
   background-color: pink;
   border: 0;
   padding: 7px 0;
-  margin-top: 50px;
+  margin-top: 40px;
   border-radius:  3px;
   font-family: 'Pretendard-Regular';
   font-size: 15px;
@@ -122,8 +128,36 @@ export default {
   border-radius:  3px;
   transition: 0.14s all ease-in;
 }
-.sc-login-div{
-  width : 350px;
-  margin:auto;
+.alert-text {
+  display: block;
+  font-size: 15px;
+  color: gray;
+  margin: 15px 0;
+}
+.social-text {
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  margin: 40px 0 20px;
+}
+.signup-text:hover {
+  color: black;
+}
+.social-text>hr {
+  color: lightgray;
+  width: 20%;
+  margin: 0;
+}
+.social-container {
+  display: flex;
+  justify-content: center;
+}
+.social-container>img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%;
+  padding: 0;
+  margin: 0 15px;
 }
 </style>
