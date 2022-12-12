@@ -29,7 +29,7 @@ const loginStore = {
   actions: {
     login (dispatch, loginObj) {
       axios
-        .post('http://localhost:8000/accounts/login/', loginObj) // 로그인 URL로 ID, PW를 보냄
+        .post('http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/accounts/login/', loginObj) // 로그인 URL로 ID, PW를 보냄
         .then((res) => {
           const token = res.data.access_token
           localStorage.setItem('access_token', token) // 토큰을 저장함
@@ -45,7 +45,7 @@ const loginStore = {
         })
     },
     kakaologin(dispatch, code){
-      axios.get(`http://localhost:8000/accounts/kakao/callback/?code=${code}`)
+      axios.get(`http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/accounts/kakao/callback/?code=${code}`)
       .then((response) => {
         console.log(response)
         const token = response.data.access_token
@@ -60,7 +60,7 @@ const loginStore = {
       })
     },
     googlelogin(dispatch, code){
-      axios.get(`http://localhost:8000/accounts/google/callback/?code=${code}`)
+      axios.get(`http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/accounts/google/callback/?code=${code}`)
       .then((response) => {
         console.log(response)
         const token = response.data.access_token
@@ -86,7 +86,7 @@ const loginStore = {
         }
       }
       axios
-        .get('http://localhost:8000/accounts/user/', config) // 가져온 토큰을 헤더에 Authorization 로 담아서 요청을 보냄
+        .get('http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/accounts/user/', config) // 가져온 토큰을 헤더에 Authorization 로 담아서 요청을 보냄
         .then((response) => {
           console.log('accounts/user에 보냄')
           const userInfo = {
