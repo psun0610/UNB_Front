@@ -82,7 +82,7 @@ export default {
               this.getPosts()
             }
           }
-        },200)
+        },500)
       }
 
     }
