@@ -52,6 +52,7 @@ const url = 'https://www.unbback.cf/articles/'
 import { csrftoken } from '../csrf/csrf_token'
 import TodayKing from '../components/TodayKing'
 import axios from 'axios'
+import * as _ from 'lodash'
 export default {
   components: {
     TodayKing
@@ -69,14 +70,21 @@ export default {
   created() { },
   mounted() {
     this.getPosts()
+    var throttler
     window.onscroll = () => {
-      this.scroll_height = window.scrollY || document.documentElement.scrollTop;
-      if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-        if (this.hasNext) {
-          this.page += 1
-          this.getPosts()
-        }
+      if (!throttler){
+        throttler = setTimeout(()=>{
+          throttler=null
+          this.scroll_height = window.scrollY || document.documentElement.scrollTop;
+          if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+            if (this.hasNext) {
+              this.page += 1
+              this.getPosts()
+            }
+          }
+        },200)
       }
+
     }
 
   },
