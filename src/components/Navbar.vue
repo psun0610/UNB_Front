@@ -5,7 +5,7 @@
       <div class="left-nav">
         <a :href="'/Detail/'+random_index">밸런스게임</a>
         <router-link to="/all-list">토론리스트</router-link>
-        <router-link to="/create-game">만들기</router-link>
+        <router-link to="/create-game" v-if="logincheck">만들기</router-link>
       </div>
       <router-link to="/"><img src="../assets/로고1.png" class="nav-logo"></router-link>
       <div class="right-nav" v-if="logincheck">
@@ -64,7 +64,7 @@ nav {
   width: 100%;
   box-shadow: 0 0 20px rgba(133, 133, 133, 0.378);
   background-color: white;
-  z-index: 1;
+  z-index: 1000;
 }
 nav a {
   color: black;

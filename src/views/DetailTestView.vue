@@ -1,7 +1,8 @@
 <template>
   <div class="detail-container">
 
-    <h1 class="kg-font title">{{ article_title }}</h1>
+    <h1 v-if="article_title" class="kg-font title">{{ article_title }}</h1>
+    <h1 v-else class="kg-font title">둘 중 하나를 고르세요</h1>
     <div class="balance-wrap">
       <div :class="{'after-pick-wrap': pick_result}" style="z-index: 100;"></div>
       <div class="after-pick-next-wrap" v-if="pick_result!=null" @click="nextbutton()">
@@ -65,6 +66,14 @@
     </form>
     <!-- 댓글 출력 -->
     <div>
+      <!-- <BestCommentVue
+      :comment="best_A"
+      :pick=1
+      ></BestCommentVue> -->
+      <!-- <BestCommentVue
+      :comment="best_B"
+      :pick=2
+      ></BestCommentVue> -->
       <div v-for="(comment, index) in article_comment" :key="index" style="margin:2rem 0">
         <!-- A B 픽마다 색깔 바꾸기 -->
         <div class="comment-div" :class="{'a_shadow': comment.pick == 1, 'b_shadow': comment.pick == 2}">
@@ -76,8 +85,8 @@
           <div class="comment">
             <div class="comment-profile">
               <p class="comment-name">{{ comment.user }}</p>
-              <i class="fa-regular fa-heart heart" v-show="!comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
-              <i class="fa-solid fa-heart heart" v-show="comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
+              <i class="fa-regular fa-heart heart" style="color: rgb(255 0 89);" v-show="!comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
+              <i class="fa-solid fa-heart heart" style="color: rgb(255 0 89);" v-show="comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
               <button type="button" class="my-shadow no-kg-font" :class="`${comment.pk}`" @click="recommenttoggle(index)">답글</button>
             </div>
             <div class="comment-content">{{ comment.content }} </div>
@@ -112,6 +121,7 @@ const url = 'https://www.unbback.cf/articles/'
 import loginStore from '../store/index'
 import axios from '../axios/index'
 import axios2 from 'axios'
+import BestCommentVue from '@/components/BestComment.vue'
 export default {
   data(){
     return {
@@ -130,12 +140,15 @@ export default {
       user_pk : '',
       purl: 'https://www.unbalace.cf/userprofile/',
       pick_result: null,
+      best_A: {},
+      best_B: {},
       }
+  },
+  components: {
+    BestCommentVue
   },
   mounted() {
     this.logincheck = loginStore.state.loginStore.isLogin // 로그인 체크
-    console.log(this.logincheck)
-
     if (this.logincheck) {
       this.user_pk = loginStore.state.loginStore.userInfo.pk // 로그인 체크
     }
@@ -151,6 +164,8 @@ export default {
         this.article_comment = response.data.comments
         this.show = Array(this.article_comment.length).fill(false)
         this.comments = response.data.comments
+        this.best_A = response.data.best_A
+        this.best_B = response.data.best_B
       })
       .catch(response => {
           alert('없는 글입니다.')
