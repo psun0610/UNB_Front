@@ -41,7 +41,7 @@ const loginStore = {
           this.dispatch('getMemberInfo') // 유저 정보를 가져오는 actions 호출
         })
         .catch(() => {
-          alert('소셜 로그인 오류. 관리자에게 문의하세요.')
+          alert('로그인 오류. 관리자에게 문의하세요.')
         })
     },
     kakaologin(dispatch, code){
