@@ -35,8 +35,6 @@ const loginStore = {
           localStorage.setItem('access_token', token) // 토큰을 저장함
           const refretoken = res.data.refresh_token
           localStorage.setItem('refresh_token', refretoken) // 토큰을 저장함
-          console.log('토큰을 받아옴')
-          console.log(res)
           axios.defaults.headers.common.Authorization = `Bearer ${token}`
           this.dispatch('getMemberInfo') // 유저 정보를 가져오는 actions 호출
         })
@@ -47,7 +45,6 @@ const loginStore = {
     kakaologin(dispatch, code){
       axios.get(`https://www.unbback.cf/accounts/kakao/callback/?code=${code}`)
       .then((response) => {
-        console.log(response)
         const token = response.data.access_token
         localStorage.setItem('access_token', token) // 토큰을 저장함
         const refretoken = response.data.refresh_token
@@ -62,7 +59,6 @@ const loginStore = {
     googlelogin(dispatch, code){
       axios.get(`https://www.unbback.cf/accounts/google/callback/?code=${code}`)
       .then((response) => {
-        console.log(response)
         const token = response.data.access_token
         localStorage.setItem('access_token', token) // 토큰을 저장함
         const refretoken = response.data.refresh_token
@@ -76,7 +72,7 @@ const loginStore = {
     },
     logouttest_act ({ commit }) { // 로그아웃 actions
       commit('logoutTest')
-      window.location.href="http://localhost:8080/"
+      window.location.href="https://www.unbalace.cf/"
     },
     getMemberInfo ({ commit }) { // 토큰으로 유저 정보를 받아오는 코드
       const token = localStorage.getItem('access_token') // 저장된 access 토큰을 가져옴
@@ -88,16 +84,12 @@ const loginStore = {
       axios
         .get('https://www.unbback.cf/accounts/user/', config) // 가져온 토큰을 헤더에 Authorization 로 담아서 요청을 보냄
         .then((response) => {
-          console.log('accounts/user에 보냄')
           const userInfo = {
             pk: response.data.pk,
             email: response.data.email,
           } // 유저 정보를 받아옴
           commit('loginSuccess', userInfo) // mutations 호출
-          console.log('유저 정보 받아옴')
-          console.log(userInfo)
-          console.log(loginStore.state.isLogin)
-          window.location.href="http://localhost:8080/logincheck/"
+          window.location.href="https://www.unbalace.cf/"
           // router.push('logincheck')
         })
         .catch(() => {

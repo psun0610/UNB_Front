@@ -49,14 +49,14 @@ export default {
       this.$store.dispatch('login', saveData)
     },
     googlelogin() {
-      const SOCIAL_AUTH_GOOGLE_CLIENT_ID= "594914704717-2s7b5k1fjai3o89vnc66hc0fiisa15uq.apps.googleusercontent.com"
-      const GOOGLE_CALLBACK_URI= 'http://localhost:8080/login'
+      const SOCIAL_AUTH_GOOGLE_CLIENT_ID= process.env.SOCIAL_AUTH_GOOGLE_CLIENT_ID
+      const GOOGLE_CALLBACK_URI= 'https://www.unbalace.cf/login'
       const scope = "https://www.googleapis.com/auth/userinfo.email"
       window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${SOCIAL_AUTH_GOOGLE_CLIENT_ID}&response_type=code&redirect_uri=${GOOGLE_CALLBACK_URI}&scope=${scope}`
     },
     kakaologin() {
-      const KAKAO_REST_API_KEY ='5382360b9e66802f9a69f0cab2e2349d'
-      const KAKAO_REDIRECT_URI = 'http://localhost:8080/login'
+      const KAKAO_REST_API_KEY =process.env.KAKAO_REST_API_KEY
+      const KAKAO_REDIRECT_URI = 'https://www.unbalace.cf/login'
       window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code&scope=account_email`
   }
 }

@@ -83,7 +83,6 @@ export default {
   unmounted() { },
   methods: {
     getPosts() {
-      console.log('Get Posts')
       axios.get(url + '?page=' + this.page)
         .then(response => {
           this.hasNext = false
@@ -95,7 +94,6 @@ export default {
           }
         })
         .catch(error => {
-          console.log(error)
         })
     }
   }

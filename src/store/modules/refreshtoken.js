@@ -12,7 +12,6 @@ const refreshtoken = {
         .then((response) => {
           const newToken = response.data.access
           localStorage.setItem('access_token', newToken)
-          console.log(newToken)
         })
     }
   }
