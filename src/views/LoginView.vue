@@ -14,6 +14,7 @@
       <div>
         <img @click="googlelogin()" src='https://developers.kakao.com/tool/resource/static/img/button/login/full/ko/kakao_login_medium_narrow.png'> 
         <div> ↑↑↑↑↑얘는 구글임↑↑↑ </div>
+        <div>테스트입니다</div>
         <img @click="kakaologin()" src='https://developers.kakao.com/tool/resource/static/img/button/login/full/ko/kakao_login_medium_narrow.png'> 
       </div>
     </div>

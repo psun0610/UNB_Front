@@ -227,7 +227,7 @@ export default {
     choice_A() {
       this.Choice_AB = 'A'
       console.log('A')
-      // axios.post
+      // axios.post(url + `${this.$route.params.pk}/`)
     },
     choice_B() {
       this.Choice_AB = 'B'
