@@ -24,7 +24,7 @@
 </template>
 <script>
 import axios from 'axios'
-const url = 'http://unb-env.eba-5jaav4mx.ap-northeast-2.elasticbeanstalk.com/accounts/';
+const url = 'https://www.unbback.cf/accounts/';
 
 export default {
   name: 'SignupForm',

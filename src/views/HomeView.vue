@@ -33,7 +33,7 @@
               <div class="comments">
                 <div class="best-comment">
                   <div style="background-color:#FF719B;">BEST</div>
-                  <p class="best-p">베스트 댓글 테스트</p>
+                  <p class="best-p">{{this.best_A}}</p>
                 </div>
                 <p>테스트 댓글 테스트 댓글 테스트 댓글 테스트 댓글 테스트 댓글 테스트 댓글 테스트 댓글 테스트 댓글 테스트 댓글 테스트 댓글 테스트 댓글 테스트 댓글 테스트 댓글 테스트 댓글 </p>
                 <p>테스트 댓글</p>
@@ -53,7 +53,7 @@
               <div class="comments">
                 <div class="best-comment">
                   <div style="background-color:#4BBEFF;">BEST</div>
-                  <p class="best-p">베스트 댓글 테스트</p>
+                  <p class="best-p">{{this.best_A}}</p>
                 </div>
                 <p>테스트 댓글</p>
                 <p>테스트 댓글</p>
@@ -94,11 +94,10 @@ export default {
       this.random_index = response.data.article_pk
     })
 
-    axios.get('https://www.unbback.cf/articles/random/article/') // 오늘의 토론 URL 넣을 자리
+    axios.get('https://www.unbback.cf/articles/today/article/') // 오늘의 토론 URL 넣을 자리
     .then((response) =>{
       this.today_pk = response.data.article_pk
-      console.log(this.today_pk)
-      axios({ // 글 목록 axios
+      axios({ // 글 axios
       method: 'GET',
       url: `https://www.unbback.cf/articles/${this.today_pk}/`
       })

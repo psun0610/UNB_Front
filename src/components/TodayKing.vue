@@ -37,19 +37,16 @@ export default {
     .then((resposne)=>{
       axios.get(url + 'accounts/' + resposne.data[0].user + '/my_page/',)
       .then((res) => {
-        console.log(res.data.userinfo.nickname)
         this.today_1st = res.data.userinfo.nickname
       })
 
       axios.get(url + 'accounts/' + resposne.data[1].user + '/my_page/',)
       .then((res) => {
-        console.log(res.data.userinfo.nickname)
         this.today_2nd = res.data.userinfo.nickname
       })
 
       axios.get(url + 'accounts/' + resposne.data[2].user + '/my_page/',)
       .then((res) => {
-        console.log(res.data.userinfo.nickname)
         this.today_3rd = res.data.userinfo.nickname
       })
 
