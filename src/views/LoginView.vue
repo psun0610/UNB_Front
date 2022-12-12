@@ -55,7 +55,7 @@ export default {
       this.$store.dispatch('login', saveData)
     },
     googlelogin() {
-      const SOCIAL_AUTH_GOOGLE_CLIENT_ID= process.env.SOCIAL_AUTH_GOOGLE_CLIENT_ID
+      const SOCIAL_AUTH_GOOGLE_CLIENT_ID= process.env.VUE_APP_SOCIAL_AUTH_GOOGLE_CLIENT_ID
       const GOOGLE_CALLBACK_URI= 'https://www.unbalace.cf/login'
       const scope = "https://www.googleapis.com/auth/userinfo.email"
       window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${SOCIAL_AUTH_GOOGLE_CLIENT_ID}&response_type=code&redirect_uri=${GOOGLE_CALLBACK_URI}&scope=${scope}`
