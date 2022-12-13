@@ -10,10 +10,7 @@
         </div>
         <router-link to="/"><img src="../assets/로고1.png" class="nav-logo"></router-link>
         <div class="right-nav" v-if="logincheck">
-          <router-link
-            :to="{ name: 'UserDetailView', params: { pk: this.userInfo.pk } }"
-          >
-            마이페이지
+        <a @click="mypage()">마이페이지</a>
           </router-link>
           <a @click="logoutplz()">로그아웃</a>
         </div>
@@ -40,7 +37,7 @@
           <div v-if="logincheck">
             <li><router-link to="/create-game" v-if="logincheck">만들기</router-link></li>
             <hr style="width: 70%; margin: 30px auto; color: gray">
-            <li><router-link :to="{ name: 'UserDetailView', params: { pk: this.userInfo.pk } }">마이페이지</router-link></li>
+            <li><a @click="mypage()">마이페이지</a>마이페이지</a></li>
             <li><a @click="logoutplz()">로그아웃</a></li>
           </div>
           <div v-else>
@@ -93,6 +90,9 @@ export default {
     handleResize(event) {
       var innerWidth = window.innerWidth;
       innerWidth <= "650" ? this.responsive = true : this.responsive = false;
+    },
+    mypage() {
+      window.location.href="https://www.unbalace.cf/userprofile/" + this.userInfo.pk
     }
   }
 }
