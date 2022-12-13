@@ -140,8 +140,6 @@ export default {
       user_pk : '',
       purl: 'https://www.unbalace.cf/userprofile/',
       pick_result: null,
-      best_A: {},
-      best_B: {},
       }
   },
   components: {
