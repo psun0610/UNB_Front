@@ -51,10 +51,10 @@
     </form>
 
     <div>
-    <!-- 베댓 A 출력 -->
+      <!-- 베댓 A 출력 -->
       <div class='best_a_shadow' v-if="best_A">
         <a v-if="best_A" :href="purl + `${best_A.userpk}` + '/'">
-        <img v-if="best_A" :src="`${best_A.userbadge.image}`" class="my-shadow comment-profile-img">
+          <img v-if="best_A" :src="`${best_A.userbadge.image}`" class="my-shadow comment-profile-img">
         </a>
         <div class="comment">
           <div class="comment-profile">
@@ -67,7 +67,7 @@
       <!-- 베댓 B -->
       <div class='best_b_shadow' v-if="best_B">
         <a v-if="best_B" :href="purl + `${best_B.userpk}` + '/'">
-        <img v-if="best_B" :src="`${best_B.userbadge.image}`" class="my-shadow comment-profile-img">
+          <img v-if="best_B" :src="`${best_B.userbadge.image}`" class="my-shadow comment-profile-img">
         </a>
         <div class="comment">
           <div class="comment-profile">
@@ -101,7 +101,7 @@
                 v-show="!comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
               <i class="fa-solid fa-heart heart" style="color: rgb(255 0 89);"
                 v-show="comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
-              <p> {{comment.total_likes}} </p>
+              <p> {{ comment.total_likes }} </p>
               <button type="button" class="my-shadow no-kg-font" :class="`${comment.pk}`"
                 @click="recommenttoggle(index)" style="margin-right: 2px;">답글</button>
               <button type="button" class="my-shadow no-kg-font" :class="`${comment.pk}`"
@@ -128,7 +128,9 @@
             <img :src="`${soncomment.userbadge.image}`" class="my-shadow comment-profile-img">
           </a>
           <div class="comment">
-            <p class="comment-name" style="margin-bottom: 8px;">{{ soncomment.user }}</p>
+            <p class="comment-name" style="margin-bottom: 8px;">{{ soncomment.user }}<button
+                @click="recommentDelete(comment.pk, soncomment.pk)" style="background-color:red; margin-left: 5px;"
+                class="my-shadow no-kg-font">삭제</button></p>
             <div class="comment-content">{{ soncomment.content }}</div>
           </div>
         </div>
@@ -161,8 +163,8 @@ export default {
       userpk: '',
       purl: 'https://www.unbalace.cf/userprofile/',
       pick_result: null,
-      best_A : null,
-      best_B : null,
+      best_A: null,
+      best_B: null,
 
     }
   },
@@ -194,7 +196,7 @@ export default {
         // this.best_B_likeusers = response.data.best_B.like_users
         // this.best_B_userbadge = response.data.best_B.userbadge
         console.log(response.data.best_B)
-        }
+      }
       )
       .catch(err => {
         console.log(err)
@@ -256,6 +258,35 @@ export default {
     commentDelete(pk) {
       if (this.logincheck) {
         axios.delete(url + `${this.$route.params.pk}/comment/${pk}/`)
+          .then((response) => {
+            axios({ // 댓글 작성해서 리스트를 다시 불러옴
+              method: 'GET',
+              url: url + this.$route.params.pk + '/',
+              headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('access_token')
+              }
+            })
+              .then(response => {
+                this.article = response.data
+                this.article_A = response.data.A
+                this.article_B = response.data.B
+                this.article_comment = response.data.comments
+                this.show = Array(this.article_comment.length).fill(false)
+                this.content = null
+              })
+              .catch(response => {
+              })
+          })
+          .catch((err) => {
+            console.error(err)
+          })
+      } else {
+        alert('로그인 후 가능합니다.')
+      }
+    },
+    recommentDelete(pk, pk2) {
+      if (this.logincheck) {
+        axios.delete(url + `${this.$route.params.pk}/comment/${pk}/recomment/${pk2}/`)
           .then((response) => {
             axios({ // 댓글 작성해서 리스트를 다시 불러옴
               method: 'GET',
@@ -582,6 +613,7 @@ article {
 .b_shadow {
   box-shadow: rgba(75, 172, 242, 0.5) 4px 2px 16px 0px;
 }
+
 .best_a_shadow {
   display: flex;
   align-items: center;
@@ -590,6 +622,7 @@ article {
   background-color: rgba(255, 113, 155, 0.5);
   box-shadow: rgba(255, 113, 155, 0.5) 4px 2px 16px 0px;
 }
+
 .best_b_shadow {
   display: flex;
   align-items: center;
@@ -605,6 +638,7 @@ article {
   padding: 10px 30px;
   margin: 30px 0;
 }
+
 .bestcomment-div {
   display: flex;
   align-items: center;
@@ -636,6 +670,7 @@ article {
   font-weight: bold;
   text-align: start;
 }
+
 .comment-content {
   width: 100%;
   text-align: start;
@@ -665,13 +700,16 @@ article {
   .balance-wrap {
     height: 360px;
   }
+
   .balance-back {
     padding: 40px 30px;
     height: 350px;
   }
+
   .AB {
-  font-size: 18px;
+    font-size: 18px;
   }
+
   .title {
     font-size: 27px;
     height: 15px;
@@ -680,10 +718,12 @@ article {
     margin-bottom: 50px;
   }
 }
+
 @media (max-width: 550px) {
   .balance-wrap {
     height: 310px;
   }
+
   .balance-back {
     height: 300px;
   }
