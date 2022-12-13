@@ -10,8 +10,7 @@
         </div>
         <router-link to="/"><img src="../assets/로고1.png" class="nav-logo"></router-link>
         <div class="right-nav" v-if="logincheck">
-        <a @click="mypage()">마이페이지</a>
-          </router-link>
+          <a @click="mypage()">마이페이지</a>
           <a @click="logoutplz()">로그아웃</a>
         </div>
         <div class="right-nav" v-else>
@@ -37,7 +36,7 @@
           <div v-if="logincheck">
             <li><router-link to="/create-game" v-if="logincheck">만들기</router-link></li>
             <hr style="width: 70%; margin: 30px auto; color: gray">
-            <li><a @click="mypage()">마이페이지</a>마이페이지</a></li>
+            <li><a @click="mypage()">마이페이지</a></li>
             <li><a @click="logoutplz()">로그아웃</a></li>
           </div>
           <div v-else>
