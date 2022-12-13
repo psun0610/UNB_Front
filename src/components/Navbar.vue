@@ -9,11 +9,9 @@
       </div>
       <router-link to="/"><img src="../assets/로고1.png" class="nav-logo"></router-link>
       <div class="right-nav" v-if="logincheck">
-        <router-link
-          :to="{ name: 'UserDetailView', params: { pk: this.userInfo.pk } }"
-        >
+        <a @click="mypage()">        
           마이페이지
-        </router-link>
+        </a>
         <a @click="logoutplz()">로그아웃</a>
       </div>
       <div class="right-nav" v-else>
@@ -52,6 +50,9 @@ export default {
     logoutplz () {
       this.$store.dispatch('logouttest_act')
     },
+    mypage() {
+      window.location.href="https://www.unbalace.cf/userprofile/" + this.userInfo.pk
+    }
   }
 }
 </script>
