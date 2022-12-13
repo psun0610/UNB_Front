@@ -73,8 +73,8 @@ export default {
   },
   mounted() {
     this.logincheck = loginStore.state.loginStore.isLogin
-    console.log('↓↓로그인 여부 ↓↓')
-    console.log(loginStore.state.loginStore.isLogin)
+    // console.log('↓↓로그인 여부 ↓↓')
+    // console.log(loginStore.state.loginStore.isLogin)
     axios.get('https://www.unbback.cf/articles/random/article/')
     .then((response) =>{
       this.random_index = response.data.article_pk
