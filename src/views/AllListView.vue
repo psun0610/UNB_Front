@@ -20,7 +20,7 @@
           </div>
 
           <!-- exp 바 -->
-          <div class="exp-wrap" v-if="(article.ABcount.A_percent & article.ABcount.B_percent)">
+          <div class="exp-wrap" v-if="(article.ABcount.A_percent || article.ABcount.B_percent)">
             <div class="exp" :style="`width:${article.ABcount.A_percent}%`" style="background-color: var(--mypink);">
               <p> {{ article.ABcount.A_pick }} ({{ article.ABcount.A_percent }}%)</p>
             </div>
@@ -72,9 +72,9 @@ export default {
     this.getPosts()
     var throttler
     window.onscroll = () => {
-      if (!throttler){
-        throttler = setTimeout(()=>{
-          throttler=null
+      if (!throttler) {
+        throttler = setTimeout(() => {
+          throttler = null
           this.scroll_height = window.scrollY || document.documentElement.scrollTop;
           if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
             if (this.hasNext) {
@@ -82,7 +82,7 @@ export default {
               this.getPosts()
             }
           }
-        },500)
+        }, 500)
       }
 
     }
