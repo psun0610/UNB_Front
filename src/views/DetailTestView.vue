@@ -338,6 +338,7 @@ export default {
   transition: all .5s ease;
   overflow: hidden;
 }
+
 .a:hover {
   z-index: 1;
   scale: 1.02;
@@ -537,6 +538,35 @@ article {
   padding: 7px 30px 7px 40px;
   border-left: 2px solid rgb(185, 185, 185);
   margin: 0 0 0 70px;
+}
+
+
+@media (max-width: 750px) {
+  .balance-wrap {
+    height: 360px;
+  }
+  .balance-back {
+    padding: 40px 30px;
+    height: 350px;
+  }
+  .AB {
+  font-size: 18px;
+  }
+  .title {
+    font-size: 27px;
+    height: 15px;
+    padding: 0px 30px;
+    border-bottom: 25px solid rgb(224, 224, 224);
+    margin-bottom: 50px;
+  }
+}
+@media (max-width: 550px) {
+  .balance-wrap {
+    height: 310px;
+  }
+  .balance-back {
+    height: 300px;
+  }
 }
 
 </style>

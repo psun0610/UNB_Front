@@ -3,14 +3,14 @@
   <!-- 오늘의 토론왕 -->
     <div class="today-king my-shadow">
       <div class="today-king-title">
-        오늘의 토론왕<img src="../assets/crown.png" style="width: 50px;">
+        오늘의 토론왕<img src="../assets/crown.png">
       </div>
       <div class="rollingbanner">
           <div class="wrap">
               <ul>
-                <li class="current"><a href="#">1. {{today_1st}}</a></li>
-                <li class="next"><a href="#">2. {{today_2nd}}</a></li>
-                <li class="prev"><a href="#">3. {{today_3rd}}</a></li>
+                <li class="current"><a :href="`/userprofile/${first_pk}`">1. {{today_1st}}</a></li>
+                <li class="next"><a :href="`/userprofile/${second_pk}`">2. {{today_2nd}}</a></li>
+                <li class="prev"><a :href="`/userprofile/${third_pk}`">3. {{today_3rd}}</a></li>
               </ul>
           </div>
       </div>
@@ -26,8 +26,11 @@ export default {
     return {
       sampleData:'',
       today_1st:'',
+      first_pk:'',
       today_2nd:'',
+      second_pk:'',
       today_3rd:'',
+      third_pk:'',
       interval:''
     }
   },
@@ -35,18 +38,21 @@ export default {
   created () {},
   mounted () {
     axios.get(url+'profiles/best_user/')
-    .then((resposne)=>{
-      axios.get(url + 'accounts/' + resposne.data[0].user + '/my_page/',)
+    .then((response)=>{
+      this.first_pk = response.data[0].user
+      this.second_pk = response.data[1].user
+      this.third_pk = response.data[2].user
+      axios.get(url + 'accounts/' + response.data[0].user + '/my_page/',)
       .then((res) => {
         this.today_1st = res.data.userinfo.nickname
       })
 
-      axios.get(url + 'accounts/' + resposne.data[1].user + '/my_page/',)
+      axios.get(url + 'accounts/' + response.data[1].user + '/my_page/',)
       .then((res) => {
         this.today_2nd = res.data.userinfo.nickname
       })
 
-      axios.get(url + 'accounts/' + resposne.data[2].user + '/my_page/',)
+      axios.get(url + 'accounts/' + response.data[2].user + '/my_page/',)
       .then((res) => {
         this.today_3rd = res.data.userinfo.nickname
       })
@@ -94,7 +100,7 @@ export default {
   border-left: 5px solid #4BBEFF;
   border-bottom: 5px solid #FF719B;
   border-right: 5px solid #FF719B;
-  padding: 0 7vmin;
+  padding: 0 1vmin 0 7vmin;
   font-weight: bold;
 }
 .today-king-title {
@@ -102,6 +108,9 @@ export default {
   align-items: center;
   font-weight: 400;
   font-size: 17px;
+}
+.today-king-title>img {
+  width: 50px;
 }
 .rollingbanner{
     position: relative;
@@ -149,5 +158,31 @@ export default {
     -webkit-box-orient:vertical;
     overflow: hidden;
     color: #000;
+}
+
+@media (max-width: 650px){
+  .today-king {
+  padding: 0 6vmin;
+  font-weight: bold;
+  }
+  .today-king-title {
+  display: flex;
+  align-items: center;
+  font-weight: 400;
+  font-size: 15px;
+  }
+  .today-king-title>img {
+  width: 38px;
+  }
+  .rollingbanner{
+    position: relative;
+    width: 100px;
+    height: 32px;
+    font-size: 1rem;
+    letter-spacing: -1px;
+    padding: 7px 15px;
+    box-sizing: border-box;
+    border-radius: 16px;
+}
 }
 </style>

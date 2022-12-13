@@ -179,8 +179,15 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   margin: 0;
+  width: 100%;
+  font-size: 16px;
 }
-
+@media (max-width: 650px) {
+  .exp>p {
+    font-size: 14px;
+    min-width: 80px;
+  }
+}
 .top-btn {
   position: fixed;
   bottom: 100px;

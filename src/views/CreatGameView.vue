@@ -68,7 +68,7 @@ export default {
 .create-div {
   max-width: 850px;
   margin: 25vmin auto;
-  padding: 80px 0px;
+  padding: 80px 15px;
 }
 .create-btn {
   width: 100%;
@@ -127,5 +127,6 @@ textarea:focus, .title-input:focus {
 .vs {
   font-weight: bold;
   font-size: 20px;
+  margin: 0 5px;
 }
 </style>

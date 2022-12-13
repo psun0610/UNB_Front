@@ -4,12 +4,12 @@
       <!-- 현재 뱃지 -->
       <img :src="current_badge" class="current-badge my-shadow" @click="isFolding()">
       <button v-if="usercheck && !edit_open" class="edit-btn no-kg-font my-shadow" @click="editOpen()">프로필 편집</button>
-      <button v-else-if="usercheck" class="edit-done-btn no-kg-font my-shadow" @click="[editOpen(), nameChange()]">완료</button>
+      <button v-else-if="usercheck" class="edit-done-btn no-kg-font my-shadow" @click="[editClose(), nameChange()]">완료</button>
     </div>
     <!-- 뱃지컬렉션 -->
       <div class="badge-collection my-shadow" v-if="isOpen && usercheck">
         <div v-for="(badge, index) in user_badges" :key="index"><!-- @click="badgeChange"-->
-            <img :src="badge[0]" class="my-shadow" @click="badgeChange(badge)" style="cursor:pointer;"/> 
+            <img :src="badge[0]" class="my-shadow" @click="badgeChange(badge)"/> 
         </div>
       </div>
     <!-- 이름과 활동지수 -->
@@ -81,9 +81,16 @@
         <div v-else v-for="(com, index) in comlist.slice().reverse()" :key="index" class="comlist">
           <router-link :to="'/Detail/' + com.article_pk" class="article-router">
             <div class="article artlist my-shadow">
-              <h3 class="kg-font" style="font-size: 22px; margin: 0 10px;">{{ com.article }}</h3>
-              <!-- <h3 class="kg-font" style="font-size: 20px; margin: 0 10px;">{{ article.article.title }}</h3> -->
-              <p style="margin: 0; font-size: 16px;">> {{ com.content }}</p>
+              <h3 class="kg-font" style="font-size: 22px; margin: 0 0 10px;">{{ com.article }}</h3>
+              <div style="display: grid; grid-template-columns: 8fr 1fr 8fr; margin-bottom: 10px;">
+                <h4 style="margin: 0;">{{ com.A }}</h4>
+                <h3 class="kg-font" style="margin: 0 10px;">
+                  <span style="color: var(--mypink)">V</span>
+                  <span style="color: var(--myblue)">S</span>
+                </h3>
+                <h4 style="margin: 0;">{{ com.B }}</h4>
+              </div>
+              <p style="margin: 0; font-size: 16px;">{{ com.content }}</p>
             </div>
           </router-link>
         </div>
@@ -192,17 +199,12 @@ export default {
       }) 
     },
     editOpen() {
-      if(this.edit_open == true) {
-        this.edit_open = false
-      } else {
-        this.edit_open = true
-      }
-      if (this.isOpen == true) {
-        this.isOpen = false
-      } else {
-        this.isOpen = true
-      }
-      console.log(this.edit_open)
+      this.edit_open = true
+      this.isOpen = true
+    },
+    editClose() {
+      this.edit_open = false
+      this.isOpen = false
     },
     nameChange() {
       axios({
@@ -239,7 +241,7 @@ export default {
 }
 .container2 {
   margin: 100px auto;
-  width: 500px;
+  max-width: 500px;
 }
 .badge-edit-wrap {
   margin: 0 auto;
@@ -304,6 +306,11 @@ export default {
   object-fit: cover;
   border-radius: 50%;
   cursor: pointer;
+  transition: all .05s ease-in;
+}
+.badge-collection img:hover {
+  scale: 1.05;
+  transition: all .05s ease-in;
 }
 
 /* 이름과 활동지수 */
