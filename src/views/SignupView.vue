@@ -47,20 +47,40 @@ export default {
       if (this.password1 != this.password2) {
         alert('비밀번호가 일치하지 않습니다.')
       }
+      if(!this.nickname || !this.email || !this.password1 || !this.password2){
+        alert('필수 항목을 입력해주세요.')
+      }
       axios.post(url + 'registration', this.$data)
         .then(response => {
-          console.log('회원가입 성공')
-          console.log(response)
+          // console.log('회원가입 성공')
+          // console.log(response)
           const token = response.data.access_token
           localStorage.setItem('access_token', token) // 토큰을 저장함
           const refretoken = response.data.refresh_token
           localStorage.setItem('refresh_token', refretoken) // 토큰을 저장함
           this.$store.dispatch('getMemberInfo') // 유저 정보를 가져오는 actions 호출
           alert('회원가입 성공')
-          router.push('logincheck')
+          // router.push('logincheck')
         })
-        .catch(response => {
-          console.log('fail', this, response)
+        .catch(error => {
+          const err = error.response.data
+          try {
+            if (err.non_field_errors[0] == '비밀번호가 email와 너무 유사합니다.'){
+              alert('비밀번호가 email와 너무 유사합니다.')
+            }
+          } catch(e) {}
+          try {
+            if (err.password1) {
+              alert(err.password1)
+            }
+          } catch(e) {}
+          try {
+            if(err.email[0] == "이미 이 이메일 주소로 등록된 사용자가 있습니다.") {
+              alert(err.email[0])
+            }
+          } catch(e) {
+
+          }
         })
     }
   }

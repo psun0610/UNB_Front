@@ -169,7 +169,7 @@ export default {
       this.next_exp = exp[grade] - response.data.all_score
     })
     .catch(error => {
-      console.log(error)
+      console.error(error)
     })
   },
   methods: {
@@ -387,7 +387,7 @@ export default {
 
 /* 잔디심기 */
 .grass-div {
-  padding: 20px 40px;
+  /* padding: 20px 40px; */
 }
 .grass-title {
   display: flex;
@@ -410,6 +410,7 @@ export default {
 .grass-wrap {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
   margin: 15px auto 0;
   width: calc((17px + 6px * 2)*11);
 }
