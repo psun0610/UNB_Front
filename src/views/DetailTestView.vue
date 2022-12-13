@@ -49,8 +49,31 @@
         <button type="submit" class="my-shadow no-kg-font" v-bind:disabled="(Choice_AB == '')">작성</button>
       </div>
     </form>
-    <!-- 댓글 출력 -->
+
     <div>
+    <!-- 베댓 출력 -->
+      <div class="bestcomment-div" :class="{'best_a_shadow': best_A.pick == 1, 'best_b_shadow': best_A.pick == 2}">
+        <a :href="purl + `${best_A.userpk}` + '/'">
+        <img :src="`${best_A_userbadge.image}`" class="my-shadow comment-profile-img">
+        </a>
+        <div class="comment">
+          <div class="comment-profile">
+            <p class="comment-name">{{ best_A.user }}</p>
+          </div>
+          <div class="comment-content">{{ best_A.content }} </div>
+        </div>
+      </div>
+      <div class="bestcomment-div" :class="{'best_a_shadow': best_B.pick == 1, 'best_b_shadow': best_B.pick == 2}">
+        <a :href="purl + `${best_B.userpk}` + '/'">
+        <img :src="`${best_B_userbadge.image}`" class="my-shadow comment-profile-img">
+        </a>
+        <div class="comment">
+          <div class="comment-profile">
+            <p class="comment-name">{{ best_B.user }}</p>
+          </div>
+          <div class="comment-content">{{ best_B.content }} </div>
+        </div>
+      </div>
       <!-- <BestCommentVue
       :comment="best_A"
       :pick=1
@@ -133,8 +156,12 @@ export default {
       userpk: '',
       purl: 'https://www.unbalace.cf/userprofile/',
       pick_result: null,
-      best_A: null,
-      best_B: null
+      best_A : [],
+      best_B : [],
+      best_A_likeusers : [],
+      best_B_likeusers : [],
+      best_A_userbadge: {},
+      best_B_userbadge: {}
     }
   },
   components: {
@@ -160,6 +187,10 @@ export default {
         this.userpk = response.data.userpk
         this.best_A = response.data.best_A
         this.best_B = response.data.best_B
+        this.best_A_likeusers = response.data.best_A.like_users
+        this.best_B_likeusers = response.data.best_B.like_users
+        this.best_A_userbadge = response.data.best_A.userbadge
+        this.best_B_userbadge = response.data.best_B.userbadge
       })
       .catch(response => {
         alert('없는 글입니다.')
@@ -546,8 +577,22 @@ article {
 .b_shadow {
   box-shadow: rgba(75, 172, 242, 0.5) 4px 2px 16px 0px;
 }
+.best_a_shadow {
+  background-color: rgba(255, 113, 155, 0.5);
+  box-shadow: rgba(255, 113, 155, 0.5) 4px 2px 16px 0px;
+}
+.best_b_shadow {
+  background-color: rgba(75, 172, 242, 0.5);
+  box-shadow: rgba(75, 172, 242, 0.5) 4px 2px 16px 0px;
+}
 
 .comment-div {
+  display: flex;
+  align-items: center;
+  padding: 10px 30px;
+  margin: 30px 0;
+}
+.bestcomment-div {
   display: flex;
   align-items: center;
   padding: 10px 30px;
