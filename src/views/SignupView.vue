@@ -8,7 +8,7 @@
       </div>
       <div class="input-wrap">
         <label for="email">이메일<span style="color: rgb(255, 69, 37)">*</span></label>
-        <input type="text" id="email" v-model="email" class="input-text"/>
+        <input type="email" id="email" v-model="email" class="input-text"/>
       </div>
       <div class="input-wrap">
         <label for="password1">비밀번호<span style="color: rgb(255, 69, 37)">*</span></label>
@@ -18,7 +18,9 @@
         <label for="password2">비밀번호 확인<span style="color: rgb(255, 69, 37)">*</span></label>
         <input type="password" id="password2" v-model="password2" class="input-text"/>
       </div>
-      <button type="submit" class="form-btn my-shadow">회원가입</button>
+      <div style="max-width: 350px; margin: 0 auto;">
+        <button type="submit" class="form-btn my-shadow">회원가입</button>
+      </div>
     </form>
   </div>
 </template>
@@ -73,27 +75,32 @@ export default {
   margin-top: 0;
 }
 .signup-container {
-  width: 550px;
-  margin: 200px auto;
+  max-width: 550px;
+  margin: 20vh auto 0;
 }
 .input-wrap {
-  width: 350px;
+  max-width: 350px;
   margin: 20px auto;
   display: flex;
   justify-content: space-between;
 }
 .myform {
-  padding: 80px 0;
+  padding: 10vmin 15px;
+}
+.input-wrap>label {
+  width: 95px;
+  text-align: start;
 }
 .input-text {
-  width: 220px;
+  max-width: 250px;
   padding: 7px 10px;
   border: 1px solid rgb(180, 180, 180);
   border-radius:  3px;
   font-size: 15px;
 }
 .form-btn {
-  width: 350px;
+  display: block;
+  width: 100%;
   background-color: pink;
   border: 0;
   padding: 7px 0;
@@ -108,5 +115,28 @@ export default {
   font-family: 'Pretendard-Regular';
   color: white;
   transition: 0.14s all ease-in;
+}
+
+@media (max-width: 600px) {
+  .social-container>img {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media (max-width: 410px) {
+  .input-wrap {
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    align-content: start;
+    justify-content: center;
+  }
+  .input-wrap>label {
+    margin-bottom: 5px;
+  }
+  .input-wrap>input {
+    max-width: 100%;
+  }
 }
 </style>
