@@ -4,7 +4,10 @@
 
     <h1 v-if="article_title" class="kg-font title">{{ article_title }}</h1>
     <h1 v-else class="kg-font title">둘 중 하나를 고르세요</h1>
-
+    <div style="text-align:right">
+      <div v-if="user_pk != userpk"></div>
+      <button class="delete-btn kg-font" @click="deletetbutton()" v-else>삭제</button>
+    </div>
     <div class="balance-wrap">
       <div :class="{ 'after-pick-wrap': pick_result }" style="z-index: 100;"></div>
       <div class="after-pick-next-wrap" v-if="pick_result != null" @click="nextbutton()">
@@ -68,9 +71,12 @@
           <div class="comment">
             <div class="comment-profile">
               <p class="comment-name">{{ comment.user }}</p>
-              <i class="fa-regular fa-heart heart" style="color: rgb(255 0 89);" v-show="!comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
-              <i class="fa-solid fa-heart heart" style="color: rgb(255 0 89);" v-show="comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
-              <button type="button" class="my-shadow no-kg-font" :class="`${comment.pk}`" @click="recommenttoggle(index)">답글</button>
+              <i class="fa-regular fa-heart heart" style="color: rgb(255 0 89);"
+                v-show="!comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
+              <i class="fa-solid fa-heart heart" style="color: rgb(255 0 89);"
+                v-show="comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
+              <button type="button" class="my-shadow no-kg-font" :class="`${comment.pk}`"
+                @click="recommenttoggle(index)">답글</button>
               <div v-if="user_pk != comment.userpk"></div>
               <button type="button" class="my-shadow no-kg-font" :class="`${comment.pk}`"
                 @click="commentDelete(comment.pk)" style="background-color:red" v-else>삭제</button>
@@ -82,7 +88,8 @@
         <div v-show="show[index]">
           <form @submit.prevent="submitreForm(comment.pk)" class="myreform">
             <div class="input-wrap">
-              <input type="text" id="recomment" style="margin-left:50px;" v-model="content" class="my-shadow" autocomplete="off"/>
+              <input type="text" id="recomment" style="margin-left:50px;" v-model="content" class="my-shadow"
+                autocomplete="off" />
               <!-- v-model content로 할것 -->
               <button type="submit" class="my-shadow no-kg-font">작성</button>
             </div>
@@ -119,17 +126,17 @@ export default {
       article_comment: [],
       show: [],
       content: null,
-      logincheck:'',
-      random_index:'', // 아티클 인덱스
+      logincheck: '',
+      random_index: '', // 아티클 인덱스
       comments: [],
       Choice_AB: '',
       user_pk: '',
       userpk: '',
       purl: 'https://www.unbalace.cf/userprofile/',
       pick_result: null,
-      best_A:null,
-      best_B:null
-      }
+      best_A: null,
+      best_B: null
+    }
   },
   components: {
     // BestCommentVue
@@ -271,27 +278,27 @@ export default {
       this.show.splice(index, 1, !this.show[index])
     },
     submitreForm(pk) {
-      if(this.logincheck) {
+      if (this.logincheck) {
         axios.post(url + `${this.$route.params.pk}/comment/${pk}/recomment/`, this.$data)
-        .then((response) => {
-          axios({ // 댓글 작성해서 리스트를 다시 불러옴
-            method: 'GET',
-            url: url + this.$route.params.pk + '/',
-            headers: {
-              Authorization: 'Bearer ' + localStorage.getItem('access_token')
-            }
-          })
-            .then(response => {
-              this.article = response.data
-              this.article_A = response.data.A
-              this.article_B = response.data.B
-              this.article_comment = response.data.comments
-              this.show = Array(this.article_comment.length).fill(false)
-              this.content = null
+          .then((response) => {
+            axios({ // 댓글 작성해서 리스트를 다시 불러옴
+              method: 'GET',
+              url: url + this.$route.params.pk + '/',
+              headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('access_token')
+              }
             })
-            .catch(response => {
-              console.log('에러')
-            })
+              .then(response => {
+                this.article = response.data
+                this.article_A = response.data.A
+                this.article_B = response.data.B
+                this.article_comment = response.data.comments
+                this.show = Array(this.article_comment.length).fill(false)
+                this.content = null
+              })
+              .catch(response => {
+                console.log('에러')
+              })
           })
           .catch((err) => {
             console.log('댓글 작성 실패')
