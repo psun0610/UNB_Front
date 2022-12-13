@@ -3,10 +3,11 @@
     <div class="badge-edit-wrap">
       <!-- 현재 뱃지 -->
       <img :src="current_badge" class="current-badge my-shadow" @click="isFolding()">
-      <button class="edit-btn no-kg-font my-shadow">프로필 편집</button>
+      <button v-if="usercheck && !edit_open" class="edit-btn no-kg-font my-shadow" @click="editOpen()">프로필 편집</button>
+      <button v-else-if="usercheck" class="edit-done-btn no-kg-font my-shadow" @click="[editOpen(), nameChange()]">완료</button>
     </div>
     <!-- 뱃지컬렉션 -->
-      <div class="badge-collection my-shadow" v-if="isOpen">
+      <div class="badge-collection my-shadow" v-if="isOpen && usercheck">
         <div v-for="(badge, index) in user_badges" :key="index"><!-- @click="badgeChange"-->
             <img :src="badge[0]" class="my-shadow" @click="badgeChange(badge)" style="cursor:pointer;"/> 
         </div>
@@ -14,7 +15,8 @@
     <!-- 이름과 활동지수 -->
     <div class="profile-container">
       <div class="name-exp-wrap">
-        <h2>{{ userinfo.nickname }}</h2>
+        <h2 v-if="!edit_open">{{ nickname }}</h2>
+        <input v-else type="text" v-model="nickname" class="name-edit-input no-kg-font" autocomplete="off">
         <div style="display: flex;">
           <p>총 활동지수 <b>{{ user.all_score }}</b></p>
           <p>오늘의 활동지수 <b>{{ user.today_score }}</b></p>
@@ -91,11 +93,12 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
+import axios from '../axios/index'
 const url = 'https://www.unbback.cf/accounts/'
 export default {
   data(){
     return {
+      usercheck: false,
       user: '',
       userinfo: '',
       current_badge: '',
@@ -110,9 +113,15 @@ export default {
       next_exp: '',
       exp_percent: '',
       badge_pick: '',
+      edit_open: false,
+      nickname: '',
     }
   },
   mounted() {
+    const login_user_pk = JSON.parse(localStorage.getItem('vuex')).loginStore.userInfo.pk
+    if (login_user_pk == this.$route.params.pk) {
+      this.usercheck = true
+    }
     axios({
       method: 'GET',
       url: url + this.$route.params.pk + '/my_page/',
@@ -130,6 +139,7 @@ export default {
       })
       this.articlelist = response.data.userinfo.article
       this.comlist = response.data.comment
+      this.nickname = this.userinfo.nickname
       // 레벨 분기
       const grade = response.data.userinfo.profiles.grade
       const level = [
@@ -180,7 +190,34 @@ export default {
       }).catch(err => {
         console.error(err)
       }) 
-    }
+    },
+    editOpen() {
+      if(this.edit_open == true) {
+        this.edit_open = false
+      } else {
+        this.edit_open = true
+      }
+      if (this.isOpen == true) {
+        this.isOpen = false
+      } else {
+        this.isOpen = true
+      }
+      console.log(this.edit_open)
+    },
+    nameChange() {
+      axios({
+        url : url + this.$route.params.pk + '/my_page/',
+        method : 'PATCH',
+        data : {
+          nickname: this.nickname
+        }
+      })
+      .then(response => {
+        this.nickname = response.data.nickname
+      }).catch(err => {
+        console.error(err)
+      }) 
+    },
   }
 }
 </script>
@@ -232,6 +269,26 @@ export default {
   background-color: #c4c4c4;
   scale: 1.05;
   transition: all .05s ease-in;
+}
+
+.edit-done-btn {
+  background-color: rgb(255, 62, 130);
+  border-radius: 3px;
+  border: 0;
+  padding: 10px 18px;
+  margin-bottom: 15px;
+  color: white;
+  font-weight: bold;
+}
+.edit-done-btn:hover {
+  background-color: rgb(236, 61, 122);
+  scale: 1.05;
+  transition: all .05s ease-in;
+}
+.name-edit-input {
+  font-size: 16px;
+  padding: 5px 10px;
+  width: 150px;
 }
 
 .badge-collection {
