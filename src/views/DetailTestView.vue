@@ -96,7 +96,8 @@
         <div v-show="show[index]">
           <form @submit.prevent="submitreForm(comment.pk)" class="myreform">
             <div class="input-wrap">
-              <input type="text" id="recomment" style="margin-left:50px;" v-model="recontent" class="my-shadow" autocomplete="off"/>
+              <input type="text" id="recomment" style="margin-left:50px;" v-model="content" class="my-shadow" autocomplete="off"/>
+              <!-- v-model content로 할것 -->
               <button type="submit" class="my-shadow no-kg-font">작성</button>
             </div>
           </form>
@@ -121,7 +122,7 @@ const url = 'https://www.unbback.cf/articles/'
 import loginStore from '../store/index'
 import axios from '../axios/index'
 import axios2 from 'axios'
-import BestCommentVue from '@/components/BestComment.vue'
+// import BestCommentVue from '@/components/BestComment.vue'
 export default {
   data(){
     return {
@@ -132,7 +133,6 @@ export default {
       article_comment: [],
       show:[],
       content: null,
-      recontent: null,
       logincheck:'',
       random_index:'', // 아티클 인덱스
       comments: [],
@@ -140,10 +140,12 @@ export default {
       user_pk : '',
       purl: 'https://www.unbalace.cf/userprofile/',
       pick_result: null,
+      best_A:null,
+      best_B:null
       }
   },
   components: {
-    BestCommentVue
+    // BestCommentVue
   },
   mounted() {
     this.logincheck = loginStore.state.loginStore.isLogin // 로그인 체크
@@ -268,7 +270,7 @@ export default {
               this.article_B = response.data.B
               this.article_comment = response.data.comments
               this.show = Array(this.article_comment.length).fill(false)
-              this.recontent = null
+              this.content = null
             })
             .catch(response => {
               console.log('에러')
