@@ -4,13 +4,15 @@
       <h1 class="form-title">로그인</h1>
       <div class="input-wrap">
         <label for="email">이메일</label>
-        <input type="text" id="email" v-model="email" class="input-text"/>
+        <input type="email" id="email" v-model="email" class="input-text"/>
       </div>
       <div class="input-wrap">
         <label for="password">패스워드</label>
         <input type="password" id="password" v-model="password" class="input-text"/>
       </div>
-      <button @click="loginSubmit()" class="form-btn my-shadow">로그인</button>
+      <div style="max-width: 350px; margin: 0 auto;">
+        <button @click="loginSubmit()" class="form-btn my-shadow">로그인</button>
+      </div>
       <a href="/signup" class="alert-text signup-text">회원이 아니신가요?</a>
       <div class="social-text">
         <hr>
@@ -38,8 +40,8 @@ export default {
     const urlSearch = new URLSearchParams(location.search);
     const code = urlSearch.get('code')
     const scope_test = urlSearch.get('scope')
-    console.log(code)
-    console.log(scope_test)
+    // console.log(code)
+    // console.log(scope_test)
     if (code != null && scope_test == null) {
       this.$store.dispatch('kakaologin', code)
     } else if (code != null && scope_test) {
@@ -71,8 +73,8 @@ export default {
 
 <style scoped>
 .login-container {
-  width: 550px;
-  margin: 200px auto;
+  max-width: 550px;
+  margin: 20vh auto 0;
 }
 .form-title {
   text-align: center;
@@ -82,23 +84,28 @@ export default {
   margin-top: 0;
 }
 .input-wrap {
-  width: 350px;
+  max-width: 350px;
   margin: 20px auto;
   display: flex;
   justify-content: space-between;
 }
 .myform {
-  padding: 80px 0;
+  padding: 10vmin 15px;
+}
+.input-wrap>label {
+  width: 95px;
+  text-align: start;
 }
 .input-text {
-  width: 220px;
+  max-width: 250px;
   padding: 7px 10px;
   border: 1px solid rgb(180, 180, 180);
   border-radius:  3px;
   font-size: 15px;
 }
 .form-btn {
-  width: 350px;
+  display: block;
+  width: 100%;
   background-color: pink;
   border: 0;
   padding: 7px 0;
@@ -159,5 +166,26 @@ export default {
   border-radius: 50%;
   padding: 0;
   margin: 0 15px;
+}
+@media (max-width: 600px) {
+  .social-container>img {
+    width: 50px;
+    height: 50px;
+  }
+}
+@media (max-width: 380px) {
+  .input-wrap {
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+  }
+  .input-wrap>label {
+    margin-bottom: 5px;
+  }
+  .input-wrap>input {
+    max-width: 100%;
+  }
 }
 </style>

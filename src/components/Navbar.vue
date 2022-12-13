@@ -10,7 +10,9 @@
         </div>
         <router-link to="/"><img src="../assets/로고1.png" class="nav-logo"></router-link>
         <div class="right-nav" v-if="logincheck">
-          <a @click="mypage()">마이페이지</a>
+          <a @click="mypage()"
+          :class="{'selected': this.$route.path === '/userprofile/' + userInfo.pk }">
+          마이페이지</a>
           <a @click="logoutplz()">로그아웃</a>
         </div>
         <div class="right-nav" v-else>
@@ -120,6 +122,9 @@ nav a {
   text-decoration: none;
 }
 nav a.router-link-exact-active {
+  font-weight: bold;
+}
+.selected {
   font-weight: bold;
 }
 .nav-item-wrap {

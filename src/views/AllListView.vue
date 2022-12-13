@@ -22,10 +22,10 @@
           <!-- exp 바 -->
           <div class="exp-wrap" v-if="(article.ABcount.A_percent || article.ABcount.B_percent)">
             <div class="exp" :style="`width:${article.ABcount.A_percent}%`" style="background-color: var(--mypink);">
-              <p> {{ article.ABcount.A_pick }} ({{ article.ABcount.A_percent }}%)</p>
+              <p v-if="article.ABcount.A_percent!=0"> {{ article.ABcount.A_pick }} ({{ article.ABcount.A_percent }}%)</p>
             </div>
             <div class="exp" :style="`width:${article.ABcount.B_percent}%`" style="background-color: var(--myblue);">
-              <p> {{ article.ABcount.B_pick }} ({{ article.ABcount.B_percent }}%)</p>
+              <p v-if="article.ABcount.B_percent!=0"> {{ article.ABcount.B_pick }} ({{ article.ABcount.B_percent }}%)</p>
             </div>
           </div>
 
