@@ -5,8 +5,7 @@
     <h1 v-if="article_title" class="kg-font title">{{ article_title }}</h1>
     <h1 v-else class="kg-font title">둘 중 하나를 고르세요</h1>
     <div style="text-align:right">
-      <div v-if="user_pk != userpk"></div>
-      <button class="delete-btn kg-font" @click="deletetbutton()" v-else>삭제</button>
+      <button class="delete-btn kg-font" @click="deletetbutton()" v-if="user_pk == userpk">삭제</button>
     </div>
     <div class="balance-wrap">
       <div :class="{ 'after-pick-wrap': pick_result }" style="z-index: 100;"></div>
@@ -76,10 +75,10 @@
               <i class="fa-solid fa-heart heart" style="color: rgb(255 0 89);"
                 v-show="comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
               <button type="button" class="my-shadow no-kg-font" :class="`${comment.pk}`"
-                @click="recommenttoggle(index)">답글</button>
-              <div v-if="user_pk != comment.userpk"></div>
+                @click="recommenttoggle(index)" style="margin-right: 2px;">답글</button>
               <button type="button" class="my-shadow no-kg-font" :class="`${comment.pk}`"
-                @click="commentDelete(comment.pk)" style="background-color:red" v-else>삭제</button>
+                @click="commentDelete(comment.pk)" style="background-color:red"
+                v-if="user_pk == comment.userpk">삭제</button>
             </div>
             <div class="comment-content">{{ comment.content }} </div>
           </div>
