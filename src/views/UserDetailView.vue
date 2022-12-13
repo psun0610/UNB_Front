@@ -3,9 +3,15 @@
     <div class="badge-edit-wrap">
       <!-- 현재 뱃지 -->
       <img :src="current_badge" class="current-badge my-shadow" @click="isFolding()">
-      <button v-if="usercheck && !edit_open" class="edit-btn no-kg-font my-shadow" @click="editOpen()">프로필 편집</button>
-      <button v-else-if="usercheck" class="edit-done-btn no-kg-font my-shadow"
-        @click="[editClose(), nameChange()]">완료</button>
+      <div>
+
+        <button v-if="usercheck && !edit_open" class="edit-btn no-kg-font my-shadow" @click="editOpen()"
+          style="margin-right:7px">프로필 편집</button>
+        <button v-else-if="usercheck" class="edit-done-btn no-kg-font my-shadow" @click="[editClose(), nameChange()]"
+          style="margin-right:7px">완료</button>
+        <button v-if="realuserpk == user_pk" class="delete-btn no-kg-font my-shadow"
+          @click="accountsDelete()">계정삭제</button>
+      </div>
     </div>
     <!-- 뱃지컬렉션 -->
     <div class="badge-collection my-shadow" v-if="isOpen && usercheck">
@@ -103,7 +109,7 @@
 <script>
 import axios from '../axios/index'
 import loginStore from '../store/index'
-const url = 'http://localhost:8080/accounts/'
+const url = 'https://www.unbback.cf/accounts/'
 export default {
   data() {
     return {
@@ -124,12 +130,14 @@ export default {
       badge_pick: '',
       edit_open: false,
       nickname: '',
+      realuserpk: '',
     }
   },
   mounted() {
     const login_user_pk = JSON.parse(localStorage.getItem('vuex')).loginStore.userInfo.pk
     if (login_user_pk == this.$route.params.pk) {
       this.usercheck = true
+      this.realuserpk = loginStore.state.loginStore.userInfo.pk
     }
     axios({
       method: 'GET',
@@ -223,9 +231,9 @@ export default {
         })
     },
     accountsDelete() {
-      axios.delete("http://127.0.0.1:8000/accounts/" + this.$route.params.pk + '/my_page/')
-      // this.$store.dispatch('logouttest_act')
-      window.location.href = 'http://localhost:8080/'
+      axios.delete("https://www.unbback.cf/accounts/delete/")
+      this.$store.dispatch('logouttest_act')
+      window.location.href = 'https://www.unbalace.cf/'
     }
   }
 }
@@ -285,6 +293,21 @@ export default {
 
 .edit-btn:hover {
   background-color: #c4c4c4;
+  scale: 1.05;
+  transition: all .05s ease-in;
+}
+
+.delete-btn {
+  background-color: #ff3700;
+  border-radius: 3px;
+  border: 0;
+  padding: 10px 18px;
+  margin-bottom: 15px;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #f43636f0;
   scale: 1.05;
   transition: all .05s ease-in;
 }
