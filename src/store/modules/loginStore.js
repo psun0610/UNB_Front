@@ -38,8 +38,28 @@ const loginStore = {
           axios.defaults.headers.common.Authorization = `Bearer ${token}`
           this.dispatch('getMemberInfo') // 유저 정보를 가져오는 actions 호출
         })
-        .catch(() => {
-          alert('로그인 오류. 관리자에게 문의하세요.')
+        .catch((error) => {
+          const err = error.response.data
+          try {
+            if(err.email[0] == '이 필드는 null일 수 없습니다.') {
+              alert('이메일을 입력하세요.')
+            }
+          } catch(e) {}
+          try {
+            if(err.password[0] == '이 필드는 null일 수 없습니다.') {
+              alert('비밀번호를 입력하세요.')
+            }
+          } catch(e) {}
+          try {
+            if(err.email[0] == "유효한 이메일 주소를 입력하십시오.") {
+              alert('유효한 이메일 주소를 입력하세요.')
+            }
+          } catch(e) {}
+          try {
+            if(err.non_field_errors[0] == '주어진 자격 증명으로 로그인이 불가능합니다.') {
+              alert('이메일이나 비밀번호가 틀렸습니다.')
+            }
+          } catch(e) {}
         })
     },
     kakaologin(dispatch, code){
