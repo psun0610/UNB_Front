@@ -70,6 +70,11 @@ export default {
 :root {
   --mypink: #FF719B;
   --myblue: #4BBEFF;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 #app {
   /* font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -94,5 +99,6 @@ a {
   max-width: 920px;
   margin: 0 auto;
   margin-top: 50px;
+  padding: 0 20px;
 }
 </style>

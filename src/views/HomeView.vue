@@ -24,44 +24,58 @@
       </div>
       <hr style="border: solid 1px #D9D9D9">
 
-      <div class="today-dis-article-wrap">
-        <img src="../assets/vs.png" class="vs">
+      <a :href="'/Detail/' + today_pk">
+        <h1 class="kg-font article-title">{{ article_title }}고르세요</h1>
+      </a>
+      <a :href="'/Detail/' + today_pk">
         <article>
-          <a :href="'/Detail/' + today_pk">
-            <h1 class="article-title">{{ article_A }}</h1>
-          </a>
-          <a :href="'/Detail/' + today_pk">
-            <div class="today-dis-comment-wrap">
-              <img src="../assets/말풍선1.png">
-              <div class="comments">
-                <div class="best-comment">
-                  <div style="background-color:#FF719B;">BEST</div>
-                  <p class="best-p">{{ this.best_A }}</p>
-                </div>
-                <p v-for="(item, index) in comments_A.slice(0, 3)" :key="index">{{ item }}</p>
+          <h2 class="no-kg-font">{{ article_A }}</h2>
+          <div class="comment-box-A my-shadow">
+            <!-- 댓글들 -->
+            <div v-if="comments_A!=[]" class="comment-wrap">
+              <!-- A 베스트 댓글 -->
+              <div class="best-comment my-shadow">
+                <div class="best-badge" style="background-color: var(--mypink);">BEST</div>
+                {{ this.best_A }}
               </div>
+              <!-- 일반 댓글 3개 -->
+              <p v-for="(item, index) in comments_A.slice(0, 3)" :key="index" class="my-shadow">{{ item }}</p>
             </div>
-          </a>
+            <!-- 댓글이 없다면 -->
+            <div v-else style="font-size: 16px;">
+              댓글이 없어요 ㅠㅠ
+            </div>
+          </div>
         </article>
+      </a>
 
+      <h1 class="kg-font" style="font-size: 35px; margin: 10px 0;">
+        <span style="color: var(--mypink);">V</span>
+        <span style="color: var(--myblue);">S</span>
+      </h1>
+
+      <a :href="'/Detail/' + today_pk">
         <article>
-          <a :href="'/Detail/' + today_pk">
-            <h1 class="article-title">{{ article_B }}</h1>
-          </a>
-          <a :href="'/Detail/' + today_pk">
-            <div class="today-dis-comment-wrap">
-              <img src="../assets/말풍선2.png">
-              <div class="comments">
-                <div class="best-comment">
-                  <div style="background-color:#4BBEFF;">BEST</div>
-                  <p class="best-p">{{ this.best_B }}</p>
-                </div>
-                <p v-for="(item, index) in comments_B.slice(0, 3)" :key="index">{{ item }}</p>
+          <h2 class="no-kg-font">{{ article_B }}</h2>
+          <div class="comment-box-B my-shadow">
+            <!-- 댓글들 -->
+            <div v-if="comments_B!=[]" class="comment-wrap">
+              <!-- B 베스트 댓글 -->
+              <div class="best-comment my-shadow">
+                <div class="best-badge" style="background-color: var(--myblue);">BEST</div>
+                {{ this.best_B }}
               </div>
+              <!-- 일반 댓글 3개 -->
+              <p v-for="(item, index) in comments_B.slice(0, 3)" :key="index" class="my-shadow">{{ item }}</p>
             </div>
-          </a>
+            <!-- 댓글이 없다면 -->
+            <div v-else style="font-size: 16px;">
+              댓글이 없어요 ㅠㅠ
+            </div>
+          </div>
         </article>
-      </div>
+      </a>
+
     </div>
   </div>
 </template>
@@ -78,6 +92,7 @@ export default {
       sampleData: '',
       random_index: '',
       today_pk: '',
+      article_title: '',
       article_A: '',
       article_B: '',
       comment: '',
@@ -103,6 +118,7 @@ export default {
           url: `https://www.unbback.cf/articles/${this.today_pk}/`
         })
           .then(response => {
+            this.article_title = response.data.title
             this.article_A = response.data.A
             this.article_B = response.data.B
             this.comment = response.data.comments
@@ -178,96 +194,100 @@ export default {
 .today-dis-title p {
   margin: 0;
 }
-
-.today-dis-article-wrap {
-  display: flex;
-  position: relative;
-}
-
-.vs {
-  position: absolute;
-  top: 65%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 60px;
-}
-
 .article-title {
-  /* width: 90%;
-  margin: 0 auto; */
-  font-size: 20px;
+  display: inline-block;
+  margin: 20px auto 10px;
+  height: 23px;
+  display: inline-block;
+  padding: 0px 30px;
+  border-bottom: 25px solid rgb(224, 224, 224);
 }
-
-.today-dis-comment-wrap {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  height: 400px;
+article>h2 {
+  font-size: 22px;
 }
-
-.today-dis-comment-wrap img {
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, 0);
-  height: 400px;
-  width: 80%;
+.comment-box-A {
+  border: 5px solid var(--mypink);
+  padding: 20px;
 }
-
-.today-dis-comment-wrap>div>p {
-  margin: 10px 0;
-  text-align: start;
-  width: 250px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  /* 라인수 */
-  -webkit-box-orient: vertical;
-  word-wrap: break-word;
-  line-height: 1.2em;
+.comment-box-B {
+  border: 5px solid var(--myblue);
+  padding: 20px;
 }
-
-.best-p {
-  margin: 10px 0;
-  text-align: start;
-  width: calc(250px - 50px);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  /* 라인수 */
-  -webkit-box-orient: vertical;
-  word-wrap: break-word;
-  line-height: 1.2em;
-}
-
 .best-comment {
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  line-height: 1.2em;
+  margin: 10px 0;
+  padding: 7px 10px;
+  border-radius: 3px;
+  text-align: start;
 }
-
-.best-comment div {
+.best-badge {
+  align-self: start;
   color: white;
-  border-radius: 5px;
-  padding: 4px 8px;
-  margin-right: 8px;
-  font-family: 'Pretendard-Regular';
+  padding: 2px 7px;
+  border-radius: 3px;
   font-size: 14px;
+  margin-right: 10px;
+}
+.comment-box-A p, .comment-box-B p {
+  margin: 10px 0;
+  text-align: start;
+  padding: 7px 10px 7px 13px;
+  border-radius: 3px;
+}
+.comment-wrap {
+  max-width: 350px;
+  margin: 0 auto;
+}
+@media (max-width: 750px) {
+  .balance-wrap {
+  display: flex;
+  position: relative;
+  height: 360px;
+  margin-bottom: 50px;
+  }
+
+  .balance-back {
+    width: 50%;
+    height: 350px;
+  }
+
+  .title {
+    font-size: 27px;
+    height: 15px;
+    padding: 0px 30px;
+    border-bottom: 25px solid rgb(224, 224, 224);
+    margin-bottom: 50px;
+  }
+
+  .b-title {
+    font-size: 40px;
+  }
+
+  .b-subtitle {
+    font-size: 18px;
+  }
 }
 
-article {
-  width: 50%;
-}
+@media (max-width: 550px) {
+  .balance-wrap {
+    height: 310px;
+  }
+  .balance-back {
+    height: 300px;
+  }
+  .b-title {
+    font-size: 35px;
+  }
 
-.comments {
-  position: absolute;
-  z-index: 1;
-  top: 55%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  .b-subtitle {
+    font-size: 16px;
+  }
 }
 </style>
