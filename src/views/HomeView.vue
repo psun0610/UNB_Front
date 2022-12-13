@@ -48,7 +48,6 @@
           </div>
         </article>
       </a>
-
       <h1 class="kg-font" style="font-size: 35px; margin: 10px 0;">
         <span style="color: var(--mypink);">V</span>
         <span style="color: var(--myblue);">S</span>
@@ -289,5 +288,11 @@ article>h2 {
   .b-subtitle {
     font-size: 16px;
   }
+  .article-title {
+    font-size: 22px;
+  }
+  article>h2 {
+  font-size: 18px;
+}
 }
 </style>
