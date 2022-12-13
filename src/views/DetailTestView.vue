@@ -57,7 +57,7 @@
         <img v-if="best_A" :src="`${best_A.userbadge.image}`" class="my-shadow comment-profile-img">
         </a>
         <div class="comment">
-          <div class="comment-profile">
+          <div class="comment-profile" style="flex-direction: row">
             <p class="comment-name" v-if="best_A">{{ best_A.user }}</p>
             <div class="best-badge" style="background-color: var(--mypink);">BEST</div>
           </div>
@@ -70,7 +70,7 @@
         <img v-if="best_B" :src="`${best_B.userbadge.image}`" class="my-shadow comment-profile-img">
         </a>
         <div class="comment">
-          <div class="comment-profile">
+          <div class="comment-profile" style="flex-direction: row">
             <p class="comment-name" v-if="best_B">{{ best_B.user }}</p>
             <div class="best-badge" style="background-color: var(--myblue);">BEST</div>
           </div>
@@ -95,18 +95,23 @@
           <!-- 댓글 -->
           <div class="comment">
             <div class="comment-profile">
-              <p class="comment-name">{{ comment.user }}</p>
-
-              <i class="fa-regular fa-heart heart" style="color: rgb(255 0 89);"
-                v-show="!comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
-              <i class="fa-solid fa-heart heart" style="color: rgb(255 0 89);"
-                v-show="comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
-              <p style="margin: 0 8px 0 0;">{{comment.total_likes}}</p>
-              <button type="button" class="my-shadow no-kg-font" :class="`${comment.pk}`"
-                @click="recommenttoggle(index)" style="margin-right: 2px;">답글</button>
-              <button type="button" class="my-shadow no-kg-font" :class="`${comment.pk}`"
-                @click="commentDelete(comment.pk)" style="background-color:red"
-                v-if="user_pk == comment.userpk">삭제</button>
+              <div style="display: flex;">
+                <p class="comment-name">{{ comment.user }}</p>
+                <div style="display: flex;">
+                  <i class="fa-regular fa-heart heart" style="color: rgb(255 0 89);"
+                  v-show="!comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
+                  <i class="fa-solid fa-heart heart" style="color: rgb(255 0 89);"
+                  v-show="comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
+                  <p style="margin: 0 8px 0 0;">{{comment.total_likes}}</p>
+                </div>
+              </div>
+              <div class="comment-sub-box" style="display: flex;">
+                <button type="button" class="my-shadow no-kg-font" :class="`${comment.pk}`"
+                  @click="recommenttoggle(index)" style="margin-right: 2px;">답글</button>
+                <button type="button" class="my-shadow no-kg-font" :class="`${comment.pk}`"
+                  @click="commentDelete(comment.pk)" style="background-color:red"
+                  v-if="user_pk == comment.userpk">삭제</button>
+              </div>
             </div>
             <div class="comment-content">{{ comment.content }} </div>
           </div>
@@ -315,7 +320,7 @@ export default {
     },
     submitreForm(pk) {
       if (this.logincheck) {
-        axios.post(url + `${this.$route.params.pk}/comment/${pk}/recomment/`, this.$data)
+        axios.post(url + `${this.$route.params.pk}/comment/${pk}/recomment/`, {"content" : this.$data.recontent})
           .then((response) => {
             axios({ // 댓글 작성해서 리스트를 다시 불러옴
               method: 'GET',
@@ -383,7 +388,6 @@ export default {
   padding: 2px 7px;
   border-radius: 3px;
   font-size: 14px;
-  margin-left: 10px;
 }
 .title {
   height: 23px;
@@ -622,8 +626,8 @@ article {
 }
 
 .comment-profile-img {
-  width: 80px;
-  height: 80px;
+  width: 75px;
+  height: 75px;
   border-radius: 50%;
   object-fit: cover;
 }
@@ -644,6 +648,7 @@ article {
   font-size: 17px;
   font-weight: bold;
   text-align: start;
+  margin-right: 8px;
 }
 .comment-content {
   width: 100%;
@@ -659,7 +664,7 @@ article {
 }
 
 .heart {
-  margin: 0 2px 0 8px;
+  margin: 0 2px 0 0;
 }
 
 .recomment {
@@ -695,6 +700,26 @@ article {
   }
   .balance-back {
     height: 300px;
+  }
+  .comment-profile-img {
+    width: 60px;
+    height: 60px;
+  }
+}
+@media (max-width: 450px) {
+  .recomment {
+    padding: 7px 15px 7px 20px;
+    margin: 0 0 0 60px;
+  }
+  .comment-name {
+    font-size: 16px;
+  }
+  .comment-profile {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .comment-sub-box {
+    margin-top: 5px;
   }
 }
 

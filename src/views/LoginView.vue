@@ -40,8 +40,8 @@ export default {
     const urlSearch = new URLSearchParams(location.search);
     const code = urlSearch.get('code')
     const scope_test = urlSearch.get('scope')
-    console.log(code)
-    console.log(scope_test)
+    // console.log(code)
+    // console.log(scope_test)
     if (code != null && scope_test == null) {
       this.$store.dispatch('kakaologin', code)
     } else if (code != null && scope_test) {

@@ -14,6 +14,6 @@ if (document.cookie && document.cookie !== '') {
 return cookieValue;
 }
 const csrftoken = getCookie('csrftoken');
-console.log(csrftoken)
+// console.log(csrftoken)
 
 export {csrftoken}
