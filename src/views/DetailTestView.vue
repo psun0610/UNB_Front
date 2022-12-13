@@ -46,7 +46,8 @@
     <form v-show="Choice_AB" @submit.prevent="submitForm" class="myform">
       <div class="input-wrap">
         <input type="text" id="comment" v-model="content" class="my-shadow" autocomplete="off" />
-        <button type="submit" class="my-shadow no-kg-font" v-bind:disabled="(Choice_AB == '')" style="cursor:pointer;">작성</button>
+        <button type="submit" class="my-shadow no-kg-font" v-bind:disabled="(Choice_AB == '')"
+          style="cursor:pointer;">작성</button>
       </div>
     </form>
 
@@ -99,10 +100,10 @@
                 <p class="comment-name">{{ comment.user }}</p>
                 <div style="display: flex;">
                   <i class="fa-regular fa-heart heart" style="color: rgb(255 0 89);"
-                  v-show="!comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
+                    v-show="!comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
                   <i class="fa-solid fa-heart heart" style="color: rgb(255 0 89);"
-                  v-show="comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
-                  <p style="margin: 0 8px 0 0;">{{comment.total_likes}}</p>
+                    v-show="comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
+                  <p style="margin: 0 8px 0 0;">{{ comment.total_likes }}</p>
                 </div>
               </div>
               <div class="comment-sub-box" style="display: flex;">
@@ -135,7 +136,7 @@
           <div class="comment">
             <p class="comment-name" style="margin-bottom: 8px;">{{ soncomment.user }}<button
                 @click="recommentDelete(comment.pk, soncomment.pk)" style="background-color:red; margin-left: 5px;"
-                class="my-shadow no-kg-font">삭제</button></p>
+                class="my-shadow no-kg-font" v-if="user_pk == soncomment.userpk">삭제</button></p>
             <div class="comment-content">{{ soncomment.content }}</div>
           </div>
         </div>
@@ -349,7 +350,7 @@ export default {
     },
     submitreForm(pk) {
       if (this.logincheck) {
-        axios.post(url + `${this.$route.params.pk}/comment/${pk}/recomment/`, {"content" : this.$data.recontent})
+        axios.post(url + `${this.$route.params.pk}/comment/${pk}/recomment/`, { "content": this.$data.recontent })
           .then((response) => {
             axios({ // 댓글 작성해서 리스트를 다시 불러옴
               method: 'GET',
@@ -417,6 +418,7 @@ export default {
   border-radius: 3px;
   font-size: 14px;
 }
+
 .title {
   height: 23px;
   display: inline-block;
@@ -738,23 +740,28 @@ article {
   .balance-back {
     height: 300px;
   }
+
   .comment-profile-img {
     width: 60px;
     height: 60px;
   }
 }
+
 @media (max-width: 450px) {
   .recomment {
     padding: 7px 15px 7px 20px;
     margin: 0 0 0 60px;
   }
+
   .comment-name {
     font-size: 16px;
   }
+
   .comment-profile {
     flex-direction: column;
     align-items: flex-start;
   }
+
   .comment-sub-box {
     margin-top: 5px;
   }
