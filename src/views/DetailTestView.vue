@@ -46,7 +46,7 @@
     <form v-show="Choice_AB" @submit.prevent="submitForm" class="myform">
       <div class="input-wrap">
         <input type="text" id="comment" v-model="content" class="my-shadow" autocomplete="off" />
-        <button type="submit" class="my-shadow no-kg-font" v-bind:disabled="(Choice_AB == '')">작성</button>
+        <button type="submit" class="my-shadow no-kg-font" v-bind:disabled="(Choice_AB == '')" style="cursor:pointer;">작성</button>
       </div>
     </form>
 
@@ -59,7 +59,7 @@
         <div class="comment">
           <div class="comment-profile">
             <p class="comment-name" v-if="best_A">{{ best_A.user }}</p>
-            <p class="best-title">BEST</p>
+            <div class="best-badge" style="background-color: var(--mypink);">BEST</div>
           </div>
           <div class="comment-content" v-if="best_A">{{ best_A.content }} </div>
         </div>
@@ -72,7 +72,7 @@
         <div class="comment">
           <div class="comment-profile">
             <p class="comment-name" v-if="best_B">{{ best_B.user }}</p>
-            <p class="best-title">BEST</p>
+            <div class="best-badge" style="background-color: var(--myblue);">BEST</div>
           </div>
           <div class="comment-content" v-if="best_B">{{ best_B.content }} </div>
         </div>
@@ -101,7 +101,7 @@
                 v-show="!comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
               <i class="fa-solid fa-heart heart" style="color: rgb(255 0 89);"
                 v-show="comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
-              <p> {{comment.total_likes}} </p>
+              <p style="margin: 0 8px 0 0;">{{comment.total_likes}}</p>
               <button type="button" class="my-shadow no-kg-font" :class="`${comment.pk}`"
                 @click="recommenttoggle(index)" style="margin-right: 2px;">답글</button>
               <button type="button" class="my-shadow no-kg-font" :class="`${comment.pk}`"
@@ -115,10 +115,10 @@
         <div v-show="show[index]">
           <form @submit.prevent="submitreForm(comment.pk)" class="myreform">
             <div class="input-wrap">
-              <input type="text" id="recomment" style="margin-left:50px;" v-model="content" class="my-shadow"
+              <input type="text" id="recomment" style="margin-left:50px;" v-model="recontent" class="my-shadow"
                 autocomplete="off" />
               <!-- v-model content로 할것 -->
-              <button type="submit" class="my-shadow no-kg-font">작성</button>
+              <button type="submit" class="my-shadow no-kg-font" style="cursor:pointer;">작성</button>
             </div>
           </form>
         </div>
@@ -153,6 +153,7 @@ export default {
       article_comment: [],
       show: [],
       content: null,
+      recontent: null,
       logincheck: '',
       random_index: '', // 아티클 인덱스
       comments: [],
@@ -376,6 +377,14 @@ export default {
 }
 </script>
 <style scoped>
+.best-badge {
+  align-self: start;
+  color: white;
+  padding: 2px 7px;
+  border-radius: 3px;
+  font-size: 14px;
+  margin-left: 10px;
+}
 .title {
   height: 23px;
   display: inline-block;
@@ -650,7 +659,7 @@ article {
 }
 
 .heart {
-  margin: 0 8px;
+  margin: 0 2px 0 8px;
 }
 
 .recomment {
