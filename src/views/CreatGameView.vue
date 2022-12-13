@@ -50,9 +50,8 @@ export default {
       if(!this.title || !this.A || !this.B) {
         this.error = "선택지를 모두 채워주세요"
       } else {
-        console.log(this.title, this.A, this.B)
+        // console.log(this.title, this.A, this.B)
         axios.post(url, {title: this.title, A: this.A, B: this.B})
-      .then(resp => {console.log(resp.data)})
       .then(() => {
         this.$router.push({
           name: 'all-list'

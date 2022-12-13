@@ -146,33 +146,33 @@ export default {
         response.data.userinfo.user_badges.forEach((current, index, array) => {
           this.user_badges.push([require(`../assets${current.badge.image}`), current.badge.pk])
         })
-        this.articlelist = response.data.userinfo.article
-        this.comlist = response.data.comment
-        this.nickname = this.userinfo.nickname
-        // 레벨 분기
-        const grade = response.data.userinfo.profiles.grade
-        const level = [
-          ['Unranked', '#3eb489'],
-          ['Bronze', 'rgb(123 93 77)'],
-          ['Silver', 'rgb(176 176 176)'],
-          ['Gold', '#ffd700'],
-          ['Platinum', '#deefed'],
-          ['Diamond', '#a0b2c6'],
-          ['Master', '#8b00ff']
-        ]
-        this.current_level = level[grade - 1][0]
-        this.current_color = level[grade - 1][1]
-        if (grade === 7) {
-          this.next_level = '준비중'
-        } else {
-          this.next_level = level[grade][0]
-        }
-        const exp = [0, 30, 300, 600, 1000, 1600, 2500]
-        this.next_exp = exp[grade] - response.data.all_score
-      })
-      .catch(error => {
-        console.log(error)
-      })
+      this.articlelist = response.data.userinfo.article
+      this.comlist = response.data.comment
+      this.nickname = this.userinfo.nickname
+      // 레벨 분기
+      const grade = response.data.userinfo.profiles.grade
+      const level = [
+        ['Unranked', '#3eb489'],
+        ['Bronze', 'rgb(123 93 77)'],
+        ['Silver', 'rgb(176 176 176)'],
+        ['Gold', '#ffd700'],
+        ['Platinum', '#deefed'],
+        ['Diamond', '#a0b2c6'],
+        ['Master', '#8b00ff']
+      ]
+      this.current_level = level[grade-1][0]
+      this.current_color = level[grade-1][1]
+      if (grade === 7) {
+        this.next_level = '준비중'
+      } else {
+        this.next_level = level[grade][0]
+      }
+      const exp = [0, 30, 300, 600, 1000, 1600, 2500]
+      this.next_exp = exp[grade] - response.data.all_score
+    })
+    .catch(error => {
+      console.error(error)
+    })
   },
   methods: {
     isFolding() {
@@ -421,7 +421,7 @@ export default {
 
 /* 잔디심기 */
 .grass-div {
-  padding: 20px 40px;
+  /* padding: 20px 40px; */
 }
 
 .grass-title {
@@ -449,6 +449,7 @@ export default {
 .grass-wrap {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
   margin: 15px auto 0;
   width: calc((17px + 6px * 2)*11);
 }

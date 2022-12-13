@@ -202,8 +202,7 @@ export default {
         this.best_B = response.data.best_B
         // this.best_B_likeusers = response.data.best_B.like_users
         // this.best_B_userbadge = response.data.best_B.userbadge
-        console.log(response.data.best_B)
-      }
+        }
       )
       .catch(err => {
         console.log(err)
@@ -325,7 +324,6 @@ export default {
         const comment_like_url = url + `${this.$route.params.pk}/comment/${e}/like/`
         axios.post(comment_like_url)
           .then((res) => {
-            console.log(res)
             axios({
               method: 'GET',
               url: url + this.$route.params.pk + '/'
@@ -369,12 +367,13 @@ export default {
                 this.show = Array(this.article_comment.length).fill(false)
                 this.content = null
               })
-              .catch(response => {
-                console.log('에러')
+              .catch(error => {
+                console.error(error)
               })
           })
-          .catch((err) => {
+          .catch((error) => {
             console.log('댓글 작성 실패')
+            console.error(error)
           })
       } else {
         alert('로그인 후 가능합니다.')
@@ -394,7 +393,6 @@ export default {
     },
     choice_A() {
       this.Choice_AB = 'A'
-      console.log('A')
       axios.post(url + `${this.$route.params.pk}/game_pick/`, { pick: 1 })
         .then(response => {
           this.pick_result = response.data
@@ -403,7 +401,6 @@ export default {
     },
     choice_B() {
       this.Choice_AB = 'B'
-      console.log('B')
       axios.post(url + `${this.$route.params.pk}/game_pick/`, { pick: 2 })
         .then(response => {
           this.pick_result = response.data
