@@ -66,27 +66,30 @@
     </form>
 
     <div>
-    <!-- 베댓 출력 -->
-      <div class="bestcomment-div" :class="{'best_a_shadow': best_A.pick == 1, 'best_b_shadow': best_A.pick == 2}">
-        <a :href="purl + `${best_A.userpk}` + '/'">
-        <img :src="`${best_A_userbadge.image}`" class="my-shadow comment-profile-img">
+    <!-- 베댓 A 출력 -->
+      <div class='best_a_shadow' v-if="best_A">
+        <a v-if="best_A" :href="purl + `${best_A.userpk}` + '/'">
+        <img v-if="best_A" :src="`${best_A.userbadge.image}`" class="my-shadow comment-profile-img">
         </a>
         <div class="comment">
           <div class="comment-profile">
-            <p class="comment-name">{{ best_A.user }}</p>
+            <p class="comment-name" v-if="best_A">{{ best_A.user }}</p>
+            <p class="best-title">BEST</p>
           </div>
-          <div class="comment-content">{{ best_A.content }} </div>
+          <div class="comment-content" v-if="best_A">{{ best_A.content }} </div>
         </div>
       </div>
-      <div class="bestcomment-div" :class="{'best_a_shadow': best_B.pick == 1, 'best_b_shadow': best_B.pick == 2}">
-        <a :href="purl + `${best_B.userpk}` + '/'">
-        <img :src="`${best_B_userbadge.image}`" class="my-shadow comment-profile-img">
+      <!-- 베댓 B -->
+      <div class='best_b_shadow' v-if="best_B">
+        <a v-if="best_B" :href="purl + `${best_B.userpk}` + '/'">
+        <img v-if="best_B" :src="`${best_B.userbadge.image}`" class="my-shadow comment-profile-img">
         </a>
         <div class="comment">
           <div class="comment-profile">
-            <p class="comment-name">{{ best_B.user }}</p>
+            <p class="comment-name" v-if="best_B">{{ best_B.user }}</p>
+            <p class="best-title">BEST</p>
           </div>
-          <div class="comment-content">{{ best_B.content }} </div>
+          <div class="comment-content" v-if="best_B">{{ best_B.content }} </div>
         </div>
       </div>
       <!-- <BestCommentVue
@@ -110,6 +113,7 @@
               <p class="comment-name">{{ comment.user }}</p>
               <i class="fa-regular fa-heart heart" style="color: rgb(255 0 89);" v-show="!comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
               <i class="fa-solid fa-heart heart" style="color: rgb(255 0 89);" v-show="comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
+              <p> {{comment.total_likes}} </p>
               <button type="button" class="my-shadow no-kg-font" :class="`${comment.pk}`" @click="recommenttoggle(index)">답글</button>
             </div>
             <div class="comment-content">{{ comment.content }} </div>
@@ -163,12 +167,8 @@ export default {
       user_pk : '',
       purl: 'https://www.unbalace.cf/userprofile/',
       pick_result: null,
-      best_A : [],
-      best_B : [],
-      best_A_likeusers : [],
-      best_B_likeusers : [],
-      best_A_userbadge: {},
-      best_B_userbadge: {},
+      best_A : null,
+      best_B : null,
     }
   },
   components: {
@@ -192,15 +192,18 @@ export default {
         this.show = Array(this.article_comment.length).fill(false)
         this.comments = response.data.comments
         this.best_A = response.data.best_A
+        // this.best_A_likeusers = response.data.best_A.like_users
+        // this.best_A_userbadge = response.data.best_A.userbadge
         this.best_B = response.data.best_B
-        this.best_A_likeusers = response.data.best_A.like_users
-        this.best_B_likeusers = response.data.best_B.like_users
-        this.best_A_userbadge = response.data.best_A.userbadge
-        this.best_B_userbadge = response.data.best_B.userbadge
-      })
-      .catch(response => {
-          alert('없는 글입니다.')
-          history.go(-1)
+        // this.best_B_likeusers = response.data.best_B.like_users
+        // this.best_B_userbadge = response.data.best_B.userbadge
+        console.log(response.data.best_B)
+        }
+      )
+      .catch(err => {
+        console.log(err)
+        alert('없는 글입니다.')
+        history.go(-1)
       })
 
     axios.get(url + 'random/article/')
@@ -522,10 +525,18 @@ article {
   box-shadow: rgba(75, 172, 242, 0.5) 4px 2px 16px 0px;
 }
 .best_a_shadow {
+  display: flex;
+  align-items: center;
+  padding: 10px 30px;
+  margin: 30px 0;
   background-color: rgba(255, 113, 155, 0.5);
   box-shadow: rgba(255, 113, 155, 0.5) 4px 2px 16px 0px;
 }
 .best_b_shadow {
+  display: flex;
+  align-items: center;
+  padding: 10px 30px;
+  margin: 30px 0;
   background-color: rgba(75, 172, 242, 0.5);
   box-shadow: rgba(75, 172, 242, 0.5) 4px 2px 16px 0px;
 }
@@ -557,6 +568,12 @@ article {
   margin-bottom: 8px;
 }
 .comment-name {
+  margin: 0;
+  font-size: 17px;
+  font-weight: bold;
+  text-align: start;
+}
+.best-title {
   margin: 0;
   font-size: 17px;
   font-weight: bold;
