@@ -2,10 +2,10 @@
   <div class="detail-container">
 
 
-    <h1 v-if="article_title" class="kg-font title">{{ article_title }}</h1>
-    <h1 v-else class="kg-font title">둘 중 하나를 고르세요</h1>
+    <h1 v-show="article_title" class="kg-font title">{{ article_title }}</h1>
+    <h1 v-show="!article_title" class="kg-font title">둘 중 하나를 고르세요</h1>
     <div style="text-align:right">
-      <button class="delete-btn kg-font" @click="deletetbutton()" v-if="user_pk == userpk">삭제</button>
+      <button class="delete-btn kg-font" @click="deletetbutton()" v-show="user_pk == userpk">삭제</button>
     </div>
     <div class="balance-wrap">
       <div :class="{ 'after-pick-wrap': pick_result }" style="z-index: 100;"></div>
@@ -209,41 +209,34 @@ export default {
         alert('없는 글입니다.')
         history.go(-1)
       })
-
+    // 랜덤 함수 받아오기
     axios.get(url + 'random/article/')
       .then((response) => {
-        this.$store.dispatch('randomcheck', response.data.article_pk)
-        const listcheck = loginStore.state.loginStore.random_list
-        if (response.data.article_pk in JSON.parse(JSON.stringify(listcheck))) {
-          console.log('중복')
-          // 1차 중복 수정
-          axios.get(url + 'random/article/')
-            .then((response) => {
-              this.$store.dispatch('randomcheck', response.data.article_pk)
-              const listcheck = loginStore.state.loginStore.random_list
-              if (response.data.article_pk in JSON.parse(JSON.stringify(listcheck))) {
-                console.log('중복')
-                //2차 중복 수정
-                axios.get(url + 'random/article/')
-                  .then((response) => {
+        var listcheck = loginStore.state.loginStore.random_list
+        if (listcheck.includes(response.data.article_pk)) {
+          //1차
+              axios.get(url + 'random/article/')
+                .then((response) => {
+                  var listcheck = loginStore.state.loginStore.random_list
+                  if (listcheck.includes(response.data.article_pk)) {
+                    //2차
+                        axios.get(url + 'random/article/')
+                          .then((response) => {
+                            var listcheck = loginStore.state.loginStore.random_list
+                            if (listcheck.includes(response.data.article_pk)) {
+                            } else {
+                              this.$store.dispatch('randomcheck', response.data.article_pk)
+                              this.random_index = response.data.article_pk
+                            }
+                          })
+                  } else {
                     this.$store.dispatch('randomcheck', response.data.article_pk)
-                    const listcheck = loginStore.state.loginStore.random_list
-                    if (response.data.article_pk in JSON.parse(JSON.stringify(listcheck))) {
-                      console.log('중복')
-                    } else {
-                      console.log('노중복')
-                      this.random_index = response.data.article_pk
-                    }
-                  })
-                //2차 중복 수정
-              } else {
-                console.log('노중복')
-                this.random_index = response.data.article_pk
-              }
-            })
-      // 1차 중복 수정
+                    this.random_index = response.data.article_pk
+                  }
+                })
+          //1차
         } else {
-          console.log('노중복')
+          this.$store.dispatch('randomcheck', response.data.article_pk)
           this.random_index = response.data.article_pk
         }
       })
@@ -417,7 +410,7 @@ export default {
     },
     nextbutton() {
       const idx = this.random_index
-      window.location.href = 'https://www.unbalace.cf/Detail/' + idx
+      window.location.href = 'http://localhost:8080/Detail/' + idx
     },
     deletetbutton() {
       axios.delete(url + `${this.$route.params.pk}/`)
