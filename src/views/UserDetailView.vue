@@ -5,12 +5,14 @@
       <img :src="current_badge" class="current-badge my-shadow" @click="isFolding()">
       <div>
 
-        <button v-if="usercheck && !edit_open" class="edit-btn no-kg-font my-shadow" @click="editOpen()"
-          style="margin-right:7px">프로필 편집</button>
-        <button v-else-if="usercheck" class="edit-done-btn no-kg-font my-shadow" @click="[editClose(), nameChange()]"
-          style="margin-right:7px">완료</button>
-        <button v-if="realuserpk == user_pk" class="delete-btn no-kg-font my-shadow"
-          @click="accountsDelete()">계정삭제</button>
+        <div style="display: flex; flex-direction: column; justify-content: flex-start;">
+          <button v-if="usercheck && !edit_open" class="edit-btn no-kg-font my-shadow" @click="editOpen()"
+            style="margin-right:7px">프로필 편집</button>
+          <button v-else-if="usercheck" class="edit-done-btn no-kg-font my-shadow" @click="[editClose(), nameChange()]"
+            style="margin-right:7px">완료</button>
+          <p v-if="realuserpk == user_pk && edit_open" class="delete-btn no-kg-font"
+            @click="accountsAlert()">계정 탈퇴하기</p>
+          </div>
       </div>
     </div>
     <!-- 뱃지컬렉션 -->
@@ -236,6 +238,12 @@ export default {
           console.error(err)
         })
     },
+    accountsAlert() {
+      var return_value = confirm('정말 탈퇴하시게요? ㅠㅠ..');
+      if(return_value == true) {
+        accountsDelete();
+      }
+    },
     accountsDelete() {
       axios.delete(url + this.$route.params.pk + '/my_page/')
       this.$store.dispatch('logouttest_act')
@@ -304,16 +312,14 @@ export default {
 }
 
 .delete-btn {
-  background-color: #ff3700;
-  border-radius: 3px;
-  border: 0;
-  padding: 10px 18px;
-  margin-bottom: 15px;
-  color: white;
+  cursor:pointer;
+  margin: 8px 0 0 0;
+  color: dimgray;
+  font-weight: bold;
+  font-size: 14px;
 }
 
 .delete-btn:hover {
-  background-color: #f43636f0;
   scale: 1.05;
   transition: all .05s ease-in;
 }
@@ -323,7 +329,7 @@ export default {
   border-radius: 3px;
   border: 0;
   padding: 10px 18px;
-  margin-bottom: 15px;
+  margin-bottom: 0;
   color: white;
   font-weight: bold;
 }
