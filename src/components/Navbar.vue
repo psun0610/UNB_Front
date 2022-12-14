@@ -137,7 +137,7 @@ nav a.router-link-exact-active {
   justify-content: space-between;
 }
 .nav-logo {
-  height: 40px;
+  height: 55px;
 }
 .left-nav {
   display: flex;
