@@ -19,7 +19,7 @@
         <div v-if="pick_result != null" class="black-back"></div>
         <div v-if="pick_result != null" class="after-pick"
           :style="`height:${pick_result.A_percent}%; background-color:var(--mypink)`">
-          <h1 v-if="pick_result != null" class="kg-font result_percent">{{ pick_result.A_percent }}%</h1>
+          <h1 v-if="pick_result != null" class="kg-font result_percent">{{ pick_result.A_percent }}% <span class="no-kg-font" style="font-size:22px;">({{ pick_result.A_count }})</span></h1>
         </div>
         <div class="AB">{{ article_A }}</div>
       </div>
@@ -30,7 +30,7 @@
         <div v-if="pick_result != null" class="black-back"></div>
         <div v-if="pick_result != null" class="after-pick" :style="`height:${pick_result.B_percent}%;`"
           style="background-color:var(--myblue)">
-          <h1 v-if="pick_result != null" class="kg-font result_percent">{{ pick_result.B_percent }}%</h1>
+          <h1 v-if="pick_result != null" class="kg-font result_percent">{{ pick_result.B_percent }}% <span class="no-kg-font" style="font-size:22px;">({{ pick_result.B_count }})</span></h1>
         </div>
         <div class="AB">{{ article_B }}</div>
       </div>
