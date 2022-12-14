@@ -5,7 +5,7 @@
       <img :src="current_badge" class="current-badge my-shadow" @click="isFolding()">
       <div>
 
-        <div style="display: flex; flex-direction: column; justify-content: flex-start;">
+        <div style="display: flex; flex-direction: column;">
           <button v-if="usercheck && !edit_open" class="edit-btn no-kg-font my-shadow" @click="editOpen()"
             style="margin-right:7px">프로필 편집</button>
           <button v-else-if="usercheck" class="edit-done-btn no-kg-font my-shadow" @click="[editClose(), nameChange()]"
