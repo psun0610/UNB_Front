@@ -39,7 +39,7 @@
                     있어요</p>
             </div>
             <div style="display:flex; margin: 20px 0;">
-                <img src="../../public/badges/dia.png" alt="" class="badge my-shadow">
+                <img src="../../public/badges/diamond.png" alt="" class="badge my-shadow">
                 <p style="display:flex; align-items:center" class="badge_title">다이아 뱃지 : 다이아 등급을 달성하면 드려요. 다이아 등급은 활동점수
                     1600을 기록하면 달성 할 수
                     있어요</p>
