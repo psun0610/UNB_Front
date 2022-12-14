@@ -183,7 +183,7 @@ export default {
         this.next_exp = exp[grade] - response.data.all_score
       })
       .catch(error => {
-        if (error.response.data.detail == '찾을 수 없습니다.'){
+        if (error.response.data.detail == '찾을 수 없습니다.') {
           alert('탈퇴한 계정입니다.')
         }
       })
@@ -237,7 +237,7 @@ export default {
         })
     },
     accountsDelete() {
-      axios.delete("https://www.unbback.cf/accounts/delete/")
+      axios.delete(url + this.$route.params.pk + '/my_page/')
       this.$store.dispatch('logouttest_act')
       window.location.href = 'https://www.unbalace.cf/'
     }
