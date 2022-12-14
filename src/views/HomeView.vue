@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" v-show="today_pk">
     <TodayKing></TodayKing>
     <!-- 밸런스 게임 바로가기 -->
     <router-link to="/about">
@@ -25,7 +25,7 @@
       <hr style="border: solid 1px #D9D9D9">
 
       <a :href="'/Detail/' + today_pk">
-        <h1 class="kg-font article-title">{{ article_title }}고르세요</h1>
+        <h1 class="kg-font article-title" v-show="article_title">{{ article_title }}고르세요</h1>
       </a>
       <a :href="'/Detail/' + today_pk">
         <article>

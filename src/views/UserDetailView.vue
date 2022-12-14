@@ -1,5 +1,5 @@
 <template>
-  <div class="container2">
+  <div class="container2" v-show="user_pk">
     <div class="badge-edit-wrap">
       <!-- 현재 뱃지 -->
       <img :src="current_badge" class="current-badge my-shadow" @click="isFolding()">

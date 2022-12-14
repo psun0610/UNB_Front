@@ -1,5 +1,5 @@
 <template>
-  <div class="detail-container">
+  <div class="detail-container" v-show="article_A">
 
 
     <h1 v-show="article_title" class="kg-font title">{{ article_title }}</h1>
