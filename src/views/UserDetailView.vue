@@ -241,7 +241,7 @@ export default {
     accountsAlert() {
       var return_value = confirm('정말 탈퇴하시게요? ㅠㅠ..');
       if(return_value == true) {
-        accountsDelete();
+        this.accountsDelete();
       }
     },
     accountsDelete() {
