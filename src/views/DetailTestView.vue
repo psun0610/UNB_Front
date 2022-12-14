@@ -224,6 +224,7 @@ export default {
                           .then((response) => {
                             var listcheck = loginStore.state.loginStore.random_list
                             if (listcheck.includes(response.data.article_pk)) {
+                              this.random_index = response.data.article_pk
                             } else {
                               this.$store.dispatch('randomcheck', response.data.article_pk)
                               this.random_index = response.data.article_pk
