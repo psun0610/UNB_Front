@@ -108,6 +108,7 @@
 </template>
 <script>
 import axios from '../axios/index'
+import axios2 from 'axios'
 import loginStore from '../store/index'
 const url = 'https://www.unbback.cf/accounts/'
 export default {
@@ -134,17 +135,17 @@ export default {
     }
   },
   mounted() {
-    const login_user_pk = JSON.parse(localStorage.getItem('vuex')).loginStore.userInfo.pk
-    if (login_user_pk == this.$route.params.pk) {
-      this.usercheck = true
-      this.realuserpk = loginStore.state.loginStore.userInfo.pk
-    }
-    axios({
-      method: 'GET',
-      url: url + this.$route.params.pk + '/my_page/',
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('access_token')
+    if (JSON.parse(localStorage.getItem('vuex'))) {
+      const login_user_pk = JSON.parse(localStorage.getItem('vuex')).loginStore.userInfo.pk
+      if (login_user_pk == this.$route.params.pk) {
+        this.usercheck = true
+        this.realuserpk = loginStore.state.loginStore.userInfo.pk
       }
+    }
+
+    axios2({
+      method: 'GET',
+      url: url + this.$route.params.pk + '/my_page/'
     })
       .then(response => {
         this.user_pk = response.data.user_pk
@@ -179,7 +180,9 @@ export default {
         this.next_exp = exp[grade] - response.data.all_score
       })
       .catch(error => {
-        console.error(error)
+        if (error.response.data.detail == '찾을 수 없습니다.'){
+          alert('탈퇴한 계정입니다.')
+        }
       })
   },
   methods: {
