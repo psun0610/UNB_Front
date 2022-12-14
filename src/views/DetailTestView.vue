@@ -2,7 +2,9 @@
   <div class="detail-container" v-show="article_A">
 
 
-    <h1 v-show="article_title" class="kg-font title">{{ article_title }}</h1>
+    <h1 v-show="article_title" class="kg-font title">
+      <span class="highlight">{{ article_title }}</span>
+    </h1>
     <h1 v-show="!article_title" class="kg-font title">둘 중 하나를 고르세요</h1>
     <div style="text-align:right">
       <button class="delete-btn kg-font" @click="deletetbutton()" v-show="user_pk == userpk">삭제</button>
@@ -10,7 +12,7 @@
     <div class="balance-wrap">
       <div :class="{ 'after-pick-wrap': pick_result }" style="z-index: 100;"></div>
       <div class="after-pick-next-wrap" v-if="pick_result != null" @click="nextbutton()">
-        <img src="../assets/arrow.png" class="kg-font next-button" style="width: 150px;">
+        <img src="../assets/arrow.png" class="kg-font next-button">
         <div>다음 질문</div>
       </div>
       <!-- A 선택지 -->
@@ -103,13 +105,13 @@
                     v-show="!comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
                   <i class="fa-solid fa-heart heart" style="color: rgb(255 0 89);"
                     v-show="comment.like_users.includes(this.user_pk)" @click="like(comment.pk)"></i>
-                  <p style="margin: 0 8px 0 0;">{{ comment.total_likes }}</p>
+                  <p style="margin: 0 8px 0 0; font-size: 15px;">{{ comment.total_likes }}</p>
                 </div>
               </div>
               <div class="comment-sub-box" style="display: flex;">
-                <button type="button" class="my-shadow no-kg-font" :class="`${comment.pk}`"
+                <button type="button" class="my-shadow no-kg-font btnbtn" :class="`${comment.pk}`"
                   @click="recommenttoggle(index)" style="margin-right: 2px;">답글</button>
-                <button type="button" class="my-shadow no-kg-font" :class="`${comment.pk}`"
+                <button type="button" class="my-shadow no-kg-font btnbtn" :class="`${comment.pk}`"
                   @click="commentDelete(comment.pk)" style="background-color:red"
                   v-if="user_pk == comment.userpk">삭제</button>
               </div>
@@ -135,7 +137,7 @@
           </a>
           <div class="comment">
             <p class="comment-name" style="margin-bottom: 8px;">{{ soncomment.user }}<button
-                @click="recommentDelete(comment.pk, soncomment.pk)" style="background-color:red; margin-left: 5px;"
+                @click="recommentDelete(comment.pk, soncomment.pk)" style="background-color: #b71c1c; margin-left: 5px;"
                 class="my-shadow no-kg-font" v-if="user_pk == soncomment.userpk">삭제</button></p>
             <div class="comment-content">{{ soncomment.content }}</div>
           </div>
@@ -447,11 +449,12 @@ export default {
 }
 
 .title {
-  height: 23px;
-  display: inline-block;
-  padding: 0px 30px;
-  border-bottom: 25px solid rgb(224, 224, 224);
-  margin-bottom: 50px;
+  margin-bottom: 20px;
+  white-space: wrap;
+  font-size: 28px;
+}
+.highlight {
+  box-shadow: inset 0 -25px 0 #d9d9d9; 
 }
 
 .detail-container {
@@ -736,7 +739,11 @@ article {
   margin: 0 0 0 70px;
 }
 
-@media (max-width: 750px) {
+.next-button {
+  width: 150px;
+}
+
+@media (min-width:550px) and (max-width: 750px) {
   .balance-wrap {
     height: 360px;
   }
@@ -751,16 +758,10 @@ article {
   }
 
   .title {
-    font-size: 27px;
-    height: 15px;
-    padding: 0px 30px;
-    border-bottom: 25px solid rgb(224, 224, 224);
-    margin-bottom: 50px;
+    font-size: 24px;
   }
-}
-@media (max-width: 650px) {
-  * {
-    font-size: 15px;
+  .highlight {
+    box-shadow: inset 0 -20px 0 #d9d9d9; 
   }
 }
 
@@ -771,11 +772,33 @@ article {
 
   .balance-back {
     height: 300px;
+    padding: 25px 30px;
   }
 
   .comment-profile-img {
     width: 60px;
     height: 60px;
+  }
+  .title {
+    font-size: 21px;
+  }
+  .highlight {
+    box-shadow: inset 0 -18px 0 #d9d9d9; 
+  }
+  .AB {
+    font-size: 16px;
+  }
+  .result_percent {
+    font-size: 30px;
+  }
+  .next-button {
+    width: 120px;
+  }
+  .comment-content {
+    font-size: 15px;
+  }
+  .btnbtn {
+    font-size: 14px;
   }
 }
 
@@ -805,7 +828,7 @@ article {
   height: 30px;
   border: 0;
   border-radius: 3px;
-  background-color: #f20808;
+  background-color: #b71c1c;
   transition: all .1s ease;
   color: #ffffff
 }
