@@ -131,6 +131,8 @@ export default {
             this.best_A = response.data.best_A.content
             this.best_B = response.data.best_B.content
           })
+          .catch(error=> {
+          })
       })
   },
   unmounted() { },
