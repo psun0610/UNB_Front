@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-show="articles.length">
     <TodayKing></TodayKing>
     <h2 class="kg-font">토론 리스트</h2>
     <div v-for="(article, index) in articles" :key="index" class="list">
