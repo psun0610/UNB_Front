@@ -212,7 +212,40 @@ export default {
 
     axios.get(url + 'random/article/')
       .then((response) => {
-        this.random_index = response.data.article_pk
+        this.$store.dispatch('randomcheck', response.data.article_pk)
+        const listcheck = loginStore.state.loginStore.random_list
+        if (response.data.article_pk in JSON.parse(JSON.stringify(listcheck))) {
+          console.log('중복')
+          // 1차 중복 수정
+          axios.get(url + 'random/article/')
+            .then((response) => {
+              this.$store.dispatch('randomcheck', response.data.article_pk)
+              const listcheck = loginStore.state.loginStore.random_list
+              if (response.data.article_pk in JSON.parse(JSON.stringify(listcheck))) {
+                console.log('중복')
+                //2차 중복 수정
+                axios.get(url + 'random/article/')
+                  .then((response) => {
+                    this.$store.dispatch('randomcheck', response.data.article_pk)
+                    const listcheck = loginStore.state.loginStore.random_list
+                    if (response.data.article_pk in JSON.parse(JSON.stringify(listcheck))) {
+                      console.log('중복')
+                    } else {
+                      console.log('노중복')
+                      this.random_index = response.data.article_pk
+                    }
+                  })
+                //2차 중복 수정
+              } else {
+                console.log('노중복')
+                this.random_index = response.data.article_pk
+              }
+            })
+      // 1차 중복 수정
+        } else {
+          console.log('노중복')
+          this.random_index = response.data.article_pk
+        }
       })
 
   },
