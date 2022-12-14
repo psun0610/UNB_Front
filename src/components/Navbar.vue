@@ -34,6 +34,7 @@
         <ul class="menu-items">
           <li><router-link to="/">홈으로</router-link></li>
           <li><a :href="'/Detail/'+random_index">밸런스게임</a></li>
+          <li><router-link to="/all-list">토론리스트</router-link></li>
           <!-- 로그인 했을 때 -->
           <div v-if="logincheck">
             <li><router-link to="/create-game" v-if="logincheck">만들기</router-link></li>
