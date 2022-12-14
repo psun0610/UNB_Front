@@ -32,7 +32,7 @@
           <h2 class="no-kg-font">{{ article_A }}</h2>
           <div class="comment-box-A my-shadow">
             <!-- 댓글들 -->
-            <div v-if="comments_A!=[]" class="comment-wrap">
+            <div v-if="comments_A.length" class="comment-wrap">
               <!-- A 베스트 댓글 -->
               <div class="best-comment my-shadow">
                 <div class="best-badge" style="background-color: var(--mypink);">BEST</div>
@@ -58,7 +58,7 @@
           <h2 class="no-kg-font">{{ article_B }}</h2>
           <div class="comment-box-B my-shadow">
             <!-- 댓글들 -->
-            <div v-if="comments_B!=[]" class="comment-wrap">
+            <div v-if="comments_B.length" class="comment-wrap">
               <!-- B 베스트 댓글 -->
               <div class="best-comment my-shadow">
                 <div class="best-badge" style="background-color: var(--myblue);">BEST</div>
