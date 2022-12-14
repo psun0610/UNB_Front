@@ -136,12 +136,15 @@ export default {
   },
   mounted() {
     if (JSON.parse(localStorage.getItem('vuex'))) {
-      const login_user_pk = JSON.parse(localStorage.getItem('vuex')).loginStore.userInfo.pk
-      if (login_user_pk == this.$route.params.pk) {
-        this.usercheck = true
-        this.realuserpk = loginStore.state.loginStore.userInfo.pk
+      if (JSON.parse(localStorage.getItem('vuex')).loginStore.isLogin) {
+        const login_user_pk = JSON.parse(localStorage.getItem('vuex')).loginStore.userInfo.pk
+        if (login_user_pk == this.$route.params.pk) {
+          this.usercheck = true
+          this.realuserpk = loginStore.state.loginStore.userInfo.pk
+        }
       }
     }
+
 
     axios2({
       method: 'GET',
