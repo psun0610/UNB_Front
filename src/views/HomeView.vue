@@ -274,7 +274,10 @@ article>h2 {
   }
 }
 
-@media (max-width: 550px) {
+@media (max-width: 650px) {
+  * {
+    font-size: 15px;
+  }
   .balance-wrap {
     height: 310px;
   }
@@ -288,11 +291,19 @@ article>h2 {
   .b-subtitle {
     font-size: 16px;
   }
+  article>h2 {
+    font-size: 18px;
+  }
   .article-title {
     font-size: 22px;
+    margin: 20px auto 10px;
+    height: 15px;
+    display: inline-block;
+    padding: 0px 30px;
+    border-bottom: 25px solid rgb(224, 224, 224);
   }
-  article>h2 {
-  font-size: 18px;
-}
+  .today-dis-title>h1 {
+    font-size: 22px;
+  }
 }
 </style>

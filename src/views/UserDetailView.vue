@@ -5,13 +5,13 @@
       <img :src="current_badge" class="current-badge my-shadow" @click="isFolding()">
       <div>
 
-        <div style="display: flex; flex-direction: column;">
-          <button v-if="usercheck && !edit_open" class="edit-btn no-kg-font my-shadow" @click="editOpen()"
-            style="margin-right:7px">프로필 편집</button>
-          <button v-else-if="usercheck" class="edit-done-btn no-kg-font my-shadow" @click="[editClose(), nameChange()]"
-            style="margin-right:7px">완료</button>
+        <div style="display: flex; justify-content: center; align-items: center;">
           <p v-if="realuserpk == user_pk && edit_open" class="delete-btn no-kg-font"
             @click="accountsAlert()">계정 탈퇴하기</p>
+          <button v-if="usercheck && !edit_open" class="edit-btn no-kg-font my-shadow" @click="editOpen()"
+            >프로필 편집</button>
+          <button v-else-if="usercheck" class="edit-done-btn no-kg-font my-shadow" @click="[editClose(), nameChange()]"
+            >완료</button>
           </div>
       </div>
     </div>
@@ -313,7 +313,7 @@ export default {
 
 .delete-btn {
   cursor:pointer;
-  margin: 8px 0 0 0;
+  margin: 0 10px 0 0;
   color: dimgray;
   font-weight: bold;
   font-size: 14px;
@@ -455,9 +455,6 @@ export default {
 }
 
 /* 잔디심기 */
-.grass-div {
-  /* padding: 20px 40px; */
-}
 
 .grass-title {
   display: flex;
@@ -485,8 +482,9 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin: 15px auto 0;
+  margin: 15px auto;
   width: calc((17px + 6px * 2)*11);
+  padding-bottom: 10px;
 }
 
 .grass {
@@ -501,5 +499,45 @@ export default {
   width: 10px;
   height: 17px;
   margin: 4px;
+}
+@media (max-width: 650px){
+  .current-badge {
+    width: 120px;
+    height: 120px;
+  }
+  .edit-btn {
+    padding: 7px 14px;
+  }
+  .grass {
+    width: 14px;
+    height: 14px;
+  }
+  .grass-wrap {
+    width: calc((14px + 6px * 2)*11);
+  }
+  .grass-title {
+    width: calc((14px + 6px * 2)*11);
+  }
+  .grass-title>p {
+    font-size: 14px;
+  }
+  .grass-title>h1 {
+    font-size: 21px;
+    margin-bottom: 0;
+  }
+  .grass-title>h3 {
+    font-size: 14px;
+    margin-bottom: 0;
+  }
+  .edit-done-btn {
+    padding: 7px 14px;
+  }
+  .name-exp-wrap p {
+    margin: 0 3px;
+    font-size: 14px;
+  }
+  .name-exp-wrap>h2 {
+    font-size: 20px;
+  }
 }
 </style>

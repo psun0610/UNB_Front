@@ -182,12 +182,6 @@ export default {
   width: 100%;
   font-size: 16px;
 }
-@media (max-width: 650px) {
-  .exp>p {
-    font-size: 14px;
-    min-width: 80px;
-  }
-}
 .top-btn {
   position: fixed;
   bottom: 100px;
@@ -204,5 +198,21 @@ export default {
   background-color: rgb(163, 163, 163);
   color: white;
   font-weight: bold;
+}
+@media (max-width: 650px) {
+  .article-choice>h3 {
+    font-size: 17px;
+  }
+  .article-title {
+    font-size: 20px;
+  }
+  .top-btn>div {
+    width: 50px;
+    height: 50px;
+  }
+  .exp>p {
+    font-size: 14px;
+    min-width: 80px;
+  }
 }
 </style>

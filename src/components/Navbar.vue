@@ -159,6 +159,9 @@ nav a.router-link-exact-active {
 
 /* 650px 이하 */
 @media (max-width: 650px){
+  *{
+    font-size: 16px;
+  }
     .navbar{
         opacity: 0.95;
     }
@@ -196,8 +199,8 @@ nav a.router-link-exact-active {
 
     .navbar-container .hamburger-lines{
         display: block;
-        height: 26px;
-        width: 33px;
+        height: 22px;
+        width: 28px;
         position: absolute;
         top: 50%;
         transform: translate(0, -50%);

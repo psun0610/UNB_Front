@@ -758,6 +758,11 @@ article {
     margin-bottom: 50px;
   }
 }
+@media (max-width: 650px) {
+  * {
+    font-size: 15px;
+  }
+}
 
 @media (max-width: 550px) {
   .balance-wrap {
