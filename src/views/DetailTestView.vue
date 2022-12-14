@@ -47,7 +47,7 @@
     <!-- 댓글 작성 -->
     <form v-show="Choice_AB" @submit.prevent="submitForm" class="myform">
       <div class="input-wrap">
-        <input type="text" id="comment" v-model="content" class="my-shadow" autocomplete="off" />
+        <input type="text" id="comment" v-model="content" class="my-shadow no-kg-font" autocomplete="off" />
         <button type="submit" class="my-shadow no-kg-font" v-bind:disabled="(Choice_AB == '')"
           style="cursor:pointer;">작성</button>
       </div>
@@ -123,7 +123,7 @@
         <div v-show="show[index]">
           <form @submit.prevent="submitreForm(comment.pk)" class="myreform">
             <div class="input-wrap">
-              <input type="text" id="recomment" style="margin-left:50px;" v-model="recontent" class="my-shadow"
+              <input type="text" id="recomment" style="margin-left:50px;" v-model="recontent" class="my-shadow no-kg-font"
                 autocomplete="off" />
               <!-- v-model content로 할것 -->
               <button type="submit" class="my-shadow no-kg-font" style="cursor:pointer;">작성</button>
@@ -137,7 +137,7 @@
           </a>
           <div class="comment">
             <p class="comment-name" style="margin-bottom: 8px;">{{ soncomment.user }}<button
-                @click="recommentDelete(comment.pk, soncomment.pk)" style="background-color: #b71c1c; margin-left: 5px;"
+                @click="recommentDelete(comment.pk, soncomment.pk)" style="background-color: #c51e1e; margin-left: 5px;"
                 class="my-shadow no-kg-font" v-if="user_pk == soncomment.userpk">삭제</button></p>
             <div class="comment-content">{{ soncomment.content }}</div>
           </div>
@@ -800,6 +800,18 @@ article {
   .btnbtn {
     font-size: 14px;
   }
+  .input-wrap>input {
+    height: 28px;
+    padding: 0 20px;
+    font-size: 15px;
+  }
+
+.input-wrap>button {
+    width: 70px;
+    height: 28px;
+    margin-left: 15px;
+    font-size: 15px;
+  }
 }
 
 @media (max-width: 450px) {
@@ -828,7 +840,7 @@ article {
   height: 30px;
   border: 0;
   border-radius: 3px;
-  background-color: #b71c1c;
+  background-color: #c51e1e;
   transition: all .1s ease;
   color: #ffffff
 }
