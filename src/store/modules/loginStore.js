@@ -4,7 +4,8 @@ const loginStore = {
   state: {
     userInfo: null,
     isLogin: false,
-    isLoginError: false
+    isLoginError: false,
+    random_list: []
   },
   mutations: { // 로그인 상태를 변경해주는 코드
     loginSuccess: function (state, payload) {
@@ -24,6 +25,9 @@ const loginStore = {
       localStorage.removeItem('access_token')
       localStorage.removeItem('refresh_token')
       localStorage.removeItem('vuex')
+    },
+    numberregistration: function (state, code) {
+      state.random_list.push(code)
     }
   },
   actions: {
@@ -90,6 +94,13 @@ const loginStore = {
 
       })
     },
+    randomcheck(state, code){
+      if (code in state.state.random_list){
+      } else {
+        this.commit('numberregistration', code)
+      }
+    },
+
     logouttest_act ({ commit }) { // 로그아웃 actions
       commit('logoutTest')
       window.location.href="https://www.unbalace.cf/"
