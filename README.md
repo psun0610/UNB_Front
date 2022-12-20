@@ -124,6 +124,7 @@ UNB는 다양한 주제들로 양자택일 토론을 하고, 가볍게 즐길 �
 <img src="https://user-images.githubusercontent.com/97274144/208605562-b6fbb8c9-0253-4738-9bba-afeab26a7904.png">
 <img src="https://user-images.githubusercontent.com/97274144/208605575-ef61e545-a694-4527-902f-025f1f48c872.png">
 </div>
+
 ### 토론리스트 페이지
 
 - 오늘의 토론왕이 표시된다.
