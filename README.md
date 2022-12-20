@@ -106,10 +106,8 @@ UNB는 다양한 주제들로 양자택일 토론을 하고, 가볍게 즐길 �
   2. input을 채우지 않았을 때
 
 
-<div style="display: flex; justify-content:center;">
-<img src="https://user-images.githubusercontent.com/97274144/208605308-b4ac7d86-9a2a-475e-9e28-e3d4af29e230.png" height="600px">
-<img src="https://user-images.githubusercontent.com/97274144/208605322-c6935e45-997f-4335-95c3-23413a071f74.png" height="600px">
-</div>
+![image](https://user-images.githubusercontent.com/97274144/208605308-b4ac7d86-9a2a-475e-9e28-e3d4af29e230.png)
+![image](https://user-images.githubusercontent.com/97274144/208605322-c6935e45-997f-4335-95c3-23413a071f74.png)
 
 
 
@@ -122,10 +120,8 @@ UNB는 다양한 주제들로 양자택일 토론을 하고, 가볍게 즐길 �
 - 댓글은 각자가 고른 선택지 색깔로 표시된다.
 
 
-<div style="display: flex; justify-content:center;">
-<img src="https://user-images.githubusercontent.com/97274144/208605562-b6fbb8c9-0253-4738-9bba-afeab26a7904.png">
-<img src="https://user-images.githubusercontent.com/97274144/208605575-ef61e545-a694-4527-902f-025f1f48c872.png">
-</div>
+![image](https://user-images.githubusercontent.com/97274144/208605562-b6fbb8c9-0253-4738-9bba-afeab26a7904.png)
+![image](https://user-images.githubusercontent.com/97274144/208605575-ef61e545-a694-4527-902f-025f1f48c872.png)
 
 ### 토론리스트 페이지
 
@@ -159,10 +155,8 @@ UNB는 다양한 주제들로 양자택일 토론을 하고, 가볍게 즐길 �
   - 연속 출석체크 일수도 보여줘서 유저들을 유지한다.
 - 프로필 편집을 클릭하면 뱃지 리스트가 열리고, 이름이 input으로 바뀌어 바로 수정할 수 있도록 한다.
 - 계정 탈퇴를 클릭하면 정말 탈퇴할 것인지 확인하는 confirm창이 뜬다.
-<div style="display: flex; justify-content:center;">
-<img src="https://user-images.githubusercontent.com/97274144/208605584-cf2cfcdb-970a-448c-b0ad-3815c03512ff.png" height="900px">
-<img src="https://user-images.githubusercontent.com/97274144/208605591-27be0f77-155e-41d5-8eab-da93cebcdb2f.png" height="900px">
-</div>
+![image](https://user-images.githubusercontent.com/97274144/208605584-cf2cfcdb-970a-448c-b0ad-3815c03512ff.png)
+![image](https://user-images.githubusercontent.com/97274144/208605591-27be0f77-155e-41d5-8eab-da93cebcdb2f.png)
 &nbsp;
 
 ## 7. 💡프로젝트 후기
