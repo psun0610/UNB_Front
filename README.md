@@ -1,6 +1,8 @@
 # 👑UNB (언발란스) 프론트엔드👑
 
-> https://www.unbalace.cf/
+~~https://www.unbalace.cf/~~
+
+➡️ 서버비 이슈로 URL 접속 불가 상태
 
 ![로고1](https://user-images.githubusercontent.com/97274144/208597017-908400e8-9c40-4343-a086-819a80f53fb4.png)
 
